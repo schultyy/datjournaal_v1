@@ -1,3 +1,5 @@
+import Constants from '../constants';
+
 const initialState = {
   currentUser: null,
   socket: null,
@@ -5,5 +7,12 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  return state;
+  switch(action.type) {
+    case Constants.CURRENT_USER:
+      return { ...state, currentUser: action.currentUser };
+    case Constants.REGISTRATIONS_ERROR:
+      return { ...state, errors: action.errors };
+    default:
+      return state;
+  }
 }
