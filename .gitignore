@@ -18,3 +18,4 @@ node_modules/
 /priv/static/css/application.css
 /priv/static/js/application.js
 .DS_Store
+*.map
