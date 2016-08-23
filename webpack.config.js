@@ -9,6 +9,7 @@ function join(dest) { return path.resolve(__dirname, dest); }
 function web(dest) { return join('web/static/' + dest); }
 
 var config = module.exports = {
+  devtool: 'source-map',
   entry: {
     application: [
       web('css/application.sass'),
