@@ -58,4 +58,3 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.optimize.UglifyJsPlugin({ minimize: true })
   );
 }
-
