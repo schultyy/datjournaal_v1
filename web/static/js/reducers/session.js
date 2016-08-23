@@ -7,7 +7,6 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  console.log("CONSTANTS", Constants);
   switch(action.type) {
     case Constants.CURRENT_USER:
       return { ...state, currentUser: action.currentUser, error: null };
