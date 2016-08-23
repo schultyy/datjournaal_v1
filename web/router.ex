@@ -11,6 +11,9 @@ defmodule Datjournaal.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug Guardian.Plug.VerifyHeader
+    plug Guardian.Plug.LoadResource
   end
 
   scope "/", Datjournaal do
@@ -23,6 +26,9 @@ defmodule Datjournaal.Router do
     pipe_through :api
 
     scope "/v1" do
+      get "/current_user", CurrentUserController, :show
+      post "/sessions", SessionController, :create
+      delete "/sessions", SessionController, :delete
       post "/registrations", RegistrationController, :create
     end
   end
