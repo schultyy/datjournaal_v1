@@ -38,6 +38,7 @@ defmodule Datjournaal.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:comeonin, "~> 2.0"},
+     {:guardian, "~> 0.12.0"},
      {:cowboy, "~> 1.0"}]
   end
 

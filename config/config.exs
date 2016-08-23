@@ -22,6 +22,13 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :guardian, Guardian,
+  issuer: "Datjournaal",
+  ttl: { 3, :days },
+  verify_issuer: true,
+  secret_key: "jNPY1SSK4CF4W2SHxHoGhljx92CUpeYfGVHRtRvVF0mZus61FESaH/LfmOVzAMfc",
+  serializer: Datjournaal.GuardianSerializer
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
