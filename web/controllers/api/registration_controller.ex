@@ -1,8 +1,8 @@
 defmodule Datjournaal.RegistrationController do
   use Datjournaal.Web, :controller
 
-  alias DatJournaal.{Repo, User}
-  
+  alias Datjournaal.{Repo, User}
+
   plug :scrub_params, "user" when action in [:create]
 
   def create(conn, %{"user" => user_params}) do
