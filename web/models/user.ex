@@ -13,6 +13,8 @@ defmodule Datjournaal.User do
   @required_fields ~w(handle email password)
   @optional_fields ~w(encrypted_password)
 
+  @derive {Poison.Encoder, only: [:id, :handle, :email]}
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
