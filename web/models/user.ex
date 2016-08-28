@@ -8,7 +8,7 @@ defmodule Datjournaal.User do
     field :email, :string
     field :encrypted_password, :string
     field :password, :string, virtual: true
-
+    has_many :owned_posts, Datjournaal.User
     timestamps()
   end
 
