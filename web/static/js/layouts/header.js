@@ -43,9 +43,6 @@ export default class Header extends React.Component {
       <header className="main-header">
         <nav>
           <ul>
-            <li>
-              <Link to="/"><i className="fa fa-columns"/> Boards</Link>
-            </li>
           </ul>
         </nav>
         <Link to='/'>
