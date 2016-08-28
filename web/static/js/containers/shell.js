@@ -11,15 +11,11 @@ class ShellContainer extends React.Component {
 
     if (phoenixAuthToken && !currentUser) {
       dispatch(Actions.currentUser());
-    } else if (!phoenixAuthToken) {
-      dispatch(push('/sign_in'));
     }
   }
 
   render() {
     const { currentUser, dispatch } = this.props;
-    if (!currentUser) return false;
-    console.log(this.props)
     return (
       <div className="application-container">
         <Header
