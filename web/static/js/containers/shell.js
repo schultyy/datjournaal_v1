@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import Header from '../layouts/header';
 import Actions from '../actions/sessions';
 
-class AuthenticatedContainer extends React.Component {
+class ShellContainer extends React.Component {
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
     const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
@@ -38,4 +38,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.session.currentUser,
 });
 
-export default connect(mapStateToProps)(AuthenticatedContainer);
+export default connect(mapStateToProps)(ShellContainer);
