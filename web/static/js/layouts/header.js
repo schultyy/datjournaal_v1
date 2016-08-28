@@ -1,7 +1,6 @@
 import React          from 'react';
 import { Link }       from 'react-router';
 import Actions        from '../actions/sessions';
-// import ReactGravatar  from 'react-gravatar';
 
 export default class Header extends React.Component {
   constructor() {
@@ -25,7 +24,7 @@ export default class Header extends React.Component {
       return false;
     }
 
-    return (<Link to="/new_post">New post</Link>);
+    return (<Link to="/posts/new">New post</Link>);
   }
 
   _renderSignOutLink() {
