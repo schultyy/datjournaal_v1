@@ -12,7 +12,7 @@ var config = module.exports = {
   devtool: 'source-map',
   entry: {
     application: [
-      // web('css/application.sass'),
+      web('css/application.sass'),
       web('js/application.js'),
     ],
   },
