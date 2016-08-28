@@ -1,6 +1,8 @@
 defmodule Datjournaal.Post do
   use Datjournaal.Web, :model
 
+  @derive {Poison.Encoder, only: [:id, :description]}
+
   schema "posts" do
     field :description, :string
     belongs_to :user, Datjournaal.User
