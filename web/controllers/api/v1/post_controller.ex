@@ -1,7 +1,7 @@
 defmodule Datjournaal.PostController do
   use Datjournaal.Web, :controller
 
-  plug Guardian.Plug.EnsureAuthenticated, handler: Datjournaal.SessionController
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create]
 
   alias Datjournaal.{Repo, Post}
 
