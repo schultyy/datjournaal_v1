@@ -7,8 +7,6 @@ class HomeIndexView extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => (
-  state.boards
-);
+const mapStateToProps = (state) => state;
 
 export default connect(mapStateToProps)(HomeIndexView);
