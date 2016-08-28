@@ -17,7 +17,7 @@ class AuthenticatedContainer extends React.Component {
   render() {
     const { currentUser, dispatch } = this.props;
     if (!currentUser) return false;
-
+    console.log(this.props)
     return (
       <div className="application-container">
         <Header

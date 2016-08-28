@@ -16,8 +16,7 @@ class RegistrationsNew extends React.Component {
     const { dispatch } = this.props;
 
     const data = {
-      first_name: this.refs.firstName.value,
-      last_name: this.refs.lastName.value,
+      handle: this.refs.handle.value,
       email: this.refs.email.value,
       password: this.refs.password.value,
       password_confirmation: this.refs.passwordConfirmation.value,

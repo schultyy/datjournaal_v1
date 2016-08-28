@@ -1,19 +1,19 @@
 defmodule Datjournaal.User do
   use Datjournaal.Web, :model
 
+  @derive {Poison.Encoder, only: [:id, :handle, :email]}
+
   schema "users" do
     field :handle, :string
     field :email, :string
-    field :password, :string, virtual: true
     field :encrypted_password, :string
+    field :password, :string, virtual: true
 
     timestamps()
   end
 
   @required_fields ~w(handle email password)
   @optional_fields ~w(encrypted_password)
-
-  @derive {Poison.Encoder, only: [:id, :handle, :email]}
 
   @doc """
   Builds a changeset based on the `struct` and `params`.

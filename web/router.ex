@@ -16,20 +16,19 @@ defmodule Datjournaal.Router do
     plug Guardian.Plug.LoadResource
   end
 
+  scope "/api", Datjournaal do
+    pipe_through :api
+      scope "/v1" do
+        post "/registrations", RegistrationController, :create
+        post "/sessions", SessionController, :create
+        delete "/sessions", SessionController, :delete
+        get "/current_user", CurrentUserController, :show
+    end
+  end
+
   scope "/", Datjournaal do
     pipe_through :browser # Use the default browser stack
 
     get "*path", PageController, :index
-  end
-
-  scope "/api", Datjournaal do
-    pipe_through :api
-
-    scope "/v1" do
-      get "/current_user", CurrentUserController, :show
-      post "/sessions", SessionController, :create
-      delete "/sessions", SessionController, :delete
-      post "/registrations", RegistrationController, :create
-    end
   end
 end
