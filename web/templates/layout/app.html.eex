@@ -8,6 +8,7 @@
     <meta name="author" content="jan@unexpected-co.de">
 
     <title>Dat Journaal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/application.css") %>">
   </head>
 

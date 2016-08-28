@@ -16,9 +16,7 @@ export default class Header extends React.Component {
     }
 
     return (
-      <a className="current-user">
-        {currentUser.handle}
-      </a>
+        <span>{currentUser.handle}</span>
     );
   }
 
@@ -41,20 +39,20 @@ export default class Header extends React.Component {
   render() {
     return (
       <header className="main-header">
-        <nav>
-          <ul>
-          </ul>
-        </nav>
-        <Link to='/'>
-          <span className='logo'/>
-        </Link>
         <nav className="right">
-          <ul>
+          <ul className="list-inline">
             <li>
-              {this._renderCurrentUser()}
+              <div className="menu-entry">
+                <Link to='/'>
+                  dat Journaal
+                </Link>
+              </div>
             </li>
             <li>
-              {this._renderSignOutLink()}
+              <div className="menu-entry">User: {this._renderCurrentUser()}</div>
+            </li>
+            <li>
+              <div className="menu-entry">{this._renderSignOutLink()}</div>
             </li>
           </ul>
         </nav>

@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 
 class HomeIndexView extends React.Component {
   render() {
-    return (<div>Home</div>);
+    return (
+      <div className="container">
+        Home
+      </div>
+    );
   }
 }
 
