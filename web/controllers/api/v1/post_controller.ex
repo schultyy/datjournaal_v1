@@ -6,16 +6,19 @@ defmodule Datjournaal.PostController do
   alias Datjournaal.{Repo, Post}
 
   def index(conn, _params) do
-    current_user = Guardian.Plug.current_resource(conn)
+    posts = Repo.all from p in Post,
+        order_by: [desc: p.inserted_at],
+        select: p,
+        limit: 30
 
-    render(conn, "index.json", posts: ["Dies, das", "Dolor sit happens"])
+    render(conn, "index.json", posts: posts)
   end
 
   def create(conn, %{"post" => post_params}) do
     current_user = Guardian.Plug.current_resource(conn)
 
     changeset = current_user
-      |> build_assoc(:owned_boards)
+      |> build_assoc(:owned_posts)
       |> Post.changeset(post_params)
 
     case Repo.insert(changeset) do

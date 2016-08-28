@@ -6,6 +6,10 @@ import { push }                 from 'react-router-redux';
 
 
 class NewPostComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.createNewPost = this.createNewPost.bind(this);
+  }
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
     const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
@@ -17,6 +21,19 @@ class NewPostComponent extends React.Component {
     }
   }
 
+  createNewPost(event) {
+    event.preventDefault();
+    const { dispatch } = this.props;
+
+    let data = {
+      post: {
+        description: this.refs.description.value  
+      }
+    };
+
+    dispatch(PostActions.createPost(data));
+  }
+
   render() {
     return (
       <div className="container">
@@ -24,10 +41,10 @@ class NewPostComponent extends React.Component {
         <form>
           <div className="form-group">
             <label htmlFor="post-description">Description</label>
-            <textarea className="post-description" rows="3" className="form-control">
+            <textarea ref="description" className="post-description" rows="3" className="form-control">
             </textarea>
           </div>
-          <button>Create Post</button>
+          <button onClick={this.createNewPost}>Create Post</button>
         </form>
       </div>
     );

@@ -1,5 +1,5 @@
 import Constants              from '../constants';
-import { routeActions }       from 'react-router-redux';
+import { push }               from 'react-router-redux';
 import { httpGet, httpPost }  from '../utils';
 
 const Actions = {
@@ -12,6 +12,25 @@ const Actions = {
         dispatch({
           type: Constants.POSTS_RECEIVED,
           posts: data.posts
+        });
+      });
+    };
+  },
+  createPost: (data) => {
+    return dispatch => {
+      dispatch({ type: Constants.POST_CREATED });
+
+      httpPost('/api/v1/posts', data)
+      .then((data) => {
+        dispatch(push("/"));
+      })
+      .catch((error) => {
+        error.response.json()
+        .then((errorJSON) => {
+          dispatch({
+            type: Constants.CREATE_POST_ERROR,
+            error: errorJSON.error
+          });
         });
       });
     };

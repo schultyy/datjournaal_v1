@@ -16,8 +16,8 @@ class HomeIndexView extends React.Component {
         <ul>
           {posts.map((post) =>{
             return (
-              <li key={post}>
-                {post}
+              <li key={post.id}>
+                {post.description}
               </li>
             );
           })}
