@@ -1,16 +1,34 @@
 import React       from 'react';
 import { connect } from 'react-redux';
+import Actions     from '../../actions/posts';
 
 class HomeIndexView extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(Actions.fetchPosts());
+  }
+
   render() {
+    let { posts } = this.props || [];
+
     return (
       <div className="container">
-        Home
+        <ul>
+          {posts.map((post) =>{
+            return (
+              <li key={post}>
+                {post}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => state;
+const mapStateToProps = (state) => {
+  return state.posts;
+};
 
 export default connect(mapStateToProps)(HomeIndexView);

@@ -38,6 +38,7 @@ export function httpDelete(url) {
 
 export function httpGet(url) {
   return fetch(url, {
+    method: 'get',
     headers: buildHeaders(),
   })
   .then(checkStatus)
