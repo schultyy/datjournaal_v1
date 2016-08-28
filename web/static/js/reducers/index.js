@@ -1,10 +1,10 @@
 import { combineReducers }  from 'redux';
-import { routeReducer }     from 'redux-simple-router';
+import { routerReducer }    from 'react-router-redux';
 import session              from './session';
 import registration         from './registration';
 
 export default combineReducers({
-  routing: routeReducer,
+  routing: routerReducer,
   session: session,
   registration: registration
 });

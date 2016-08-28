@@ -1,4 +1,4 @@
-import { routeActions }                   from 'redux-simple-router';
+import { push }                   from 'react-router-redux';
 import Constants                          from '../constants';
 import { Socket }                         from '../phoenix.js';
 import { httpGet, httpPost, httpDelete }  from '../utils';
@@ -8,8 +8,6 @@ function setCurrentUser(dispatch, user) {
     type: Constants.CURRENT_USER,
     currentUser: user,
   });
-
-  // ...
 };
 
 const Actions = {
@@ -21,7 +19,7 @@ const Actions = {
       })
       .catch(function(error) {
         console.log(error);
-        dispatch(routeActions.push('/sign_in'));
+        dispatch(push('/sign_in'));
       });
     };
   },
@@ -35,7 +33,7 @@ const Actions = {
           type: Constants.USER_SIGNED_OUT
         });
 
-        dispatch(routeActions.push('/sign_in'));
+        dispatch(push('/sign_in'));
       })
       .catch(function(error) {
         console.log(error);
@@ -55,7 +53,7 @@ const Actions = {
       .then((data) => {
         localStorage.setItem('phoenixAuthToken', data.jwt);
         setCurrentUser(dispatch, data.user);
-        dispatch(routeActions.push('/'));
+        dispatch(push('/'));
       })
       .catch((error) => {
         error.response.json()

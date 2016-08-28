@@ -1,7 +1,7 @@
 import React          from 'react';
 import { Link }       from 'react-router';
 import Actions        from '../actions/sessions';
-import ReactGravatar  from 'react-gravatar';
+// import ReactGravatar  from 'react-gravatar';
 
 export default class Header extends React.Component {
   constructor() {
@@ -15,11 +15,9 @@ export default class Header extends React.Component {
       return false;
     }
 
-    const fullName = [currentUser.first_name, currentUser.last_name].join(' ');
-
     return (
       <a className="current-user">
-        <ReactGravatar email={currentUser.email} https /> {fullName}
+        {currentUser.handle}
       </a>
     );
   }
