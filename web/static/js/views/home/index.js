@@ -1,6 +1,7 @@
 import React       from 'react';
 import { connect } from 'react-redux';
 import Actions     from '../../actions/posts';
+import { TileComponent }    from '../posts/tile';
 
 class HomeIndexView extends React.Component {
   componentDidMount() {
@@ -13,15 +14,11 @@ class HomeIndexView extends React.Component {
 
     return (
       <div className="container">
-        <ul>
           {posts.map((post) =>{
             return (
-              <li key={post.id}>
-                {post.description}
-              </li>
+              <TileComponent key={post.id} />
             );
           })}
-        </ul>
       </div>
     );
   }
