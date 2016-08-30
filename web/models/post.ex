@@ -5,6 +5,7 @@ defmodule Datjournaal.Post do
 
   schema "posts" do
     field :description, :string
+    field :image, :string
     belongs_to :user, Datjournaal.User
 
     timestamps()
