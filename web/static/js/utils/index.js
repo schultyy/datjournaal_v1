@@ -49,12 +49,17 @@ export function httpPostFormData(url, data) {
   const headers = {
     Authorization: localStorage.getItem('phoenixAuthToken'),
     Accept: 'application/json'
+  };
+
+  let formData = new FormData("post");
+  for(var key in data) {
+    formData.append(key, data[key]);
   }
 
   return fetch(url, {
     method: 'post',
     headers: headers,
-    body: data,
+    body: formData,
   })
   .then(checkStatus)
   .then(parseJSON);

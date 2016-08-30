@@ -25,9 +25,10 @@ class NewPostComponent extends React.Component {
     event.preventDefault();
     const { dispatch } = this.props;
 
-    let formData = new FormData("post");
-    formData.append("description", this.refs.description.value);
-    formData.append("image", this.refs.file.files[0]);
+    let formData = {
+      description: this.refs.description.value,
+      image: this.refs.file.files[0]
+    };
 
     dispatch(PostActions.createPost(formData));
   }
