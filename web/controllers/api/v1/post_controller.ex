@@ -22,9 +22,6 @@ defmodule Datjournaal.PostController do
       "image": image
     }
 
-    IO.inspect("POST PARAMS")
-    IO.inspect(post_params)
-    
     changeset = current_user
       |> build_assoc(:owned_posts)
       |> Post.changeset(post_params)
