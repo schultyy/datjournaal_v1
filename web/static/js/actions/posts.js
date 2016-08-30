@@ -1,6 +1,6 @@
 import Constants              from '../constants';
 import { push }               from 'react-router-redux';
-import { httpGet, httpPost }  from '../utils';
+import { httpGet, httpPost, httpPostFormData }  from '../utils';
 
 const Actions = {
   fetchPosts: () => {
@@ -20,7 +20,7 @@ const Actions = {
     return dispatch => {
       dispatch({ type: Constants.POST_CREATED });
 
-      httpPost('/api/v1/posts', data)
+      httpPostFormData('/api/v1/posts', data)
       .then((data) => {
         dispatch(push("/"));
       })

@@ -45,6 +45,21 @@ export function httpGet(url) {
   .then(parseJSON);
 }
 
+export function httpPostFormData(url, data) {
+  const headers = {
+    Authorization: localStorage.getItem('phoenixAuthToken'),
+    Accept: 'application/json'
+  }
+
+  return fetch(url, {
+    method: 'post',
+    headers: headers,
+    body: data,
+  })
+  .then(checkStatus)
+  .then(parseJSON);
+}
+
 export function httpPost(url, data) {
   const headers = {
     Authorization: localStorage.getItem('phoenixAuthToken'),
