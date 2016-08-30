@@ -14,9 +14,17 @@ defmodule Datjournaal.PostController do
     render(conn, "index.json", posts: posts)
   end
 
-  def create(conn, %{"post" => post_params}) do
+  def create(conn, %{"description" => description, "image" => image}) do
     current_user = Guardian.Plug.current_resource(conn)
 
+    post_params = %{
+      "description": description,
+      "image": image
+    }
+
+    IO.inspect("POST PARAMS")
+    IO.inspect(post_params)
+    
     changeset = current_user
       |> build_assoc(:owned_posts)
       |> Post.changeset(post_params)

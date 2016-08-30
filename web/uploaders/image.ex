@@ -2,10 +2,9 @@ defmodule Datjournaal.Image do
   use Arc.Definition
   use Arc.Ecto.Definition
 
-  # Include ecto support (requires package arc_ecto installed):
-  # use Arc.Ecto.Definition
-
   @versions [:original]
+
+  def __storage, do: Arc.Storage.Local
 
   # To add a thumbnail version:
   # @versions [:original, :thumb]
@@ -26,14 +25,14 @@ defmodule Datjournaal.Image do
   # end
 
   # Override the storage directory:
-  # def storage_dir(version, {file, scope}) do
-  #   "uploads/user/avatars/#{scope.id}"
-  # end
+  def storage_dir(version, {file, scope}) do
+    "uploads/user/images/#{scope.id}"
+  end
 
   # Provide a default URL if there hasn't been a file uploaded
-  # def default_url(version, scope) do
-  #   "/images/avatars/default_#{version}.png"
-  # end
+  def default_url(version, scope) do
+    "/images/images/default_#{version}.png"
+  end
 
   # Specify custom headers for s3 objects
   # Available options are [:cache_control, :content_disposition,
