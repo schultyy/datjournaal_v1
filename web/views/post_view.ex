@@ -22,7 +22,7 @@ defmodule Datjournaal.PostView do
   end
 
   defp post_with_file_url(post) do
-    image_url = Datjournaal.Image.url({post.image, :images})
+    image_url = Datjournaal.Image.url({post.image, :images}, :thumb)
     Map.put(post, :image, image_url)
   end
 end

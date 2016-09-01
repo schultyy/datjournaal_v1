@@ -7,7 +7,7 @@ defmodule Datjournaal.Image do
   def __storage, do: Arc.Storage.Local
 
   # To add a thumbnail version:
-  # @versions [:original, :thumb]
+  @versions [:original, :thumb]
 
   # Whitelist file extensions:
   def validate({file, _}) do
@@ -15,14 +15,12 @@ defmodule Datjournaal.Image do
   end
 
   # Define a thumbnail transformation:
-  # def transform(:thumb, _) do
-  #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
-  # end
+  def transform(:thumb, _) do
+    {:convert, "-strip -thumbnail 600x600^ -gravity center -extent 600x600 -format png", :png}
+  end
 
   # Override the persisted filenames:
-  # def filename(version, _) do
-  #   version
-  # end
+  def filename(version, {file, _}), do: "#{version}-#{file.file_name}"
 
   # Override the storage directory:
   # def storage_dir(version, {file, scope}) do
