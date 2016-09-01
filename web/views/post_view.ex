@@ -13,7 +13,8 @@ defmodule Datjournaal.PostView do
 
   def render("error.json", %{changeset: changeset}) do
     errors = Enum.map(changeset.errors, fn {field, detail} ->
-      %{} |> Map.put(field, detail)
+      message = detail |> Tuple.to_list |> List.first
+      %{} |> Map.put(field, message)
     end)
 
     %{
