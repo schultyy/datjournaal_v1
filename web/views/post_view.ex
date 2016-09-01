@@ -2,7 +2,9 @@ defmodule Datjournaal.PostView do
   use Datjournaal.Web, :view
 
   def render("index.json", %{posts: posts}) do
-    %{posts: posts}
+    %{
+      posts: Enum.map(posts, &post_with_file_url/1)
+    }
   end
 
   def render("show.json", %{post: post}) do
@@ -17,5 +19,10 @@ defmodule Datjournaal.PostView do
     %{
       errors: errors
     }
+  end
+
+  defp post_with_file_url(post) do
+    image_url = Datjournaal.Image.url({post.image, :images})
+    Map.put(post, :image, image_url)
   end
 end
