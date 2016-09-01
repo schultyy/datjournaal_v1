@@ -12,6 +12,8 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, fetching: true };
     case Constants.POSTS_RECEIVED:
       return { ...state, posts: action.posts, fetching: false };
+    case Constants.CREATE_POST_ERROR:
+      return { ...state, formErrors: action.errors};
     default:
       return state;
   }

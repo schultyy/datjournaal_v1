@@ -33,10 +33,28 @@ class NewPostComponent extends React.Component {
     dispatch(PostActions.createPost(formData));
   }
 
+  renderFormErrors(formErrors) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        <ul>
+          {formErrors.map(error => {
+            const propertyName = Object.keys(error)[0];
+            return (
+              <li>{propertyName} - {error[propertyName]}</li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  }
+
   render() {
+    let { formErrors } = this.props;
+
     return (
       <div className="container">
         <h3>Create a new post</h3>
+        {formErrors ? this.renderFormErrors(formErrors) : null}
         <form>
           <div className="form-group">
             <label htmlFor="post-file">Pick a file</label>
@@ -55,7 +73,9 @@ class NewPostComponent extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return state;
+  return {
+    formErrors: state.posts.formErrors
+  };
 };
 
 export default connect(mapStateToProps)(NewPostComponent);

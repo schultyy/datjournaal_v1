@@ -29,7 +29,7 @@ const Actions = {
         .then((errorJSON) => {
           dispatch({
             type: Constants.CREATE_POST_ERROR,
-            error: errorJSON.error
+            errors: errorJSON.errors
           });
         });
       });
