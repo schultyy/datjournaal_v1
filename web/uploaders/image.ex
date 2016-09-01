@@ -25,9 +25,9 @@ defmodule Datjournaal.Image do
   # end
 
   # Override the storage directory:
-  def storage_dir(version, {file, scope}) do
-    "uploads/user/images/#{scope.id}"
-  end
+  # def storage_dir(version, {file, scope}) do
+  #   "uploads/user/images/#{scope.id}"
+  # end
 
   # Provide a default URL if there hasn't been a file uploaded
   def default_url(version, scope) do
