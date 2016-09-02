@@ -38,7 +38,28 @@ export function httpDelete(url) {
 
 export function httpGet(url) {
   return fetch(url, {
+    method: 'get',
     headers: buildHeaders(),
+  })
+  .then(checkStatus)
+  .then(parseJSON);
+}
+
+export function httpPostFormData(url, data) {
+  const headers = {
+    Authorization: localStorage.getItem('phoenixAuthToken'),
+    Accept: 'application/json'
+  };
+
+  let formData = new FormData("post");
+  for(var key in data) {
+    formData.append(key, data[key]);
+  }
+
+  return fetch(url, {
+    method: 'post',
+    headers: headers,
+    body: formData,
   })
   .then(checkStatus)
   .then(parseJSON);

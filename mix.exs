@@ -19,7 +19,7 @@ defmodule Datjournaal.Mixfile do
   def application do
     [mod: {Datjournaal, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :arc_ecto]]
   end
 
   # Specifies which paths to compile per environment.
@@ -39,6 +39,8 @@ defmodule Datjournaal.Mixfile do
      {:gettext, "~> 0.11"},
      {:comeonin, "~> 2.0"},
      {:guardian, "~> 0.12.0"},
+     {:arc, "~> 0.5.2"},
+     {:arc_ecto, "~> 0.4.3"},
      {:cowboy, "~> 1.0"}]
   end
 

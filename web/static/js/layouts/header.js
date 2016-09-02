@@ -1,7 +1,6 @@
 import React          from 'react';
 import { Link }       from 'react-router';
 import Actions        from '../actions/sessions';
-// import ReactGravatar  from 'react-gravatar';
 
 export default class Header extends React.Component {
   constructor() {
@@ -18,6 +17,14 @@ export default class Header extends React.Component {
     return (
         <span>{currentUser.handle}</span>
     );
+  }
+
+  _renderCreateNewImageLink() {
+    if(!this.props.currentUser) {
+      return false;
+    }
+
+    return (<Link to="/posts/new">New post</Link>);
   }
 
   _renderSignOutLink() {
@@ -46,6 +53,11 @@ export default class Header extends React.Component {
                 <Link to='/'>
                   dat Journaal
                 </Link>
+              </div>
+            </li>
+            <li>
+              <div className="menu-entry">
+                {this._renderCreateNewImageLink()}
               </div>
             </li>
             <li>

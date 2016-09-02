@@ -5,8 +5,7 @@ import ShellContainer               from '../containers/shell';
 import HomeIndexView                from '../views/home';
 import RegistrationsNew             from '../views/registrations/new';
 import SessionsNew                  from '../views/sessions/new';
-
-
+import PostsNew                     from '../views/posts/new';
 
 export default function configRoutes(store) {
   return (
@@ -16,6 +15,7 @@ export default function configRoutes(store) {
 
       <Route path="/" component={ShellContainer}>
         <IndexRoute component={HomeIndexView} />
+        <Route path="/posts/new" component={PostsNew} />
       </Route>
     </Route>
   );

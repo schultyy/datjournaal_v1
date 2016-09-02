@@ -19,3 +19,4 @@ node_modules/
 /priv/static/js/application.js
 .DS_Store
 *.map
+uploads/
