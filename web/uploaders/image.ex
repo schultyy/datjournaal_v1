@@ -16,7 +16,7 @@ defmodule Datjournaal.Image do
 
   # Define a thumbnail transformation:
   def transform(:thumb, _) do
-    {:convert, "-strip -thumbnail 600x600^ -gravity center -extent 600x600 -format png", :png}
+    {:convert, "-strip -thumbnail 600x600^ -gravity center -auto-orient -extent 600x600 -format png", :png}
   end
 
   # Override the persisted filenames:
