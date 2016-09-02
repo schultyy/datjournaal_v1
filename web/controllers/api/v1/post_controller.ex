@@ -17,9 +17,10 @@ defmodule Datjournaal.PostController do
   def create(conn, %{"description" => description, "image" => image}) do
     current_user = Guardian.Plug.current_resource(conn)
 
+    ext = Path.extname(image.filename)
     post_params = %{
       "description": description,
-      "image": image
+      "image": Map.put(image, :filename, "#{UUID.uuid4()}#{ext}")
     }
 
     changeset = current_user
