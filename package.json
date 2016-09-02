@@ -17,6 +17,7 @@
     "bourbon-neat": "^1.8.0",
     "es6-promise": "^3.2.1",
     "isomorphic-fetch": "^2.2.1",
+    "moment": "^2.14.1",
     "react": "^15.3.1",
     "react-bootstrap": "^0.30.3",
     "react-dom": "^15.3.1",
