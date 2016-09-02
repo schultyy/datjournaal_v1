@@ -5,12 +5,10 @@ export class TileComponent extends React.Component {
     let { description, imageUrl } = this.props;
 
     return (
-      <div className="tile">
+      <div className="row tile">
         <div className="col-xs-12">
           <img className="image" src={imageUrl} />
-        </div>
-        <div className="col-xs-12">
-          description: {description}
+          <div>description: {description}</div>
         </div>
       </div>
     );
