@@ -45,7 +45,7 @@ class NewPostComponent extends React.Component {
           {formErrors.map(error => {
             const propertyName = Object.keys(error)[0];
             return (
-              <li>{propertyName} - {error[propertyName]}</li>
+              <li key={propertyName}>{propertyName} - {error[propertyName]}</li>
             );
           })}
         </ul>
