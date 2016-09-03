@@ -14,6 +14,11 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, posts: action.posts, fetching: false };
     case Constants.CREATE_POST_ERROR:
       return { ...state, formErrors: action.errors};
+    case Constants.POST_CREATING:
+      console.log('POST CREATING', { ...state, formErrors: null });
+      return { ...state, formErrors: null };
+    case Constants.POST_CREATED:
+      return { ...state, formErrors: null };
     default:
       return state;
   }
