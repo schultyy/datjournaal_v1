@@ -9,6 +9,10 @@ class NewPostComponent extends React.Component {
   constructor(props) {
     super(props);
     this.createNewPost = this.createNewPost.bind(this);
+
+    this.state = {
+      posting: false
+    };
   }
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
@@ -30,6 +34,7 @@ class NewPostComponent extends React.Component {
       image: this.refs.file.files[0]
     };
 
+    this.setState({posting: true});
     dispatch(PostActions.createPost(formData));
   }
 
@@ -40,7 +45,7 @@ class NewPostComponent extends React.Component {
           {formErrors.map(error => {
             const propertyName = Object.keys(error)[0];
             return (
-              <li>{propertyName} - {error[propertyName]}</li>
+              <li key={propertyName}>{propertyName} - {error[propertyName]}</li>
             );
           })}
         </ul>
@@ -48,8 +53,26 @@ class NewPostComponent extends React.Component {
     );
   }
 
+  renderLoadingIndicator() {
+    return (
+      <div className="loading-indicator">
+        Posting...
+      </div>
+    );
+  }
+
+  componentWillReceiveProps(newProps) {
+    if(newProps.formErrors) {
+      this.setState({
+        posting: false
+      });
+    }
+  }
+
   render() {
     let { formErrors } = this.props;
+
+    const canPost = this.state.posting ? "disabled" : null;
 
     return (
       <div className="container">
@@ -65,7 +88,8 @@ class NewPostComponent extends React.Component {
             <textarea ref="description" className="post-description" rows="3" className="form-control">
             </textarea>
           </div>
-          <button onClick={this.createNewPost}>Create Post</button>
+          <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+          {canPost ? this.renderLoadingIndicator() : null}
         </form>
       </div>
     );
