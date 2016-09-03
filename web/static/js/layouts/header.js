@@ -3,10 +3,6 @@ import { Link }       from 'react-router';
 import Actions        from '../actions/sessions';
 
 export default class Header extends React.Component {
-  constructor() {
-    super();
-  }
-
   _renderCurrentUser() {
     const { currentUser } = this.props;
 
@@ -33,7 +29,7 @@ export default class Header extends React.Component {
     }
 
     return (
-      <a href="#" onClick={::this._handleSignOutClick}><i className="fa fa-sign-out"/> Sign out</a>
+      <a href="#" onClick={::this._handleSignOutClick}>Sign out</a>
     );
   }
 
@@ -61,7 +57,7 @@ export default class Header extends React.Component {
               </div>
             </li>
             <li>
-              <div className="menu-entry">User: {this._renderCurrentUser()}</div>
+              <div className="menu-entry">{this._renderCurrentUser()}</div>
             </li>
             <li>
               <div className="menu-entry">{this._renderSignOutLink()}</div>
