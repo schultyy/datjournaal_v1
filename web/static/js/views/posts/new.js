@@ -61,6 +61,14 @@ class NewPostComponent extends React.Component {
     );
   }
 
+  componentWillReceiveProps(newProps) {
+    if(newProps.formErrors) {
+      this.setState({
+        posting: false
+      });
+    }
+  }
+
   render() {
     let { formErrors } = this.props;
 
