@@ -16,11 +16,9 @@ defmodule Datjournaal.PostController do
 
   def create(conn, %{"description" => description, "image" => image}) do
     current_user = Guardian.Plug.current_resource(conn)
-
-    ext = Path.extname(image.filename)
     post_params = %{
       "description": description,
-      "image": Map.put(image, :filename, "#{UUID.uuid4()}#{ext}")
+      "image": inject_unique_filename(image)
     }
 
     changeset = current_user
@@ -38,4 +36,10 @@ defmodule Datjournaal.PostController do
         |> render("error.json", changeset: changeset)
     end
   end
+
+  defp inject_unique_filename(%Plug.Upload{:filename => filename} = image) do
+    ext = Path.extname(image.filename)
+    Map.put(image, :filename, "#{UUID.uuid4()}#{ext}")
+  end
+  defp inject_unique_filename(_), do: "undefined"
 end
