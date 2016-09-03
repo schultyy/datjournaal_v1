@@ -12,6 +12,8 @@ defmodule Datjournaal.Post do
     timestamps()
   end
 
+  @required_params
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
@@ -19,6 +21,6 @@ defmodule Datjournaal.Post do
     struct
     |> cast(params, [:description])
     |> cast_attachments(params, [:image])
-    |> validate_required([:description])
+    |> validate_required([:image])
   end
 end
