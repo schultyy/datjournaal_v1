@@ -10,7 +10,7 @@ export class TileComponent extends React.Component {
     return (
       <div className="row tile">
         <div className="col-xs-12">
-          <img className="image" src={imageUrl} />
+          <img className="img-responsive" src={imageUrl} />
           <div>description: {description}</div>
           <div>posted at: {date}</div>
         </div>
