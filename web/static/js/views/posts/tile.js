@@ -11,7 +11,7 @@ export class TileComponent extends React.Component {
       <div className="tile">
         <div className="pull-right">{date}</div>
         <img src={imageUrl} />
-        <div>description: {description}</div>
+        <div>{description}</div>
       </div>
     );
   }
