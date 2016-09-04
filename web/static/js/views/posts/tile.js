@@ -10,9 +10,9 @@ export class TileComponent extends React.Component {
     return (
       <div className="row tile">
         <div className="col-xs-12">
+          <div className="pull-right">{date}</div>
           <img className="img-responsive" src={imageUrl} />
           <div>description: {description}</div>
-          <div>posted at: {date}</div>
         </div>
       </div>
     );
