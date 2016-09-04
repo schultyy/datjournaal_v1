@@ -15,6 +15,12 @@ class ShellContainer extends React.Component {
     }
   }
 
+  onCreateNewPost() {
+    const { dispatch } = this.props;
+
+    dispatch(push("/posts/new"));
+  }
+
   render() {
     const { currentUser, dispatch } = this.props;
     return (
@@ -28,7 +34,7 @@ class ShellContainer extends React.Component {
             {this.props.children}
           </div>
         </div>
-        <Footer />
+        <Footer newPostClick={this.onCreateNewPost.bind(this)} />
       </div>
     );
   }
