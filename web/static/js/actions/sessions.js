@@ -33,7 +33,7 @@ const Actions = {
           type: Constants.USER_SIGNED_OUT
         });
 
-        dispatch(push('/sign_in'));
+        dispatch(push('/'));
       })
       .catch(function(error) {
         console.log(error);
