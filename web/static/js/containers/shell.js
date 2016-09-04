@@ -34,7 +34,8 @@ class ShellContainer extends React.Component {
             {this.props.children}
           </div>
         </div>
-        <Footer newPostClick={this.onCreateNewPost.bind(this)} />
+        <Footer currentUser={currentUser}
+                newPostClick={this.onCreateNewPost.bind(this)} />
       </div>
     );
   }

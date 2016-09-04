@@ -2,7 +2,11 @@ import React from 'react';
 
 export default class Footer extends React.Component {
   render() {
-    const { newPostClick } = this.props;
+    const { newPostClick, currentUser } = this.props;
+
+    if(!currentUser) {
+      return false;
+    }
 
     return (
       <div className="footer">
