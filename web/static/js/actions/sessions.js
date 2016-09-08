@@ -19,7 +19,6 @@ const Actions = {
       })
       .catch(function(error) {
         console.log(error);
-        dispatch(push('/sign_in'));
       });
     };
   },
