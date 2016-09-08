@@ -1,4 +1,5 @@
 @import "_colors"
+$footer-height: 30px
 
 .main-header
   background-color: $color-secondary-1-0
@@ -11,12 +12,42 @@
 
 .tile
   margin-bottom: 30px
-  margin-left: auto
-  margin-right: auto
   display: block
+  max-width: 600px
   margin-left: auto
   margin-right: auto
+  img
+    display: block
+    width: 100%
+    margin-left: auto
+    margin-right: auto
 
 .loading-indicator
   display: inline
   font-style: italic
+
+.footer
+  height: $footer-height
+  background-color: $color-secondary-1-0
+  position: fixed
+  bottom: 0px
+  width: 100%
+  color: $font-color
+  font-weight: bolder
+  button
+    margin: 0px 1px
+    padding: 0px
+    width: 30px
+    border: 1px solid $font-color
+    background-color: transparent
+    text-align: center
+    vertical-align: middle
+    height: 100%
+  ul
+    margin: 0px
+    padding: 0px
+    height: 100%
+    li
+      height: 100%
+      margin: 0px
+      padding: 0px
