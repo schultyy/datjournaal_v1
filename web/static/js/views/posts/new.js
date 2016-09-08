@@ -11,7 +11,8 @@ class NewPostComponent extends React.Component {
     this.createNewPost = this.createNewPost.bind(this);
 
     this.state = {
-      posting: false
+      posting: false,
+      previewImage: null
     };
   }
   componentDidMount() {
@@ -69,27 +70,48 @@ class NewPostComponent extends React.Component {
     }
   }
 
+  onPreviewChange() {
+    const inputControl = this.refs.file;
+    const that = this;
+    if(inputControl.files && inputControl.files.length > 0) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          that.setState({
+            previewImage: e.target.result
+          });
+        }
+        reader.readAsDataURL(inputControl.files[0]);
+    }
+  }
+
   render() {
     let { formErrors } = this.props;
 
     const canPost = this.state.posting ? "disabled" : null;
 
+    const previewImage = this.state.previewImage;
+
     return (
-      <div className="container">
+      <div className="container new-post-form">
         <h3>Create a new post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
         <form>
-          <div className="form-group">
-            <label htmlFor="post-file">Pick a file</label>
-            <input type="file" ref="file" className="form-control" />
+          <div className="row">
+            <div className="col-xs-4 image-preview">
+              <img src={previewImage} className="thumbnail" />
+            </div>
+            <div className="col-xs-8 form-group">
+              <label htmlFor="post-description">Description</label>
+              <textarea ref="description" className="post-description" rows="3" className="form-control">
+              </textarea>
+            </div>
+            <div className="form-group">
+              <label htmlFor="post-file">Pick a file</label>
+              <input type="file" ref="file" onChange={this.onPreviewChange.bind(this)} className="form-control" />
+            </div>
+            <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+            {canPost ? this.renderLoadingIndicator() : null}
           </div>
-          <div className="form-group">
-            <label htmlFor="post-description">Description</label>
-            <textarea ref="description" className="post-description" rows="3" className="form-control">
-            </textarea>
-          </div>
-          <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
-          {canPost ? this.renderLoadingIndicator() : null}
         </form>
       </div>
     );
