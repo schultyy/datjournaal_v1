@@ -11,7 +11,9 @@ defmodule Datjournaal.PostController do
         select: p,
         limit: 30
 
-    render(conn, "index.json", posts: posts)
+    posts_with_user = Repo.preload(posts, :user)
+
+    render(conn, "index.json", posts: posts_with_user)
   end
 
   def create(conn, %{"description" => description, "image" => image}) do

@@ -3,13 +3,16 @@ import moment from 'moment';
 
 export class TileComponent extends React.Component {
   render() {
-    let { description, imageUrl, postedAt } = this.props;
+    let { description, imageUrl, postedAt, userHandle } = this.props;
 
     let date = moment(postedAt).calendar();
 
     return (
       <div className="tile">
-        <div className="pull-right">{date}</div>
+        <div>
+          <span className="pull-left">{userHandle}</span>
+          <span className="pull-right">{date}</span>
+        </div>
         <img src={imageUrl} />
         <div className="description">{description}</div>
       </div>

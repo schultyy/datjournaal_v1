@@ -18,7 +18,11 @@ class HomeIndexView extends React.Component {
             {posts.map((post) =>{
               return (
                 <div className="col-xs-12" key={post.id}>
-                  <TileComponent imageUrl={post.image} description={post.description} postedAt={post.inserted_at} />
+                  <TileComponent
+                    imageUrl={post.image}
+                    description={post.description}
+                    postedAt={post.inserted_at}
+                    userHandle={post.user.handle} />
                 </div>
               );
             })}
