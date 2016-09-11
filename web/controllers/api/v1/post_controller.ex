@@ -16,6 +16,19 @@ defmodule Datjournaal.PostController do
     render(conn, "index.json", posts: posts_with_user)
   end
 
+  def show(conn, %{"id" => id}) do
+    case Repo.one(from p in Post, where: p.id == ^id) do
+      nil ->
+        conn
+        |> put_status(:not_found)
+        |> render("show.json", post: nil)
+      post ->
+        conn
+        |> put_status(:ok)
+        |> render("show.json", post: Repo.preload(post, :user))
+    end
+  end
+
   def create(conn, %{"description" => description, "image" => image}) do
     current_user = Guardian.Plug.current_resource(conn)
     post_params = %{
