@@ -8,14 +8,12 @@ import { TileComponent }    from '../posts/tile';
 class PostDetailComponent extends React.Component {
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
-
     const postId = this.props.params.id;
     dispatch(PostActions.fetchPost(postId));
   }
 
   render() {
     const { fetching, errors, post } = this.props;
-    console.log('errors', errors);
     if(fetching) {
       return (
         <div>Fetching...</div>

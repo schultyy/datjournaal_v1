@@ -22,7 +22,6 @@ const Actions = {
 
       httpGet(`/api/v1/posts/${id}`)
       .then((data) => {
-        console.log("DATA", data);
         dispatch({
           type: Constants.POST_RECEIVED,
           post: data

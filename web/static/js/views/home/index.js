@@ -1,12 +1,20 @@
-import React       from 'react';
-import { connect } from 'react-redux';
-import Actions     from '../../actions/posts';
-import { TileComponent }    from '../posts/tile';
+import React              from 'react';
+import { connect }        from 'react-redux';
+import Actions            from '../../actions/posts';
+import { push }           from 'react-router-redux';
+import { TileComponent }  from '../posts/tile';
+
 
 class HomeIndexView extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(Actions.fetchPosts());
+  }
+
+  onTileDoubleClick(post) {
+    const { dispatch } = this.props;
+
+    dispatch(push(`/posts/${post.id}`));
   }
 
   render() {
@@ -19,6 +27,7 @@ class HomeIndexView extends React.Component {
               return (
                 <div className="col-xs-12" key={post.id}>
                   <TileComponent
+                    onDoubleClick={this.onTileDoubleClick.bind(this, post)}
                     imageUrl={post.image}
                     description={post.description}
                     postedAt={post.inserted_at}
