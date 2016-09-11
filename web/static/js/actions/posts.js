@@ -16,6 +16,20 @@ const Actions = {
       });
     };
   },
+  fetchPost: (id) => {
+    return dispatch => {
+      dispatch({type: Constants.POST_FETCHING});
+
+      httpGet(`/api/v1/posts/${id}`)
+      .then((data) => {
+        console.log("DATA", data);
+        dispatch({
+          type: Constants.POST_RECEIVED,
+          post: data
+        });
+      })
+    };
+  },
   createPost: (data) => {
     return dispatch => {
       dispatch({ type: Constants.POST_CREATED });

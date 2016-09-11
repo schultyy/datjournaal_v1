@@ -8,7 +8,7 @@ defmodule Datjournaal.PostView do
   end
 
   def render("show.json", %{post: post}) do
-    post
+    post |> post_with_file_url
   end
 
   def render("error.json", %{changeset: changeset}) do
