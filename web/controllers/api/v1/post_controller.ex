@@ -21,7 +21,7 @@ defmodule Datjournaal.PostController do
       nil ->
         conn
         |> put_status(:not_found)
-        |> render("show.json", post: nil)
+        |> render("not_found.json", id: id)
       post ->
         conn
         |> put_status(:ok)

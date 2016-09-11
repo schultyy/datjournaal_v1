@@ -11,6 +11,12 @@ defmodule Datjournaal.PostView do
     post |> post_with_file_url
   end
 
+  def render("not_found.json", %{id: id}) do
+    %{
+      message: "Post with id #{id} not found"
+    }
+  end
+
   def render("error.json", %{changeset: changeset}) do
     errors = Enum.map(changeset.errors, fn {field, detail} ->
       message = detail |> Tuple.to_list |> List.first

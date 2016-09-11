@@ -28,6 +28,15 @@ const Actions = {
           post: data
         });
       })
+      .catch((error) => {
+        error.response.json()
+        .then((errorJSON) => {
+          dispatch({
+            type: Constants.FETCH_POST_ERROR,
+            errors: [errorJSON]
+          });
+        })
+      });
     };
   },
   createPost: (data) => {

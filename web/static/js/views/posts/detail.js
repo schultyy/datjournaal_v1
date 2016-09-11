@@ -14,11 +14,16 @@ class PostDetailComponent extends React.Component {
   }
 
   render() {
-    const { fetching, post } = this.props;
-
+    const { fetching, errors, post } = this.props;
+    console.log('errors', errors);
     if(fetching) {
       return (
         <div>Fetching...</div>
+      );
+    }
+    else if(errors) {
+      return (
+        <div>{errors[0].message}</div>
       );
     }
 
@@ -36,7 +41,8 @@ class PostDetailComponent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     fetching: state.posts.fetching,
-    post: state.posts.currentPost
+    post: state.posts.currentPost,
+    errors: state.posts.formErrors
   };
 };
 
