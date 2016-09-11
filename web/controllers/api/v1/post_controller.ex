@@ -29,9 +29,10 @@ defmodule Datjournaal.PostController do
 
     case Repo.insert(changeset) do
       {:ok, post} ->
+        post_with_user = Repo.preload(post, :user)
         conn
         |> put_status(:created)
-        |> render("show.json", post: post )
+        |> render("show.json", post: post_with_user )
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
