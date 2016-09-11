@@ -8,7 +8,13 @@ defmodule Datjournaal.PostView do
   end
 
   def render("show.json", %{post: post}) do
-    post
+    post |> post_with_file_url
+  end
+
+  def render("not_found.json", %{id: id}) do
+    %{
+      message: "Post with id #{id} not found"
+    }
   end
 
   def render("error.json", %{changeset: changeset}) do
