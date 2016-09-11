@@ -97,20 +97,22 @@ class NewPostComponent extends React.Component {
         {formErrors ? this.renderFormErrors(formErrors) : null}
         <form>
           <div className="row">
-            <div className="col-xs-4 image-preview">
+            <div className="col-xs-4 col-md-4 image-preview">
               <img src={previewImage} className="thumbnail" />
             </div>
-            <div className="col-xs-8 form-group">
+            <div className="col-xs-8 col-md-8 form-group">
               <label htmlFor="post-description">Description</label>
               <textarea ref="description" className="post-description" rows="3" className="form-control">
               </textarea>
             </div>
-            <div className="form-group">
+            <div className="form-group col-xs-12">
               <label htmlFor="post-file">Pick a file</label>
               <input type="file" ref="file" onChange={this.onPreviewChange.bind(this)} className="form-control" />
             </div>
-            <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
-            {canPost ? this.renderLoadingIndicator() : null}
+            <div className="col-xs-12">
+              <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+              {canPost ? this.renderLoadingIndicator() : null}
+            </div>
           </div>
         </form>
       </div>
