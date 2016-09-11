@@ -22,7 +22,8 @@ class ShellContainer extends React.Component {
   }
 
   render() {
-    const { currentUser, dispatch } = this.props;
+    const { currentUser, dispatch, currentPath } = this.props;
+
     return (
       <div>
         <div className="application-container">
@@ -34,14 +35,18 @@ class ShellContainer extends React.Component {
             {this.props.children}
           </div>
         </div>
-        <Footer currentUser={currentUser}
+        {currentPath == '/posts/new' ?
+          null :
+          <Footer currentUser={currentUser}
                 newPostClick={this.onCreateNewPost.bind(this)} />
+        }
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
+  currentPath: state.routing.locationBeforeTransitions.pathname,
   currentUser: state.session.currentUser,
 });
 
