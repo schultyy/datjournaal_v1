@@ -10,6 +10,7 @@ export class TileComponent extends React.Component {
       postedAt,
       userHandle,
       onDoubleClick,
+      isDetailMode
     } = this.props;
 
     let date = moment(postedAt).calendar();
@@ -19,7 +20,12 @@ export class TileComponent extends React.Component {
         <div>
           <span className="pull-left">{userHandle}</span>
           <span className="pull-right">
-            <ContextMenu onShowDetail={onDoubleClick} />
+          {
+            isDetailMode ?
+              <ContextMenu />
+            :
+              <ContextMenu onShowDetail={onDoubleClick} />
+          }
           </span>
         </div>
         <img src={imageUrl} />

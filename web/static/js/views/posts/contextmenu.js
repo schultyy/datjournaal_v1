@@ -11,7 +11,10 @@ export default class ContextMenuComponent extends React.Component {
     const { onShowDetail, onShare } = this.props;
     return (
       <ul>
-        <li onClick={onShowDetail}><div className="entry">Show in detail</div></li>
+        { onShowDetail ?
+          <li onClick={onShowDetail}><div className="entry">Show in detail</div></li>
+          : false
+        }
         <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
       </ul>
     );
