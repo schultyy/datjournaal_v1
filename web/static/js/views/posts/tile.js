@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import ContextMenu from './contextmenu';
 
 export class TileComponent extends React.Component {
   render() {
@@ -11,7 +12,9 @@ export class TileComponent extends React.Component {
       <div className="tile" onDoubleClick={onDoubleClick}>
         <div>
           <span className="pull-left">{userHandle}</span>
-
+          <span className="pull-right">
+            <ContextMenu />
+          </span>
         </div>
         <img src={imageUrl} />
         <div className="date">{date}</div>
