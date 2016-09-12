@@ -8,10 +8,11 @@ export default class ContextMenuComponent extends React.Component {
     }
   }
   renderMenuEntries() {
+    const { onShowDetail, onShare } = this.props;
     return (
       <ul>
-        <li><div className="entry">Show in detail</div></li>
-        <li><div className="entry">Share on Twitter</div></li>
+        <li onClick={onShowDetail}><div className="entry">Show in detail</div></li>
+        <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
       </ul>
     );
   }
