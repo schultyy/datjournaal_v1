@@ -31,7 +31,8 @@ class HomeIndexView extends React.Component {
                     imageUrl={post.image}
                     description={post.description}
                     postedAt={post.inserted_at}
-                    userHandle={post.user.handle} />
+                    userHandle={post.user.handle}
+                    isDetailMode={false} />
                 </div>
               );
             })}

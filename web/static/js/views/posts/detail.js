@@ -35,7 +35,8 @@ class PostDetailComponent extends React.Component {
         imageUrl={imageUrl}
         description={post.description}
         postedAt={post.inserted_at}
-        userHandle={post.user.handle} />
+        userHandle={post.user.handle}
+        isDetailMode={true} />
     );
   }
 }
