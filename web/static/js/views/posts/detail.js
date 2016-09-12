@@ -24,6 +24,9 @@ class PostDetailComponent extends React.Component {
         <div>{errors[0].message}</div>
       );
     }
+    if(!post) {
+      return false;
+    }
 
     const imageUrl = `/${post.image}`;
 
