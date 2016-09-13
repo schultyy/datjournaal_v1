@@ -32,6 +32,7 @@ class PostDetailComponent extends React.Component {
 
     return (
       <TileComponent
+        id={post.id}
         imageUrl={imageUrl}
         description={post.description}
         postedAt={post.inserted_at}

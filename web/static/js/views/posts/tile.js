@@ -1,15 +1,17 @@
 import React from 'react';
 import moment from 'moment';
 import ContextMenu from './contextmenu';
+import {absoluteUrlForPost} from '../../utils';
 
 export class TileComponent extends React.Component {
   onCopyURLToClipboard() {
-    const currentUrl = window.location.href;
-    console.log(currentUrl);
+    const { id } = this.props;
+    console.log(absoluteUrlForPost(id));
   }
 
   render() {
     let {
+      id,
       description,
       imageUrl,
       postedAt,
