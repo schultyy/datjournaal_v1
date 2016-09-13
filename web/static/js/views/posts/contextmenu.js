@@ -8,14 +8,14 @@ export default class ContextMenuComponent extends React.Component {
     }
   }
   renderMenuEntries() {
-    const { onShowDetail, onShare } = this.props;
+    const { onShowDetail, onShare, onCopyURLToClipboard } = this.props;
     return (
       <ul>
         { onShowDetail ?
           <li onClick={onShowDetail}><div className="entry">Show in detail</div></li>
           : false
         }
-        <li><div className="entry">Copy URL</div></li>
+        <li onClick={onCopyURLToClipboard}><div className="entry">Copy URL</div></li>
         <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
       </ul>
     );

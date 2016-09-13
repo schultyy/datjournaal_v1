@@ -3,6 +3,11 @@ import moment from 'moment';
 import ContextMenu from './contextmenu';
 
 export class TileComponent extends React.Component {
+  onCopyURLToClipboard() {
+    const currentUrl = window.location.href;
+    console.log(currentUrl);
+  }
+
   render() {
     let {
       description,
@@ -28,6 +33,7 @@ export class TileComponent extends React.Component {
           <span className="pull-left">{userHandle}</span>
           <span className="pull-right">
             <ContextMenu
+              onCopyURLToClipboard={this.onCopyURLToClipboard.bind(this)}
               onShowDetail={doubleClickHandler} />
           </span>
         </div>
