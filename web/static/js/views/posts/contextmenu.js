@@ -15,6 +15,7 @@ export default class ContextMenuComponent extends React.Component {
           <li onClick={onShowDetail}><div className="entry">Show in detail</div></li>
           : false
         }
+        <li><div className="entry">Copy URL</div></li>
         <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
       </ul>
     );
