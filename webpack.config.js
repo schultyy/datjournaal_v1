@@ -23,7 +23,7 @@ var config = module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.sass'],
+    extensions: ['', '.json', '.js', '.sass'],
     modulesDirectories: ['node_modules'],
   },
 
@@ -44,6 +44,10 @@ var config = module.exports = {
         test: /\.sass$/,
         loader: ExtractTextPlugin.extract('style', 'css!sass?indentedSyntax&includePaths[]=' + __dirname +  '/node_modules'),
       },
+      {
+        include: /\.json$/,
+        loaders: ["json-loader"]
+      }
     ],
   },
 
