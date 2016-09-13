@@ -28,7 +28,7 @@ export class TileComponent extends React.Component {
     return (
       <div className="tile" onDoubleClick={onDoubleClick}>
         <div>
-          <span className="pull-left">{post.user.handle}</span>
+          <span className="pull-left author">{post.user.handle}</span>
           <span className="pull-right">
             <ContextMenu
               onCopyURLToClipboard={this.onCopyURLToClipboard.bind(this)}
