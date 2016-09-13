@@ -1,4 +1,5 @@
 import React from 'react';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 export default class ContextMenuComponent extends React.Component {
   constructor() {
@@ -8,13 +9,20 @@ export default class ContextMenuComponent extends React.Component {
     }
   }
   renderMenuEntries() {
-    const { onShowDetail, onShare } = this.props;
+    const { onShowDetail, onShare, onCopyURLToClipboard } = this.props;
+    const clipboardPayload = onCopyURLToClipboard();
+    console.log("CLIPBOARD PAYLOAD", clipboardPayload);
     return (
       <ul>
         { onShowDetail ?
           <li onClick={onShowDetail}><div className="entry">Show in detail</div></li>
           : false
         }
+        <li>
+          <CopyToClipboard text={clipboardPayload}>
+            <div className="entry">Copy URL</div>
+          </CopyToClipboard>
+        </li>
         <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
       </ul>
     );
