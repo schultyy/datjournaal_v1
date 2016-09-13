@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import ContextMenu from './contextmenu';
 import {absoluteUrlForPost} from '../../utils';
 
@@ -15,8 +15,7 @@ export class TileComponent extends React.Component {
       onDoubleClick,
       isDetailMode,
     } = this.props;
-
-    let date = moment(post.inserted_at).calendar();
+    let date = moment(`${post.inserted_at}Z`).tz('Europe/Berlin').format('DD.MM.YYYY HH:mm');
 
     if (isDetailMode) {
       var doubleClickHandler = null;
