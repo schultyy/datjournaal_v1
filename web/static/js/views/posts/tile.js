@@ -6,7 +6,7 @@ import {absoluteUrlForPost} from '../../utils';
 export class TileComponent extends React.Component {
   onCopyURLToClipboard() {
     const { id } = this.props;
-    console.log(absoluteUrlForPost(id));
+    return absoluteUrlForPost(id);
   }
 
   render() {
