@@ -27,12 +27,8 @@ class HomeIndexView extends React.Component {
               return (
                 <div className="col-xs-12" key={post.id}>
                   <TileComponent
-                    id={post.id}
+                    post={post}
                     onDoubleClick={this.onTileDoubleClick.bind(this, post)}
-                    imageUrl={post.image}
-                    description={post.description}
-                    postedAt={post.inserted_at}
-                    userHandle={post.user.handle}
                     isDetailMode={false} />
                 </div>
               );

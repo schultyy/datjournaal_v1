@@ -28,15 +28,9 @@ class PostDetailComponent extends React.Component {
       return false;
     }
 
-    const imageUrl = `/${post.image}`;
-
     return (
       <TileComponent
-        id={post.id}
-        imageUrl={imageUrl}
-        description={post.description}
-        postedAt={post.inserted_at}
-        userHandle={post.user.handle}
+        post={post}
         isDetailMode={true} />
     );
   }

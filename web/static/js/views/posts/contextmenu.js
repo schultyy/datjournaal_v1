@@ -11,7 +11,6 @@ export default class ContextMenuComponent extends React.Component {
   renderMenuEntries() {
     const { onShowDetail, onShare, onCopyURLToClipboard } = this.props;
     const clipboardPayload = onCopyURLToClipboard();
-    console.log("CLIPBOARD PAYLOAD", clipboardPayload);
     return (
       <ul>
         { onShowDetail ?
