@@ -22,7 +22,11 @@ export default class ContextMenuComponent extends React.Component {
             <div className="entry">Copy URL</div>
           </CopyToClipboard>
         </li>
-        <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
+        {
+          onShare ?
+          <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
+          : false
+        }
       </ul>
     );
   }
