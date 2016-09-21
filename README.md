@@ -66,6 +66,7 @@ $ MIX_ENV=prod mix phoenix.digest
 $ MIX_ENV=prod mix ecto.migrate
 $ MIX_ENV=prod mix release
 $ cp rel/datjournaal/releases/0.0.1/datjournaal.tar.gz /var/apps/datjournaal/
-$ tar xfz datjournaal.tar.gz
+$ cd /var/apps
+$ tar xfz datjournaal.tar.gz -C datjournaal
 $ rm datjournaal.tar.gz
 ```
