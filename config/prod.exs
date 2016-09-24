@@ -53,7 +53,7 @@ config :logger, level: :info
 # Alternatively, you can configure exactly which server to
 # start per endpoint:
 #
-#     config :datjournaal, Datjournaal.Endpoint, server: true
+config :datjournaal, Datjournaal.Endpoint, server: true
 #
 
 # Finally import the config/prod.secret.exs
