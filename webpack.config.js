@@ -53,6 +53,7 @@ var config = module.exports = {
 
   plugins: [
     new ExtractTextPlugin('css/application.css'),
+    new webpack.DefinePlugin({ 'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development') }),
   ],
 };
 
