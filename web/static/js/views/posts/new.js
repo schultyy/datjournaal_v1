@@ -107,7 +107,7 @@ class NewPostComponent extends React.Component {
             </div>
             <div className="form-group col-xs-12">
               <label htmlFor="post-file">Pick a file</label>
-              <input type="file" ref="file" onChange={this.onPreviewChange.bind(this)} className="form-control" />
+              <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} className="form-control" />
             </div>
             <div className="col-xs-12">
               <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
