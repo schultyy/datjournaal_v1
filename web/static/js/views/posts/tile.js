@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment-timezone';
 import ContextMenu from './contextmenu';
 import {absoluteUrlForPost} from '../../utils';
+import cx from 'classnames';
 
 export class TileComponent extends React.Component {
   onCopyURLToClipboard() {
@@ -25,8 +26,15 @@ export class TileComponent extends React.Component {
       var doubleClickHandler = onDoubleClick;
     }
 
+    const postIsHidden = post.hidden;
+
+    const tileClasses = cx({
+      tile: true,
+      isHidden: postIsHidden
+    });
+
     return (
-      <div className="tile" onDoubleClick={onDoubleClick}>
+      <div className={tileClasses} onDoubleClick={onDoubleClick}>
         <div>
           <span className="pull-left author">{post.user.handle}</span>
           <span className="pull-right">
