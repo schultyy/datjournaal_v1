@@ -1,6 +1,7 @@
 import React          from 'react';
 import { Link }       from 'react-router';
-import Actions        from '../actions/sessions';
+import SessionActions from '../actions/sessions';
+import PostActions    from '../actions/posts';
 
 export default class Header extends React.Component {
   _renderCurrentUser() {
@@ -28,7 +29,7 @@ export default class Header extends React.Component {
   _handleSignOutClick(e) {
     e.preventDefault();
 
-    this.props.dispatch(Actions.signOut());
+    this.props.dispatch(SessionActions.signOut());
   }
 
   render() {
