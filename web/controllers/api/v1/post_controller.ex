@@ -6,11 +6,19 @@ defmodule Datjournaal.PostController do
   alias Datjournaal.{Repo, Post}
 
   def index(conn, _params) do
-    posts = Repo.all from p in Post,
+    current_user = Guardian.Plug.current_resource(conn)
+    posts = if current_user == nil do
+      Repo.all from p in Post,
         order_by: [desc: p.inserted_at],
         where: p.hidden == false,
         select: p,
         limit: 30
+    else
+      Repo.all from p in Post,
+        order_by: [desc: p.inserted_at],
+        select: p,
+        limit: 30
+    end
 
     posts_with_user = Repo.preload(posts, :user)
 
@@ -18,8 +26,13 @@ defmodule Datjournaal.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    not_hidden = false
-    case Repo.one(from p in Post, where: p.id == ^id and p.hidden == type(^not_hidden, :boolean)) do
+    query = if Guardian.Plug.current_resource(conn) do
+      Repo.one(from p in Post, where: p.id == ^id)
+    else
+      Repo.one(from p in Post, where: p.id == ^id and p.hidden == type(^false, :boolean))
+    end
+
+    case query do
       nil ->
         conn
         |> put_status(:not_found)
