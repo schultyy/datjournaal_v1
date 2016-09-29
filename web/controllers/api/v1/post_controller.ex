@@ -103,12 +103,9 @@ defmodule Datjournaal.PostController do
   defp post_to_twitter(publish, post_with_user) do
     case publish do
       "true" ->
-        tweet = """
-        #{post_with_user.description}
-
-        http://datjournaal.de/posts/#{post_with_user.id}
-        """
-        ExTwitter.update(tweet)
+        Datjournaal.Tweet.to_url(post_with_user)
+        |> Datjournaal.Tweet.to_tweet(post_with_user.description)
+        |> ExTwitter.update()
       _ ->
     end
   end
