@@ -24,6 +24,7 @@ defmodule Datjournaal.Router do
         get "/current_user", CurrentUserController, :show
         resources "posts", PostController, only: [:index, :show, :create]
         post "/posts/:id/hide", PostController, :hide
+        post "/posts/:id/show", PostController, :show
     end
   end
 
