@@ -18,7 +18,8 @@ defmodule Datjournaal.PostController do
   end
 
   def show(conn, %{"id" => id}) do
-    case Repo.one(from p in Post, where: p.id == ^id) do
+    not_hidden = false
+    case Repo.one(from p in Post, where: p.id == ^id and p.hidden == type(^not_hidden, :boolean)) do
       nil ->
         conn
         |> put_status(:not_found)
