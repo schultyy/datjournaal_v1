@@ -32,7 +32,11 @@ export default class ContextMenuComponent extends React.Component {
           <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
           : false
         }
-        <li onClick={onHide}><div className="entry">Hide this post</div></li>
+        {
+          onHide ?
+            <li onClick={onHide}><div className="entry">Hide this post</div></li>
+          : false
+        }
       </ul>
     );
   }

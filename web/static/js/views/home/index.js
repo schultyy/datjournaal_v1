@@ -1,14 +1,19 @@
 import React              from 'react';
 import { connect }        from 'react-redux';
-import Actions            from '../../actions/posts';
+import PostActions        from '../../actions/posts';
+import SessionActions     from '../../actions/sessions';
 import { push }           from 'react-router-redux';
 import { TileComponent }  from '../posts/tile';
 
 
 class HomeIndexView extends React.Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(Actions.fetchPosts());
+    const { dispatch, currentUser } = this.props;
+    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
+    dispatch(PostActions.fetchPosts());
+    if (phoenixAuthToken && !currentUser) {
+      dispatch(SessionActions.currentUser());
+    }
   }
 
   onTileDoubleClick(post) {
@@ -19,11 +24,19 @@ class HomeIndexView extends React.Component {
 
   onHideClick(post) {
     const { dispatch } = this.props;
-    dispatch(Actions.hidePost(post.id));
+    dispatch(PostActions.hidePost(post.id));
   }
 
   render() {
-    let { posts } = this.props || [];
+    let { posts, currentUser } = this.props || [];
+    var self = this;
+    function bindHideClickHandler(post) {
+      if(currentUser) {
+        return self.onHideClick.bind(self, post);
+      } else {
+        return null;
+      }
+    }
 
     return (
       <div className="container">
@@ -34,7 +47,7 @@ class HomeIndexView extends React.Component {
                   <TileComponent
                     post={post}
                     onDoubleClick={this.onTileDoubleClick.bind(this, post)}
-                    onHide={this.onHideClick.bind(this, post)}
+                    onHide={bindHideClickHandler(post)}
                     isDetailMode={false} />
                 </div>
               );
@@ -46,7 +59,10 @@ class HomeIndexView extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return state.posts;
+  return {
+    currentUser: state.session.currentUser,
+    ...state.posts
+  };
 };
 
 export default connect(mapStateToProps)(HomeIndexView);
