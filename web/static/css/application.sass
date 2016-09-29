@@ -1,10 +1,19 @@
 @import "_colors"
+$header-height: 50px
 $footer-height: 30px
+$header-font-size: 18px
+
+body
+  background-color: rgb(240, 240, 240)
 
 .main-header
   background-color: $color-secondary-1-0
   color: $font-color
+  height: $header-height
+  font-size: $header-font-size
+  padding: 5px
   .menu-entry
+    font-size: $header-font-size
     height: 100%
     padding: 5px
   a
@@ -19,8 +28,22 @@ $footer-height: 30px
   max-width: 600px
   margin-left: auto
   margin-right: auto
+  border: 1px solid #f7f7f7
+  background-color: #ffffff
+  &:first-child
+    margin-top: 30px
+  .date
+    margin-top: 5px
+    margin-left: 10px
+    padding: 5px
+  .description
+    padding: 5px
+    margin-left: 10px
+    margin-bottom: 15px
   .author
     margin-top: 15px
+    margin-left: 10px
+    margin-bottom: 15px
     font-weight: bolder
   .menu
     z-index: 1
@@ -31,6 +54,8 @@ $footer-height: 30px
     position: relative
     cursor: pointer
     height: 30%
+    .menu-text
+      font-family: "Lucida Console", Monaco, monospace
     ul
       position: absolute
       list-style-type: none

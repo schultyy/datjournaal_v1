@@ -58,7 +58,7 @@ export default class ContextMenuComponent extends React.Component {
 
     return (
       <div className="menu">
-        <span onClick={this.onMenuClick.bind(this)}>...</span>
+        <span className="menu-text" onClick={this.onMenuClick.bind(this)}>...</span>
         { expanded ? this.renderMenuEntries() : null }
       </div>
     );
