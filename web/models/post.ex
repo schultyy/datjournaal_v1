@@ -24,4 +24,10 @@ defmodule Datjournaal.Post do
     |> cast_attachments(params, [:image])
     |> validate_required([:image])
   end
+
+  def set_hidden_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:hidden])
+    |> validate_required([:hidden])
+  end
 end

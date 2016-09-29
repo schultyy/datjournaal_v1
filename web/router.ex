@@ -23,6 +23,7 @@ defmodule Datjournaal.Router do
         delete "/sessions", SessionController, :delete
         get "/current_user", CurrentUserController, :show
         resources "posts", PostController, only: [:index, :show, :create]
+        post "/posts/:id/hide", PostController, :hide
     end
   end
 

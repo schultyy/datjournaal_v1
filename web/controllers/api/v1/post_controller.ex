@@ -1,7 +1,7 @@
 defmodule Datjournaal.PostController do
   use Datjournaal.Web, :controller
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create]
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide]
 
   alias Datjournaal.{Repo, Post}
 
@@ -65,6 +65,29 @@ defmodule Datjournaal.PostController do
         conn
         |> put_status(:unprocessable_entity)
         |> render("error.json", changeset: changeset)
+    end
+  end
+
+  def hide(conn, %{"id" => id}) do
+    current_user = Guardian.Plug.current_resource(conn)
+    case Repo.one(from p in Post, where: p.id == ^id) do
+      nil ->
+        conn
+        |> put_status(:not_found)
+        |> render("not_found.json", id: id)
+      post ->
+        changeset = post |> Post.set_hidden_changeset(%{hidden: true})
+        case Repo.update(changeset) do
+          {:ok, post} ->
+            post_with_user = Repo.preload(post, :user)
+            conn
+            |> put_status(:ok)
+            |> render("show.json", post: post_with_user )
+          {:error, changeset} ->
+            conn
+            |> put_status(:unprocessable_entity)
+            |> render("error.json", changeset: changeset)
+        end
     end
   end
 
