@@ -8,6 +8,7 @@ defmodule Datjournaal.PostController do
   def index(conn, _params) do
     posts = Repo.all from p in Post,
         order_by: [desc: p.inserted_at],
+        where: p.hidden == false,
         select: p,
         limit: 30
 
