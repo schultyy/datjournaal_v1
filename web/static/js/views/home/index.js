@@ -17,6 +17,10 @@ class HomeIndexView extends React.Component {
     dispatch(push(`/posts/${post.id}`));
   }
 
+  onHideClick(post) {
+    console.log('hiding post');
+  }
+
   render() {
     let { posts } = this.props || [];
 
@@ -29,6 +33,7 @@ class HomeIndexView extends React.Component {
                   <TileComponent
                     post={post}
                     onDoubleClick={this.onTileDoubleClick.bind(this, post)}
+                    onHide={this.onHideClick.bind(this, post)}
                     isDetailMode={false} />
                 </div>
               );

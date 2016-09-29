@@ -14,6 +14,7 @@ export class TileComponent extends React.Component {
       post,
       onDoubleClick,
       isDetailMode,
+      onHide
     } = this.props;
     let date = moment(`${post.inserted_at}Z`).tz('Europe/Berlin').format('DD.MM.YYYY HH:mm');
 
@@ -31,7 +32,8 @@ export class TileComponent extends React.Component {
           <span className="pull-right">
             <ContextMenu
               onCopyURLToClipboard={this.onCopyURLToClipboard.bind(this)}
-              onShowDetail={doubleClickHandler} />
+              onShowDetail={doubleClickHandler}
+              onHide={onHide} />
           </span>
         </div>
         <img src={post.image} />

@@ -12,6 +12,10 @@ class PostDetailComponent extends React.Component {
     dispatch(PostActions.fetchPost(postId));
   }
 
+  onHideClick(post) {
+    console.log('hiding post');
+  }
+
   render() {
     const { fetching, errors, post } = this.props;
     if(fetching) {
@@ -31,6 +35,7 @@ class PostDetailComponent extends React.Component {
     return (
       <TileComponent
         post={post}
+        onHide={this.onHideClick.bind(this, post)}
         isDetailMode={true} />
     );
   }
