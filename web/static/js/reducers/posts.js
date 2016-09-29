@@ -7,10 +7,10 @@ const initialState = {
   fetching: true
 };
 
-function replaceHiddenPost(posts, hiddenPost) {
+function replacePostInCollection(posts, toBeReplaced) {
   return posts.map(function(post) {
-    if(post.id === hiddenPost.id) {
-      return hiddenPost;
+    if(post.id === toBeReplaced.id) {
+      return toBeReplaced;
     } else {
       return post;
     }
@@ -35,14 +35,16 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, formErrors: null };
     case Constants.POST_CREATED:
       return { ...state, formErrors: null };
+    case Constants.SHOWING_POST:
     case Constants.HIDING_POST:
       return { ...state, formErrors: null };
+    case Constants.POST_SHOWN:
     case Constants.POST_HIDDEN:
       if(state.currentPost) {
         return { ...state, currentPost: action.post, fetching: false, formErrors: null };
       }
       else {
-        return { ...state,posts: replaceHiddenPost(state.posts, action.post), currentPost: null, fetching: false, formErrors: null };
+        return { ...state,posts: replacePostInCollection(state.posts, action.post), currentPost: null, fetching: false, formErrors: null };
       }
     default:
       return state;

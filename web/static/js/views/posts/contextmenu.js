@@ -13,6 +13,7 @@ export default class ContextMenuComponent extends React.Component {
       onShowDetail,
       onShare,
       onHide,
+      onShow,
       onCopyURLToClipboard
     } = this.props;
     const clipboardPayload = onCopyURLToClipboard();
@@ -35,6 +36,11 @@ export default class ContextMenuComponent extends React.Component {
         {
           onHide ?
             <li onClick={onHide}><div className="entry">Hide this post</div></li>
+          : false
+        }
+        {
+          onShow ?
+            <li onClick={onShow}><div className="entry">Show this post</div></li>
           : false
         }
       </ul>

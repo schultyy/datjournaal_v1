@@ -27,12 +27,24 @@ class HomeIndexView extends React.Component {
     dispatch(PostActions.hidePost(post.id));
   }
 
+  onShowClick(post) {
+    const { dispatch } = this.props;
+    dispatch(PostActions.showPost(post.id));
+  }
+
   render() {
     let { posts, currentUser } = this.props || [];
-    var self = this;
-    function bindHideClickHandler(post) {
+    const bindHideClickHandler = (post) => {
       if(currentUser) {
-        return self.onHideClick.bind(self, post);
+        return this.onHideClick.bind(this, post);
+      } else {
+        return null;
+      }
+    };
+
+    const bindShowClickHandler = (post) => {
+      if(currentUser) {
+        return this.onShowClick.bind(this, post);
       } else {
         return null;
       }
@@ -48,6 +60,7 @@ class HomeIndexView extends React.Component {
                     post={post}
                     onDoubleClick={this.onTileDoubleClick.bind(this, post)}
                     onHide={bindHideClickHandler(post)}
+                    onShow={bindShowClickHandler(post)}
                     isDetailMode={false} />
                 </div>
               );

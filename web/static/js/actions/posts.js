@@ -78,6 +78,28 @@ const Actions = {
         });
       });
     };
+  },
+  showPost: (id) => {
+    return dispatch => {
+      dispatch({ type: Constants.SHOWING_POST });
+
+      httpPost(`/api/v1/posts/${id}/show`)
+      .then((data) => {
+        dispatch({
+          type: Constants.POST_SHOWN,
+          post: data
+        });
+      })
+      .catch((error) => {
+        error.response.json()
+        .then((errorJSON) => {
+          dispatch({
+            type: Constants.HIDE_POST_ERROR,
+            errors: errorJSON.errors
+          });
+        });
+      });
+    };
   }
 };
 

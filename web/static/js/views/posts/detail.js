@@ -23,6 +23,11 @@ class PostDetailComponent extends React.Component {
     dispatch(PostActions.hidePost(post.id));
   }
 
+  onShowClick(post) {
+    const { dispatch } = this.props;
+    dispatch(PostActions.showPost(post.id));
+  }
+
   render() {
     const { fetching, errors, post, currentUser } = this.props;
     if(fetching) {
@@ -41,14 +46,17 @@ class PostDetailComponent extends React.Component {
 
     if(currentUser) {
       var onHideClick = this.onHideClick.bind(this, post);
+      var onShowClick = this.onShowClick.bind(this, post);
     } else {
       var onHideClick = null;
+      var onShowClick = null;
     }
 
     return (
       <TileComponent
         post={post}
         onHide={onHideClick}
+        onShow={onShowClick}
         isDetailMode={true} />
     );
   }

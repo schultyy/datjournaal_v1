@@ -72,7 +72,7 @@ defmodule Datjournaal.PostController do
     set_hidden_status(conn, id, true)
   end
 
-  def show(conn, %{"id" => id}) do
+  def show_post(conn, %{"id" => id}) do
     set_hidden_status(conn, id, false)
   end
 
