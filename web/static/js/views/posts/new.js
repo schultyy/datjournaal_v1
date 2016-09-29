@@ -93,6 +93,7 @@ class NewPostComponent extends React.Component {
     const previewImage = this.state.previewImage;
 
     const imagePreviewClasses = cx({
+      'collapse': !previewImage,
       'col-xs-4': true,
       'col-md-4': true,
       'image-preview': true
