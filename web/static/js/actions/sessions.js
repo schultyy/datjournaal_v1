@@ -32,6 +32,7 @@ const Actions = {
           type: Constants.USER_SIGNED_OUT
         });
 
+        dispatch({type: Constants.FLUSH_POSTS});
         dispatch(push('/'));
       })
       .catch(function(error) {

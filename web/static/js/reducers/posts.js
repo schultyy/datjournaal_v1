@@ -46,6 +46,8 @@ export default function reducer(state = initialState, action = {}) {
       else {
         return { ...state,posts: replacePostInCollection(state.posts, action.post), currentPost: null, fetching: false, formErrors: null };
       }
+    case Constants.FLUSH_POSTS:
+      return initialState;
     default:
       return state;
   }
