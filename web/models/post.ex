@@ -6,6 +6,7 @@ defmodule Datjournaal.Post do
 
   schema "posts" do
     field :description, :string
+    field :hidden, :boolean
     field :image, Datjournaal.Image.Type
     belongs_to :user, Datjournaal.User
 
