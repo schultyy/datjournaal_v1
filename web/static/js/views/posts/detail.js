@@ -13,7 +13,8 @@ class PostDetailComponent extends React.Component {
   }
 
   onHideClick(post) {
-    console.log('hiding post');
+    const { dispatch } = this.props;
+    dispatch(PostActions.hidePost(post.id));
   }
 
   render() {

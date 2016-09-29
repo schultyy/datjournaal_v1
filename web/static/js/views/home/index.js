@@ -18,7 +18,8 @@ class HomeIndexView extends React.Component {
   }
 
   onHideClick(post) {
-    console.log('hiding post');
+    const { dispatch } = this.props;
+    dispatch(Actions.hidePost(post.id));
   }
 
   render() {
