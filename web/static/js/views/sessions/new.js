@@ -48,7 +48,6 @@ class SessionsNew extends React.Component {
             </div>
             <button type="submit">Sign in</button>
           </form>
-          <Link to="/sign_up">Create new account</Link>
         </main>
       </div>
     );
