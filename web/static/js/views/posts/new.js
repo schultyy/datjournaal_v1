@@ -99,6 +99,14 @@ class NewPostComponent extends React.Component {
       'image-preview': true
     });
 
+    const descriptionFieldClasses = cx({
+      'col-xs-12': !previewImage,
+      'col-md-12': !previewImage,
+      'col-xs-8': previewImage,
+      'col-md-8': previewImage,
+      'form-group': true
+    });
+
     return (
       <div className="container new-post-form">
         <h3>Create a new post</h3>
@@ -108,7 +116,7 @@ class NewPostComponent extends React.Component {
             <div className={imagePreviewClasses}>
               <img src={previewImage} className="thumbnail" />
             </div>
-            <div className="col-xs-8 col-md-8 form-group">
+            <div className={descriptionFieldClasses}>
               <label htmlFor="post-description">Description</label>
               <textarea ref="description" rows="3" className="post-description form-control">
               </textarea>
