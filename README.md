@@ -70,3 +70,14 @@ $ cd /var/apps
 $ tar xfz datjournaal.tar.gz -C datjournaal
 $ rm datjournaal.tar.gz
 ```
+
+### Create a user
+
+Since sign up is disabled in the application itself, a user needs to be created via the mix shell. Login into the machine, cd into the application directory,
+and run:
+
+```bash
+$ bin/datjournaal remote_console
+iex(1)> ch = Datjournaal.User.changeset(%Datjournaal.User{},%{handle: "hansengang", email: "hansen@example.com", password: "test1234!"})
+iex(2)> Datjournaal.Repo.insert(ch)
+```

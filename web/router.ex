@@ -19,7 +19,6 @@ defmodule Datjournaal.Router do
   scope "/api", Datjournaal do
     pipe_through :api
       scope "/v1" do
-        post "/registrations", RegistrationController, :create
         post "/sessions", SessionController, :create
         delete "/sessions", SessionController, :delete
         get "/current_user", CurrentUserController, :show
