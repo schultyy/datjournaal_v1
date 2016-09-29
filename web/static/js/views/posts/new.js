@@ -3,6 +3,7 @@ import { connect }              from 'react-redux';
 import PostActions              from '../../actions/posts';
 import SessionActions           from '../../actions/sessions';
 import { push }                 from 'react-router-redux';
+import cx                       from 'classnames';
 
 
 class NewPostComponent extends React.Component {
@@ -91,18 +92,33 @@ class NewPostComponent extends React.Component {
 
     const previewImage = this.state.previewImage;
 
+    const imagePreviewClasses = cx({
+      'collapse': !previewImage,
+      'col-xs-4': true,
+      'col-md-4': true,
+      'image-preview': true
+    });
+
+    const descriptionFieldClasses = cx({
+      'col-xs-12': !previewImage,
+      'col-md-12': !previewImage,
+      'col-xs-8': previewImage,
+      'col-md-8': previewImage,
+      'form-group': true
+    });
+
     return (
       <div className="container new-post-form">
         <h3>Create a new post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
         <form>
           <div className="row">
-            <div className="col-xs-4 col-md-4 image-preview">
+            <div className={imagePreviewClasses}>
               <img src={previewImage} className="thumbnail" />
             </div>
-            <div className="col-xs-8 col-md-8 form-group">
+            <div className={descriptionFieldClasses}>
               <label htmlFor="post-description">Description</label>
-              <textarea ref="description" className="post-description" rows="3" className="form-control">
+              <textarea ref="description" rows="3" className="post-description form-control">
               </textarea>
             </div>
             <div className="form-group col-xs-12">
