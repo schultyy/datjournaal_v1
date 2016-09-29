@@ -110,7 +110,7 @@ class NewPostComponent extends React.Component {
             </div>
             <div className="col-xs-8 col-md-8 form-group">
               <label htmlFor="post-description">Description</label>
-              <textarea ref="description" className="post-description" rows="3" className="form-control">
+              <textarea ref="description" rows="3" className="post-description form-control">
               </textarea>
             </div>
             <div className="form-group col-xs-12">
