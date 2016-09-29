@@ -44,7 +44,7 @@ defmodule Datjournaal.PostController do
     end
   end
 
-  def create(conn, %{"description" => description, "image" => image}) do
+  def create(conn, %{"description" => description, "image" => image, "postOnTwitter" => post_on_twitter}) do
     current_user = Guardian.Plug.current_resource(conn)
     post_params = %{
       "description": description,
@@ -58,6 +58,7 @@ defmodule Datjournaal.PostController do
     case Repo.insert(changeset) do
       {:ok, post} ->
         post_with_user = Repo.preload(post, :user)
+        post_to_twitter(post_on_twitter, post_with_user)
         conn
         |> put_status(:created)
         |> render("show.json", post: post_with_user )
@@ -96,6 +97,19 @@ defmodule Datjournaal.PostController do
             |> put_status(:unprocessable_entity)
             |> render("error.json", changeset: changeset)
         end
+    end
+  end
+
+  defp post_to_twitter(publish, post_with_user) do
+    case publish do
+      "true" ->
+        tweet = """
+        #{post_with_user.description}
+
+        http://datjournaal.de/posts/#{post_with_user.id}
+        """
+        ExTwitter.update(tweet)
+      _ ->
     end
   end
 
