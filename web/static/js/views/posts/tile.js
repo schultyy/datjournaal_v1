@@ -42,8 +42,8 @@ export class TileComponent extends React.Component {
             <ContextMenu
               onCopyURLToClipboard={this.onCopyURLToClipboard.bind(this)}
               onShowDetail={doubleClickHandler}
-              onHide={onHide}
-              onShow={onShow} />
+              onHide={postIsHidden ? null : onHide}
+              onShow={postIsHidden ? onShow : null} />
           </span>
         </div>
         <img src={post.image} />
