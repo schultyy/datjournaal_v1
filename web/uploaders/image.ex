@@ -11,7 +11,8 @@ defmodule Datjournaal.Image do
 
   # Whitelist file extensions:
   def validate({file, _}) do
-    ~w(.jpg .jpeg .gif .png) |> Enum.member?(Path.extname(file.file_name))
+    ext_name = Path.extname(file.file_name) |> String.downcase
+    ~w(.jpg .jpeg .gif .png) |> Enum.member?(ext_name)
   end
 
   # Define a thumbnail transformation:
