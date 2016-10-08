@@ -38,7 +38,7 @@ Then install all Elixir production dependencies:
 $ MIX_ENV=prod mix do deps.get
 ```
 
-Generate two secrets via `mix phoenix.gen.secret`. Then open `config/prod.secret.exs` and paste that secret for `secret_key_base` and `secret_key`. Also paste in the password for the database user:
+Generate two secrets via `mix phoenix.gen.secret`. Then open `config/prod.secret.exs` and paste that secret for `secret_key_base` and `secret_key`. Also paste in the password for the database user. Get your Twitter secrets here: https://apps.twitter.com/app/12906694/keys
 
 ```elixir
 use Mix.Config
@@ -56,6 +56,13 @@ config :datjournaal, Datjournaal.Repo,
   database: "datjournaal_production",
   hostname: "localhost",
   pool_size: 10
+
+config :extwitter, :oauth, [
+   consumer_key: "<YOUR CONSUMER KEY>",
+   consumer_secret: "<YOUR CONSUMER SECRET>",
+   access_token: "<YOUR ACCESS TOKEN>",
+   access_token_secret: "<YOUR ACCESS TOKEN SECRET>"
+]
 ```
 
 To release the app, run the following commands:
