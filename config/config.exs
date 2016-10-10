@@ -14,6 +14,7 @@ config :datjournaal, Datjournaal.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "kjVRf1YuIevOrlYkVVkADtpABFJLSy++EQ/mgArc4ZvEX2cP8mJZh9lbi/Pam/a7",
   render_errors: [view: Datjournaal.ErrorView, accepts: ~w(html json)],
+  uploads_dir: "uploads/",
   pubsub: [name: Datjournaal.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
