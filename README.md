@@ -78,6 +78,9 @@ and run:
 
 ```bash
 $ bin/datjournaal remote_console
-iex(1)> ch = Datjournaal.User.changeset(%Datjournaal.User{},%{handle: "hansengang", email: "hansen@example.com", password: "test1234!"})
-iex(2)> Datjournaal.Repo.insert(ch)
+iex(1)> handle = "schultyy"
+iex(2)> email = "jan@unexpected-co.de"
+iex(3)> password = "<PASSWORD>"
+iex(4)> ch = Datjournaal.User.changeset(%Datjournaal.User{},%{handle: handle, email: email, password: password})
+iex(5)> Datjournaal.Repo.insert(ch)
 ```
