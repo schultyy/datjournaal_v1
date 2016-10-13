@@ -6,7 +6,7 @@ defmodule Datjournaal.PostController do
   alias Datjournaal.{Repo, Post, UserStat}
 
   def index(conn, _params) do
-    log_user_access
+    log_user_access("/")
     current_user = Guardian.Plug.current_resource(conn)
     posts = if current_user == nil do
       Repo.all from p in Post,
@@ -27,6 +27,7 @@ defmodule Datjournaal.PostController do
   end
 
   def show(conn, %{"id" => id}) do
+    log_user_access(conn.request_path)
     query = if Guardian.Plug.current_resource(conn) do
       Repo.one(from p in Post, where: p.id == ^id)
     else
@@ -106,8 +107,8 @@ defmodule Datjournaal.PostController do
   end
   defp inject_unique_filename(_), do: "undefined"
 
-  defp log_user_access do
-    changeset = UserStat.changeset(%UserStat{}, %{path: "/"})
+  defp log_user_access(path)do
+    changeset = UserStat.changeset(%UserStat{}, %{path: path})
     Repo.insert(changeset)
   end
 end
