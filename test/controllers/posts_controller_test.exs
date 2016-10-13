@@ -22,4 +22,10 @@ defmodule Datjournaal.PostControllerTest do
     url = Map.get(post, "image")
     assert Regex.match?(~r/\/uploads\//, url)
   end
+
+  test "GET / logs one access" do
+    get build_conn, "/api/v1/posts"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat)
+    assert length(stats) == 1
+  end
 end
