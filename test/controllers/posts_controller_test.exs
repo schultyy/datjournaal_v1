@@ -28,4 +28,10 @@ defmodule Datjournaal.PostControllerTest do
     stats = Datjournaal.Repo.all(Datjournaal.UserStat)
     assert length(stats) == 1
   end
+
+  test "GET / logs one access with route '/'" do
+    get build_conn, "/api/v1/posts"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
+    assert Map.get(stats, :path) == "/"
+  end
 end

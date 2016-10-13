@@ -107,7 +107,7 @@ defmodule Datjournaal.PostController do
   defp inject_unique_filename(_), do: "undefined"
 
   defp log_user_access do
-    stats = %UserStat{}
-    Repo.insert(stats)
+    changeset = UserStat.changeset(%UserStat{}, %{path: "/"})
+    Repo.insert(changeset)
   end
 end
