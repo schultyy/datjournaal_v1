@@ -6,7 +6,7 @@ defmodule Datjournaal.PostController do
   alias Datjournaal.{Repo, Post, UserStat}
 
   def index(conn, _params) do
-    log_user_access("/")
+    log_user_access(conn.request_path)
     current_user = Guardian.Plug.current_resource(conn)
     posts = if current_user == nil do
       Repo.all from p in Post,
