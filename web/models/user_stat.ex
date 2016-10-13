@@ -3,12 +3,13 @@ defmodule Datjournaal.UserStat do
 
   schema "user_stats" do
     field :path, :string
+    field :ip, :string
     timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:path])
-    |> validate_required([:path])
+    |> cast(params, [:path, :ip])
+    |> validate_required([:path, :ip])
   end
 end

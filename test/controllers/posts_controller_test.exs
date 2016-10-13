@@ -35,9 +35,21 @@ defmodule Datjournaal.PostControllerTest do
     assert Map.get(stats, :path) == "/api/v1/posts"
   end
 
+  test "GET / logs access with remote IP address" do
+    get build_conn, "/api/v1/posts"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
+    assert Map.get(stats, :ip) == "127.0.0.1"
+  end
+
   test "GET /posts/:id logs access with post's detail url" do
     get build_conn, "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :path) == "/api/v1/posts/1"
+  end
+
+  test "GET /posts/:id logs access with remote IP address" do
+    get build_conn, "/api/v1/posts/1"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
+    assert Map.get(stats, :ip) == "127.0.0.1"
   end
 end
