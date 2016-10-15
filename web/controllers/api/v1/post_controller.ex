@@ -118,7 +118,7 @@ defmodule Datjournaal.PostController do
   end
 
   defp hash_address(address) do
-    :crypto.hash(:sha256, "127.0.0.1")
+    :crypto.hash(:sha256, address)
     |> Base.encode16
   end
 
