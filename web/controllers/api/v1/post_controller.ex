@@ -107,22 +107,25 @@ defmodule Datjournaal.PostController do
   end
   defp inject_unique_filename(_), do: "undefined"
 
-  defp log_user_access(%{request_path: path, remote_ip: ip_address})do
-    changeset = UserStat.changeset(%UserStat{}, %{path: path, ip: process_ip_address(ip_address)})
+  defp log_user_access(conn) do
+    path = conn.request_path
+    ip_address = conn |> process_ip_address
+    changeset = UserStat.changeset(%UserStat{}, %{path: path, ip: ip_address})
     Repo.insert(changeset)
   end
 
-  defp process_ip_address(address_tuple) do
-    ip_address_to_string(address_tuple)
+  defp process_ip_address(conn) do
+    address = Plug.Conn.get_req_header(conn, "x-forwarded-for") |> List.first
     |> hash_address
+  end
+
+  defp hash_address(nil) do
+    :crypto.hash(:sha256, "127.0.0.1")
+    |> Base.encode16
   end
 
   defp hash_address(address) do
     :crypto.hash(:sha256, address)
     |> Base.encode16
-  end
-
-  defp ip_address_to_string({a, b, c, d}) do
-    "#{a}.#{b}.#{c}.#{d}"
   end
 end
