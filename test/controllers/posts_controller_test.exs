@@ -41,6 +41,14 @@ defmodule Datjournaal.PostControllerTest do
     assert Map.get(stats, :ip) == "12CA17B49AF2289436F303E0166030A21E525D266E209267433801A8FD4071A0"
   end
 
+  test "GET / logs access with hashed remote IP address passed via x-forwarded-for" do
+    conn = build_conn()
+           |> put_req_header("x-forwarded-for", "5.234.12.12")
+    get conn, "/api/v1/posts"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
+    assert Map.get(stats, :ip) == "8F4D21ADACE20573A9B35F956E4E15974E48A79EFFF7567DD8770B79A8CB57F7"
+  end
+
   test "GET /posts/:id logs access with post's detail url" do
     get build_conn, "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
