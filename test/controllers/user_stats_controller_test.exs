@@ -14,6 +14,18 @@ defmodule Datjournaal.UserStatsControllerTest do
     assert response.status == 403
   end
 
+  test "GET /api/v1/userstats as anonymous user does not return stats" do
+    response = get build_conn(), "/api/v1/user_stats"
+    response_body = response.resp_body |> Poison.decode!
+    assert Map.get(response_body, "stats") == nil
+  end
+
+  test "GET /api/v1/userstats as anonymous user response has error property" do
+    response = get build_conn(), "/api/v1/user_stats"
+    response_body = response.resp_body |> Poison.decode!
+    assert Map.get(response_body, "error") != nil
+  end
+
   test "GET /api/v1/userstats as authenticated user", %{user: _user, jwt: jwt} do
     response = build_conn()
       |> put_req_header("authorization", jwt)
