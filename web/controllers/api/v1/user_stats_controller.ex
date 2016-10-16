@@ -3,7 +3,10 @@ defmodule Datjournaal.UserStatsController do
 
   plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:index]
 
+  alias Datjournaal.{Repo, UserStat}
+
   def index(conn, _params) do
-    render(conn, "index.json", stats: [])
+    stats = Repo.all(UserStat)
+    render(conn, "index.json", stats: stats)
   end
 end
