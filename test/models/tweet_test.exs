@@ -13,4 +13,20 @@ defmodule Datjournaal.TweetTest do
     url = post |> Tweet.to_url
     assert String.length(Tweet.to_tweet(url, post.text)) <= 140
   end
+
+  test "Tweet with short text is not shortened" do
+    tweet_text = "Amsterdam Centraal, mit Zug"
+    post = %{id: 34, text: tweet_text}
+    url = post |> Tweet.to_url
+    text = Tweet.to_tweet(url, post.text)
+          |> String.split("\n")
+          |> List.first
+    assert text == tweet_text
+  end
+
+  test "Tweet with short text does not contain three dots" do
+    post = %{id: 34, text: "Amsterdam Centraal, mit Zug"}
+    url = post |> Tweet.to_url
+    assert String.contains?(Tweet.to_tweet(url, post.text), "...") == false
+  end
 end
