@@ -4,8 +4,8 @@ defmodule Datjournaal.Tweet do
   end
 
   def to_tweet(url, original_text) do
-    #We substract three at the end to have enough space for three dots
-    max_text_length = 140 - String.length(url) - 3
+    #We substract four at the end to have enough space for three dots and a line break
+    max_text_length = 140 - String.length(url) - 4
     if String.length(original_text) > max_text_length do
       text = String.slice(original_text, 0, max_text_length) <> "..."
     else
