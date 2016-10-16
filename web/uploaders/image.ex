@@ -11,7 +11,8 @@ defmodule Datjournaal.Image do
 
   # Whitelist file extensions:
   def validate({file, _}) do
-    ~w(.jpg .jpeg .gif .png) |> Enum.member?(Path.extname(file.file_name))
+    ext_name = Path.extname(file.file_name) |> String.downcase
+    ~w(.jpg .jpeg .gif .png) |> Enum.member?(ext_name)
   end
 
   # Define a thumbnail transformation:
@@ -23,9 +24,9 @@ defmodule Datjournaal.Image do
   def filename(version, {file, _}), do: "#{version}-#{file.file_name}"
 
   # Override the storage directory:
-  # def storage_dir(version, {file, scope}) do
-  #   "uploads/user/images/#{scope.id}"
-  # end
+  def storage_dir(version, {file, scope}) do
+    Application.get_env(:datjournaal, Datjournaal.Endpoint)[:uploads_dir]
+  end
 
   # Provide a default URL if there hasn't been a file uploaded
   def default_url(version, scope) do
