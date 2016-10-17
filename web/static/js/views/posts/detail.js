@@ -14,18 +14,18 @@ class PostDetailComponent extends React.Component {
     if (phoenixAuthToken && !currentUser) {
       dispatch(SessionActions.currentUser());
     }
-    const postId = this.props.params.id;
+    const postId = this.props.params.slug;
     dispatch(PostActions.fetchPost(postId));
   }
 
   onHideClick(post) {
     const { dispatch } = this.props;
-    dispatch(PostActions.hidePost(post.id));
+    dispatch(PostActions.hidePost(post.slug));
   }
 
   onShowClick(post) {
     const { dispatch } = this.props;
-    dispatch(PostActions.showPost(post.id));
+    dispatch(PostActions.showPost(post.slug));
   }
 
   render() {
