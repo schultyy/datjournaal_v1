@@ -90,4 +90,13 @@ defmodule Datjournaal.PostControllerTest do
     post = Repo.get(Datjournaal.Post, post_id)
     assert post.slug != nil
   end
+
+  test "GET /api/v1/posts/:slug returns post by its slug" do
+    post_from_db = Repo.all(Datjournaal.Post)
+            |> List.first
+    response = get build_conn(), "/api/v1/posts/#{post_from_db.slug}"
+    post_from_service = response.resp_body
+            |> Poison.decode!
+    assert Map.get(post_from_service, "slug") == Map.get(post_from_db, :slug)
+  end
 end

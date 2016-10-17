@@ -2,7 +2,7 @@ defmodule Datjournaal.Post do
   use Datjournaal.Web, :model
   use Arc.Ecto.Schema
 
-  @derive {Poison.Encoder, only: [:id, :description, :image, :inserted_at, :user, :hidden]}
+  @derive {Poison.Encoder, only: [:id, :description, :image, :inserted_at, :user, :hidden, :slug]}
 
   schema "posts" do
     field :description, :string

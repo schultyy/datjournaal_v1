@@ -29,9 +29,9 @@ defmodule Datjournaal.PostController do
   def show(conn, %{"id" => id}) do
     log_user_access(conn)
     query = if Guardian.Plug.current_resource(conn) do
-      Repo.one(from p in Post, where: p.id == ^id)
+      Repo.one(from p in Post, where: p.slug == ^id)
     else
-      Repo.one(from p in Post, where: p.id == ^id and p.hidden == type(^false, :boolean))
+      Repo.one(from p in Post, where: p.slug == ^id and p.hidden == type(^false, :boolean))
     end
 
     case query do
@@ -108,7 +108,7 @@ defmodule Datjournaal.PostController do
         Datjournaal.Tweet.to_url(post_with_user)
         |> Datjournaal.Tweet.to_tweet(post_with_user.description)
         |> ExTwitter.update()
-      _ ->
+      _ -> {}
     end
   end
 
