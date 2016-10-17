@@ -80,7 +80,6 @@ defmodule Datjournaal.PostController do
   end
 
   defp set_hidden_status(conn, id, hidden_status) do
-    current_user = Guardian.Plug.current_resource(conn)
     case Repo.one(from p in Post, where: p.id == ^id) do
       nil ->
         conn
@@ -112,7 +111,7 @@ defmodule Datjournaal.PostController do
     end
   end
 
-  defp inject_unique_filename(%Plug.Upload{:filename => filename} = image) do
+  defp inject_unique_filename(%Plug.Upload{:filename => _filename} = image) do
     ext = Path.extname(image.filename)
     Map.put(image, :filename, "#{UUID.uuid4()}#{ext}")
   end
@@ -126,7 +125,8 @@ defmodule Datjournaal.PostController do
   end
 
   defp process_ip_address(conn) do
-    address = Plug.Conn.get_req_header(conn, "x-forwarded-for") |> List.first
+    Plug.Conn.get_req_header(conn, "x-forwarded-for")
+    |> List.first
     |> hash_address
   end
 
