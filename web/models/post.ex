@@ -2,7 +2,7 @@ defmodule Datjournaal.Post do
   use Datjournaal.Web, :model
   use Arc.Ecto.Schema
 
-  @derive {Poison.Encoder, only: [:id, :description, :image, :inserted_at, :user, :hidden, :slug]}
+  @derive {Poison.Encoder, only: [:description, :image, :inserted_at, :user, :hidden, :slug]}
 
   schema "posts" do
     field :description, :string
@@ -13,8 +13,6 @@ defmodule Datjournaal.Post do
 
     timestamps()
   end
-
-  @required_params
 
   @doc """
   Builds a changeset based on the `struct` and `params`.

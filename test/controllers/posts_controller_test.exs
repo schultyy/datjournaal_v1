@@ -84,10 +84,10 @@ defmodule Datjournaal.PostControllerTest do
     conn = build_conn()
       |> put_req_header("authorization", jwt)
     response = post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
-    post_id = response.resp_body
+    post_slug = response.resp_body
       |> Poison.decode!
-      |> Map.get("id")
-    post = Repo.get(Datjournaal.Post, post_id)
+      |> Map.get("slug")
+    post = Repo.get_by(Datjournaal.Post, slug: post_slug)
     assert post.slug != nil
   end
 
