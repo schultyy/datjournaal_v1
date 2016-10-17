@@ -8,6 +8,7 @@ defmodule Datjournaal.PageController do
   end
 
   defp render_index_with_params(conn, []) do
+    #TODO: Pass in the latest post
     render conn, "index.html", post: nil
   end
 
