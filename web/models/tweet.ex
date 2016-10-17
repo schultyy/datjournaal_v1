@@ -1,6 +1,6 @@
 defmodule Datjournaal.Tweet do
   def to_url(post) do
-    "http://datjournaal.de/posts/#{post.id}"
+    "http://datjournaal.de/#{post.slug}"
   end
 
   def to_tweet(url, original_text) do
