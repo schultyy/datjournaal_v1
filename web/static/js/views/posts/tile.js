@@ -7,7 +7,7 @@ import cx from 'classnames';
 export class TileComponent extends React.Component {
   onCopyURLToClipboard() {
     const { post } = this.props;
-    return absoluteUrlForPost(post.id);
+    return absoluteUrlForPost(post.slug);
   }
 
   render() {

@@ -16,11 +16,11 @@ const Actions = {
       });
     };
   },
-  fetchPost: (id) => {
+  fetchPost: (slug) => {
     return dispatch => {
       dispatch({type: Constants.POST_FETCHING});
 
-      httpGet(`/api/v1/posts/${id}`)
+      httpGet(`/api/v1/posts/${slug}`)
       .then((data) => {
         dispatch({
           type: Constants.POST_RECEIVED,
@@ -57,11 +57,11 @@ const Actions = {
       });
     };
   },
-  hidePost: (id) => {
+  hidePost: (slug) => {
     return dispatch => {
       dispatch({ type: Constants.HIDING_POST });
 
-      httpPost(`/api/v1/posts/${id}/hide`)
+      httpPost(`/api/v1/posts/${slug}/hide`)
       .then((data) => {
         dispatch({
           type: Constants.POST_HIDDEN,
@@ -79,11 +79,11 @@ const Actions = {
       });
     };
   },
-  showPost: (id) => {
+  showPost: (slug) => {
     return dispatch => {
       dispatch({ type: Constants.SHOWING_POST });
 
-      httpPost(`/api/v1/posts/${id}/show`)
+      httpPost(`/api/v1/posts/${slug}/show`)
       .then((data) => {
         dispatch({
           type: Constants.POST_SHOWN,

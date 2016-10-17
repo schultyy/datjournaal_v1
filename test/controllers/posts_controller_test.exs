@@ -3,9 +3,11 @@ defmodule Datjournaal.PostControllerTest do
 
   setup do
     upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
-    Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: false, user: 1, image: upload})
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: false, user: 1, image: upload})
       |> Datjournaal.Repo.insert
-    :ok
+    {:ok, user} = Datjournaal.ConnCase.create_user
+    {:ok, jwt, _full_claims} = user |> Guardian.encode_and_sign(:token)
+    {:ok, %{post: post, jwt: jwt}}
   end
 
   test "GET /", %{conn: conn} do
@@ -59,5 +61,78 @@ defmodule Datjournaal.PostControllerTest do
     get build_conn, "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :ip) == "12CA17B49AF2289436F303E0166030A21E525D266E209267433801A8FD4071A0"
+  end
+
+  test "POST /api/v1/posts returns 201", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
+    assert response.status == 201
+  end
+
+  test "POST /api/v1/posts creates a new post", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
+    assert length(Repo.all(Datjournaal.Post)) == 2
+  end
+
+  test "POST /api/v1/posts creates a new post with a slug", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
+    post_slug = response.resp_body
+      |> Poison.decode!
+      |> Map.get("slug")
+    post = Repo.get_by(Datjournaal.Post, slug: post_slug)
+    assert post.slug != nil
+  end
+
+  test "GET /api/v1/posts/:slug returns post by its slug", %{post: post_from_db, jwt: _jwt} do
+    response = get build_conn(), "/api/v1/posts/#{post_from_db.slug}"
+    post_from_service = response.resp_body
+            |> Poison.decode!
+    assert Map.get(post_from_service, "slug") == Map.get(post_from_db, :slug)
+  end
+
+  test "POST /api/v1/posts/:slug/hide returns 200 status code", %{post: post, jwt: jwt} do
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts/#{post.slug}/hide"
+    assert response.status == 200
+  end
+
+  test "POST /api/v1/posts/:slug/hide hides an existing post", %{post: post, jwt: jwt} do
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post conn, "/api/v1/posts/#{post.slug}/hide"
+
+    is_hidden = Repo.get(Datjournaal.Post, post.id) |> Map.get(:hidden)
+    assert is_hidden
+  end
+
+  test "POST /api/v1/posts/:slug/show returns 200 status code", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: true, user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts/#{post.slug}/show"
+    assert response.status == 200
+  end
+
+  test "POST /api/v1/posts/:id/show shows an existing post", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: true, user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post conn, "/api/v1/posts/#{post.slug}/show"
+
+    is_hidden = Repo.get(Datjournaal.Post, post.id) |> Map.get(:hidden)
+    assert !is_hidden
   end
 end

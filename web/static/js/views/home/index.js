@@ -19,17 +19,17 @@ class HomeIndexView extends React.Component {
   onTileDoubleClick(post) {
     const { dispatch } = this.props;
 
-    dispatch(push(`/posts/${post.id}`));
+    dispatch(push(`/${post.slug}`));
   }
 
   onHideClick(post) {
     const { dispatch } = this.props;
-    dispatch(PostActions.hidePost(post.id));
+    dispatch(PostActions.hidePost(post.slug));
   }
 
   onShowClick(post) {
     const { dispatch } = this.props;
-    dispatch(PostActions.showPost(post.id));
+    dispatch(PostActions.showPost(post.slug));
   }
 
   render() {
@@ -55,7 +55,7 @@ class HomeIndexView extends React.Component {
           <div className="row">
             {posts.map((post) =>{
               return (
-                <div className="col-xs-12" key={post.id}>
+                <div className="col-xs-12" key={post.slug}>
                   <TileComponent
                     post={post}
                     onDoubleClick={this.onTileDoubleClick.bind(this, post)}
