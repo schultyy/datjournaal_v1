@@ -5,7 +5,9 @@ defmodule Datjournaal.PostControllerTest do
     upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
     Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: false, user: 1, image: upload})
       |> Datjournaal.Repo.insert
-    :ok
+    {:ok, user} = Datjournaal.ConnCase.create_user
+    {:ok, jwt, _full_claims} = user |> Guardian.encode_and_sign(:token)
+    {:ok, %{user: user, jwt: jwt}}
   end
 
   test "GET /", %{conn: conn} do
@@ -59,5 +61,21 @@ defmodule Datjournaal.PostControllerTest do
     get build_conn, "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :ip) == "12CA17B49AF2289436F303E0166030A21E525D266E209267433801A8FD4071A0"
+  end
+
+  test "POST /api/v1/posts returns 201", %{user: user, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
+    assert response.status == 201
+  end
+
+  test "POST /api/v1/posts creates a new post", %{user: user, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
+    assert length(Repo.all(Datjournaal.Post)) == 2
   end
 end
