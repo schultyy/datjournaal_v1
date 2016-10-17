@@ -29,9 +29,9 @@ defmodule Datjournaal.PostController do
   def show(conn, %{"id" => id}) do
     log_user_access(conn)
     query = if Guardian.Plug.current_resource(conn) do
-      Repo.one(from p in Post, where: p.id == ^id)
+      Repo.one(from p in Post, where: p.slug == ^id)
     else
-      Repo.one(from p in Post, where: p.id == ^id and p.hidden == type(^false, :boolean))
+      Repo.one(from p in Post, where: p.slug == ^id and p.hidden == type(^false, :boolean))
     end
 
     case query do
@@ -79,13 +79,12 @@ defmodule Datjournaal.PostController do
     set_hidden_status(conn, id, false)
   end
 
-  defp set_hidden_status(conn, id, hidden_status) do
-    current_user = Guardian.Plug.current_resource(conn)
-    case Repo.one(from p in Post, where: p.id == ^id) do
+  defp set_hidden_status(conn, slug, hidden_status) do
+    case Repo.one(from p in Post, where: p.slug == ^slug) do
       nil ->
         conn
         |> put_status(:not_found)
-        |> render("not_found.json", id: id)
+        |> render("not_found.json", id: slug)
       post ->
         changeset = post |> Post.set_hidden_changeset(%{hidden: hidden_status})
         case Repo.update(changeset) do
@@ -108,11 +107,11 @@ defmodule Datjournaal.PostController do
         Datjournaal.Tweet.to_url(post_with_user)
         |> Datjournaal.Tweet.to_tweet(post_with_user.description)
         |> ExTwitter.update()
-      _ ->
+      _ -> {}
     end
   end
 
-  defp inject_unique_filename(%Plug.Upload{:filename => filename} = image) do
+  defp inject_unique_filename(%Plug.Upload{:filename => _filename} = image) do
     ext = Path.extname(image.filename)
     Map.put(image, :filename, "#{UUID.uuid4()}#{ext}")
   end
@@ -126,7 +125,8 @@ defmodule Datjournaal.PostController do
   end
 
   defp process_ip_address(conn) do
-    address = Plug.Conn.get_req_header(conn, "x-forwarded-for") |> List.first
+    Plug.Conn.get_req_header(conn, "x-forwarded-for")
+    |> List.first
     |> hash_address
   end
 

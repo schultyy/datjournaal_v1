@@ -15,7 +15,7 @@ export default function configRoutes(store) {
       <Route path="/" component={ShellContainer}>
         <IndexRoute component={HomeIndexView} />
         <Route path="/posts/new" component={PostsNew} />
-        <Route path="/posts/:id" component={PostDetailView} />
+        <Route path="/:slug" component={PostDetailView} />
       </Route>
     </Route>
   );

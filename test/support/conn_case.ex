@@ -41,4 +41,16 @@ defmodule Datjournaal.ConnCase do
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
+  def create_user do
+    user_params = %{
+      handle: "hansegang",
+      email: "hansegang@example.com",
+      password: "test1234!"
+    }
+
+    %Datjournaal.User{}
+    |> Datjournaal.User.changeset(user_params)
+    |> Datjournaal.Repo.insert
+  end
 end

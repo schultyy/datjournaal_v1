@@ -9,7 +9,7 @@ const initialState = {
 
 function replacePostInCollection(posts, toBeReplaced) {
   return posts.map(function(post) {
-    if(post.id === toBeReplaced.id) {
+    if(post.slug === toBeReplaced.slug) {
       return toBeReplaced;
     } else {
       return post;
