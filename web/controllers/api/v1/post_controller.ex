@@ -79,12 +79,12 @@ defmodule Datjournaal.PostController do
     set_hidden_status(conn, id, false)
   end
 
-  defp set_hidden_status(conn, id, hidden_status) do
-    case Repo.one(from p in Post, where: p.id == ^id) do
+  defp set_hidden_status(conn, slug, hidden_status) do
+    case Repo.one(from p in Post, where: p.slug == ^slug) do
       nil ->
         conn
         |> put_status(:not_found)
-        |> render("not_found.json", id: id)
+        |> render("not_found.json", id: slug)
       post ->
         changeset = post |> Post.set_hidden_changeset(%{hidden: hidden_status})
         case Repo.update(changeset) do
