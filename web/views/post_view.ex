@@ -28,7 +28,7 @@ defmodule Datjournaal.PostView do
     }
   end
 
-  defp post_with_file_url(post) do
+  def post_with_file_url(post) do
     filename = Datjournaal.Image.url({post.image, :images}, :thumb)
                 |> Path.basename
     image_url = "/uploads/" <> filename

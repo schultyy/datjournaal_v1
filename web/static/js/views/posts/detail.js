@@ -4,6 +4,8 @@ import PostActions              from '../../actions/posts';
 import SessionActions           from '../../actions/sessions';
 import { push }                 from 'react-router-redux';
 import { TileComponent }        from '../posts/tile';
+import DocMeta                  from 'react-doc-meta';
+import { absoluteUrlForPost }   from '../../utils';
 
 
 class PostDetailComponent extends React.Component {
@@ -26,6 +28,18 @@ class PostDetailComponent extends React.Component {
   onShowClick(post) {
     const { dispatch } = this.props;
     dispatch(PostActions.showPost(post.slug));
+  }
+
+  getMetaTags() {
+    const { post } = this.props;
+    if(!post) {
+      return {};
+    }
+    const meta = [
+      { property: "title", content: "Dat Journaal" },
+      { property: "description", content: post.description }
+    ];
+    return meta;
   }
 
   render() {
@@ -52,12 +66,17 @@ class PostDetailComponent extends React.Component {
       var onShowClick = null;
     }
 
+    const meta = this.getMetaTags();
+
     return (
-      <TileComponent
-        post={post}
-        onHide={onHideClick}
-        onShow={onShowClick}
-        isDetailMode={true} />
+      <div>
+        <DocMeta tags={meta} />
+        <TileComponent
+          post={post}
+          onHide={onHideClick}
+          onShow={onShowClick}
+          isDetailMode={true} />
+      </div>
     );
   }
 }

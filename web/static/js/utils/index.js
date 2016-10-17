@@ -101,6 +101,6 @@ export function renderErrorsFor(errors, ref) {
   });
 }
 
-export function absoluteUrlForPost(postId) {
-  return `${window.location.origin}/${postId}`;
+export function absoluteUrlForPost(post) {
+  return `${window.location.origin}/${post.slug}`;
 }

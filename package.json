@@ -17,20 +17,21 @@
     "bourbon-neat": "^1.8.0",
     "classnames": "^2.2.5",
     "es6-promise": "^3.2.1",
+    "history": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.14.1",
     "moment-timezone": "^0.5.5",
     "react": "^15.3.1",
     "react-bootstrap": "^0.30.3",
     "react-copy-to-clipboard": "^4.2.3",
+    "react-doc-meta": "^0.2.0",
     "react-dom": "^15.3.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.7.0",
     "react-router-redux": "^4.0.5",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
-    "redux-thunk": "^2.1.0",
-    "history": "^3.0.0"
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
