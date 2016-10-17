@@ -1375,10 +1375,6 @@ events@^1.0.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
-exenv@^1.2.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.1.tgz#75de1c8dee02e952b102aa17f8875973e0df14f9"
-
 expand-brackets@^0.1.4:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/expand-brackets/-/expand-brackets-0.1.5.tgz#df07284e342a807cd733ac5af72411e581d1177b"
@@ -2836,15 +2832,13 @@ react-copy-to-clipboard@^4.2.3:
   dependencies:
     copy-to-clipboard "^3"
 
-react-document-meta:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/react-document-meta/-/react-document-meta-2.0.3.tgz#35052d205a822d2780555ee73df58e600459519c"
+react-doc-meta:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-doc-meta/-/react-doc-meta-0.2.0.tgz#d646609dde476d3dcd3b2dcc10d61d50ae55c635"
   dependencies:
-    exenv "^1.2.0"
-    react-dom ">=0.14.0"
-    react-side-effect "^1.0.1"
+    react-side-effect "~0.3.0"
 
-react-dom@^15.3.1, react-dom@>=0.14.0:
+react-dom@^15.3.1:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
 
@@ -2886,9 +2880,9 @@ react-router@^2.7.0:
     loose-envify "^1.2.0"
     warning "^3.0.0"
 
-react-side-effect@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-1.0.2.tgz#98e354decdbf0281e4223d87852d33e345eda561"
+react-side-effect@~0.3.0:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-0.3.2.tgz#0daff9af35a3ec98db2036dc1683d63fbe147710"
   dependencies:
     fbjs "0.1.0-alpha.10"
 

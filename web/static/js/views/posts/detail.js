@@ -4,7 +4,7 @@ import PostActions              from '../../actions/posts';
 import SessionActions           from '../../actions/sessions';
 import { push }                 from 'react-router-redux';
 import { TileComponent }        from '../posts/tile';
-import DocumentMeta             from 'react-document-meta';
+import DocMeta                  from 'react-doc-meta';
 import { absoluteUrlForPost }   from '../../utils';
 
 
@@ -35,14 +35,10 @@ class PostDetailComponent extends React.Component {
     if(!post) {
       return {};
     }
-    const meta = {
-      title: "Dat Journaal",
-      description: post.description,
-      canonical: absoluteUrlForPost(post),
-      meta: {
-        charset: 'utf-8'
-      }
-    };
+    const meta = [
+      { property: "title", content: "Dat Journaal" },
+      { property: "description", content: post.description }
+    ];
     return meta;
   }
 
@@ -74,7 +70,7 @@ class PostDetailComponent extends React.Component {
 
     return (
       <div>
-        <DocumentMeta {...meta} />
+        <DocMeta tags={meta} />
         <TileComponent
           post={post}
           onHide={onHideClick}

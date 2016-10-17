@@ -4,7 +4,7 @@ import PostActions        from '../../actions/posts';
 import SessionActions     from '../../actions/sessions';
 import { push }           from 'react-router-redux';
 import { TileComponent }  from '../posts/tile';
-
+import DocMeta            from 'react-doc-meta';
 
 class HomeIndexView extends React.Component {
   componentDidMount() {
@@ -32,6 +32,15 @@ class HomeIndexView extends React.Component {
     dispatch(PostActions.showPost(post.slug));
   }
 
+  getMetaTags() {
+    const meta = [
+      { property: 'og:description', content: "" },
+      { property: 'og:image', content: "" },
+      { property: 'twitter:card', content: "" },
+    ];
+    return meta;
+  }
+
   render() {
     let { posts, currentUser } = this.props || [];
     const bindHideClickHandler = (post) => {
@@ -50,8 +59,11 @@ class HomeIndexView extends React.Component {
       }
     }
 
+    const meta = this.getMetaTags();
+
     return (
       <div className="container">
+          <DocMeta tags={meta} />
           <div className="row">
             {posts.map((post) =>{
               return (
