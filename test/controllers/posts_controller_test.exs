@@ -98,19 +98,41 @@ defmodule Datjournaal.PostControllerTest do
     assert Map.get(post_from_service, "slug") == Map.get(post_from_db, :slug)
   end
 
-  test "POST /api/v1/posts/:id/hide returns 200 status code", %{post: post, jwt: jwt} do
+  test "POST /api/v1/posts/:slug/hide returns 200 status code", %{post: post, jwt: jwt} do
     conn = build_conn()
       |> put_req_header("authorization", jwt)
     response = post conn, "/api/v1/posts/#{post.slug}/hide"
     assert response.status == 200
   end
 
-  test "POST /api/v1/posts/:id/hide hides an existing post", %{post: post, jwt: jwt} do
+  test "POST /api/v1/posts/:slug/hide hides an existing post", %{post: post, jwt: jwt} do
     conn = build_conn()
       |> put_req_header("authorization", jwt)
-    response = post conn, "/api/v1/posts/#{post.slug}/hide"
+    post conn, "/api/v1/posts/#{post.slug}/hide"
 
     is_hidden = Repo.get(Datjournaal.Post, post.id) |> Map.get(:hidden)
     assert is_hidden
+  end
+
+  test "POST /api/v1/posts/:slug/show returns 200 status code", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: true, user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts/#{post.slug}/show"
+    assert response.status == 200
+  end
+
+  test "POST /api/v1/posts/:id/show shows an existing post", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: true, user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post conn, "/api/v1/posts/#{post.slug}/show"
+
+    is_hidden = Repo.get(Datjournaal.Post, post.id) |> Map.get(:hidden)
+    assert !is_hidden
   end
 end
