@@ -8,6 +8,7 @@ defmodule Datjournaal.Post do
     field :description, :string
     field :hidden, :boolean
     field :image, Datjournaal.Image.Type
+    field :slug, :string
     belongs_to :user, Datjournaal.User
 
     timestamps()
@@ -23,11 +24,16 @@ defmodule Datjournaal.Post do
     |> cast(params, [:description])
     |> cast_attachments(params, [:image])
     |> validate_required([:image])
+    |> create_slug
   end
 
   def set_hidden_changeset(struct, params \\ %{}) do
     struct
     |> cast(params, [:hidden])
     |> validate_required([:hidden])
+  end
+
+  defp create_slug(changeset) do
+    put_change(changeset, :slug, UUID.uuid4(:hex))
   end
 end

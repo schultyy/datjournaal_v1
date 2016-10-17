@@ -63,7 +63,7 @@ defmodule Datjournaal.PostControllerTest do
     assert Map.get(stats, :ip) == "12CA17B49AF2289436F303E0166030A21E525D266E209267433801A8FD4071A0"
   end
 
-  test "POST /api/v1/posts returns 201", %{user: user, jwt: jwt} do
+  test "POST /api/v1/posts returns 201", %{user: _user, jwt: jwt} do
     upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
     conn = build_conn()
       |> put_req_header("authorization", jwt)
@@ -71,11 +71,23 @@ defmodule Datjournaal.PostControllerTest do
     assert response.status == 201
   end
 
-  test "POST /api/v1/posts creates a new post", %{user: user, jwt: jwt} do
+  test "POST /api/v1/posts creates a new post", %{user: _user, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
+    assert length(Repo.all(Datjournaal.Post)) == 2
+  end
+
+  test "POST /api/v1/posts creates a new post with a slug", %{user: _user, jwt: jwt} do
     upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
     conn = build_conn()
       |> put_req_header("authorization", jwt)
     response = post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
-    assert length(Repo.all(Datjournaal.Post)) == 2
+    post_id = response.resp_body
+      |> Poison.decode!
+      |> Map.get("id")
+    post = Repo.get(Datjournaal.Post, post_id)
+    assert post.slug != nil
   end
 end
