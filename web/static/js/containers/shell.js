@@ -21,6 +21,12 @@ class ShellContainer extends React.Component {
     dispatch(push("/posts/new"));
   }
 
+  onShowStats() {
+    const { dispatch } = this.props;
+
+    dispatch(push("/stats"));
+  }
+
   render() {
     const { currentUser, dispatch, currentPath } = this.props;
 
@@ -38,6 +44,7 @@ class ShellContainer extends React.Component {
         {currentPath == '/posts/new' ?
           null :
           <Footer currentUser={currentUser}
+                showStatsClick={this.onShowStats.bind(this)}
                 newPostClick={this.onCreateNewPost.bind(this)} />
         }
       </div>
