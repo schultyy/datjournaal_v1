@@ -22,14 +22,20 @@ class StatsView extends React.Component {
     const visitorsToday = stats.today.length;
     const visitorsThirtyDays = stats.thirty_days.length;
     return (
-      <div className="row stats">
-        <div className="col-xs-6 today">
-          <h1>Today</h1>
-          <p>{visitorsToday} visits</p>
-        </div>
-        <div className="col-xs-6 thirty-days">
-          <h1>Last 30 days</h1>
-          <p>{visitorsThirtyDays} visits</p>
+      <div className="container">
+        <div className="row stats">
+          <div className="col-xs-6">
+            <div className="today">
+              <h1>Today</h1>
+              <div>{visitorsToday} visits</div>
+            </div>
+          </div>
+          <div className="col-xs-6">
+            <div className="thirty-days">
+              <h1>Last 30 days</h1>
+              <p>{visitorsThirtyDays} visits</p>
+            </div>
+          </div>
         </div>
       </div>
     );
