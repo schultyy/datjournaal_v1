@@ -3,6 +3,7 @@ import { connect }      from 'react-redux';
 import SessionActions   from '../../actions/sessions';
 import StatsActions     from '../../actions/stats';
 import { push }         from 'react-router-redux';
+import fp               from 'lodash/fp';
 
 class StatsView extends React.Component {
   componentDidMount() {
@@ -17,10 +18,13 @@ class StatsView extends React.Component {
     }
   }
 
+  uniqueStats(stats) {
+    return fp.uniqBy((stat) => stat.ip)(stats);
+  }
+
   renderStats(stats) {
-    console.log(stats);
-    const visitorsToday = stats.today.length;
-    const visitorsThirtyDays = stats.thirty_days.length;
+    const visitorsToday = this.uniqueStats(stats.today).length;
+    const visitorsThirtyDays = this.uniqueStats(stats.thirty_days).length;
     return (
       <div className="container">
         <div className="row stats">
