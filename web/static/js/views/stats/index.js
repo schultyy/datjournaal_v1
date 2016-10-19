@@ -16,37 +16,34 @@ class StatsView extends React.Component {
       dispatch(push('/'));
     }
   }
-  renderStats() {
-    const { stats } = this.props;
+
+  renderStats(stats) {
     console.log(stats);
-    function isToday(otherDate) {
-      var today = new Date();
-      return otherDate.getDate() == today.getDate() &&
-        otherDate.getMonth() == today.getMonth() && otherDate.getFullYear() == today.getFullYear();
-    }
-    // const todaysVisits = stats.map(stat => {
-    //   if(isToday(Date.parse(stat.inserted_at))) {
-    //     return stat;
-    //   }
-    //   return null;
-    // });
-    // console.log(todaysVisits);
+    const visitorsToday = stats.today.length;
+    const visitorsThirtyDays = stats.thirty_days.length;
     return (
-      <div>
-        <h1>Datjournaal's activity</h1>
+      <div className="row stats">
+        <div className="col-xs-6 today">
+          <h1>Today</h1>
+          <p>{visitorsToday} visits</p>
+        </div>
+        <div className="col-xs-6 thirty-days">
+          <h1>Last 30 days</h1>
+          <p>{visitorsThirtyDays} visits</p>
+        </div>
       </div>
     );
   }
+
   render() {
-    const { fetching } = this.props;
-    const renderStats = this.renderStats.bind(this);
+    const { fetching, stats } = this.props;
     return (
       <div>
         {
           fetching ?
             <div>Loading stats</div>
           :
-            renderStats()
+            this.renderStats(stats)
         }
       </div>
     );
