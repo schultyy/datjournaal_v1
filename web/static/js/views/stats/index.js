@@ -22,23 +22,22 @@ class StatsView extends React.Component {
     return fp.uniqBy((stat) => stat.ip)(stats);
   }
 
-  renderStats(stats) {
-    const visitorsToday = this.uniqueStats(stats.today).length;
-    const visitorsThirtyDays = this.uniqueStats(stats.thirty_days).length;
+  renderStats(headline, visitorsToday, visitorsThirtyDays) {
     return (
-      <div className="container">
-        <div className="row stats">
-          <div className="col-xs-6">
-            <div className="today">
-              <h1>Today</h1>
-              <div>{visitorsToday} visits</div>
-            </div>
+      <div className="row stats">
+        <div className="col-xs-12">
+          <h1>{headline}</h1>
+        </div>
+        <div className="col-xs-6">
+          <div className="today">
+            <h3>Today</h3>
+            <div>{visitorsToday} visits</div>
           </div>
-          <div className="col-xs-6">
-            <div className="thirty-days">
-              <h1>Last 30 days</h1>
-              <p>{visitorsThirtyDays} visits</p>
-            </div>
+        </div>
+        <div className="col-xs-6">
+          <div className="thirty-days">
+            <h3>Last 30 days</h3>
+            <p>{visitorsThirtyDays} visits</p>
           </div>
         </div>
       </div>
@@ -47,14 +46,24 @@ class StatsView extends React.Component {
 
   render() {
     const { fetching, stats } = this.props;
+    if(fetching) {
+      return (
+        <div className="container">
+          <div>Loading stats</div>
+        </div>
+      );
+    }
+
+    const uniqueVisitorsToday = this.uniqueStats(stats.today).length;
+    const uniqueVisitorsThirtyDays = this.uniqueStats(stats.thirty_days).length;
+
+    const overallVisitorsToday = stats.today.length;
+    const overallVisitorsThirtyDays = stats.thirty_days.length;
+
     return (
-      <div>
-        {
-          fetching ?
-            <div>Loading stats</div>
-          :
-            this.renderStats(stats)
-        }
+      <div className="container">
+      {this.renderStats("Unique Visits", uniqueVisitorsToday, uniqueVisitorsThirtyDays)}
+      {this.renderStats("Overall Visits", overallVisitorsToday, overallVisitorsThirtyDays)}
       </div>
     );
   }
