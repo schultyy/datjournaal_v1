@@ -19,7 +19,8 @@ defmodule Datjournaal.Mixfile do
   def application do
     [mod: {Datjournaal, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :arc_ecto, :guardian, :arc, :comeonin, :extwitter, :oauth]]
+                    :phoenix_ecto, :postgrex, :arc_ecto, :guardian, :arc, :comeonin,
+                    :extwitter, :oauth, :calendar]]
   end
 
   # Specifies which paths to compile per environment.
@@ -45,7 +46,8 @@ defmodule Datjournaal.Mixfile do
      {:uuid, "~> 1.1"},
      {:exrm, "~> 1.0.8"},
      {:oauth, github: "tim/erlang-oauth"},
-     {:extwitter, "~> 0.6"}]
+     {:extwitter, "~> 0.6"},
+     {:calendar, "~> 0.14.2"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

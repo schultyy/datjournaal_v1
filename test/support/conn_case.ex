@@ -42,15 +42,23 @@ defmodule Datjournaal.ConnCase do
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
-  def create_user do
+  def create_user() do
     user_params = %{
-      handle: "hansegang",
-      email: "hansegang@example.com",
-      password: "test1234!"
+      handle: "tester",
+      email: "tester@example.org",
+      password: "tester1234!"
     }
+    changeset = Datjournaal.User.changeset(%Datjournaal.User{}, user_params)
+    Datjournaal.Repo.insert(changeset)
+  end
 
-    %Datjournaal.User{}
-    |> Datjournaal.User.changeset(user_params)
+  def create_stats() do
+    Datjournaal.UserStat.changeset(%Datjournaal.UserStat{}, %{path: "/", ip: "127.0.0.1"})
+    |> Datjournaal.Repo.insert
+  end
+
+  def create_stats(inserted_at) do
+    %Datjournaal.UserStat{path: "/", ip: "127.0.0.1", inserted_at: inserted_at}
     |> Datjournaal.Repo.insert
   end
 end
