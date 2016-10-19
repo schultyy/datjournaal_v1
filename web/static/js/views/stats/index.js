@@ -31,13 +31,13 @@ class StatsView extends React.Component {
         <div className="col-xs-6">
           <div className="today">
             <h3>Today</h3>
-            <div>{visitorsToday} visits</div>
+            <div className="visitor-count">{visitorsToday} visits</div>
           </div>
         </div>
         <div className="col-xs-6">
           <div className="thirty-days">
             <h3>Last 30 days</h3>
-            <p>{visitorsThirtyDays} visits</p>
+            <div className="visitor-count">{visitorsThirtyDays} visits</div>
           </div>
         </div>
       </div>
