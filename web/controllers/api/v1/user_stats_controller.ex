@@ -8,7 +8,34 @@ defmodule Datjournaal.UserStatsController do
   def index(conn, _params) do
     today_query = from st in UserStat, where: st.inserted_at > ^yesterday and st.logged_in == false
     thirty_days_query = from st in UserStat, where: st.inserted_at > ^thirty_days_ago and st.logged_in == false
-    render(conn, "index.json", today: Repo.all(today_query), thirty_days: Repo.all(thirty_days_query))
+    today = Repo.all(today_query)
+            |> to_local_time
+            |> clean
+    render(conn, "index.json", today: today, thirty_days: Repo.all(thirty_days_query) |> to_local_time)
+  end
+
+  defp to_local_time([]) do
+    []
+  end
+
+  defp to_local_time([stat | stats]) do
+    [convert(stat)] ++ to_local_time(stats)
+  end
+
+  defp convert(stat) do
+    {:ok, tuple} = stat
+            |> Map.get(:inserted_at)
+            |> Ecto.DateTime.dump
+    converted_time = tuple |> Calendar.DateTime.from_erl!("Europe/Berlin")
+    Map.put(stat, :inserted_at, converted_time)
+  end
+
+  defp clean(stats) do
+    Enum.filter(stats, fn (x) ->
+      inserted_at = Map.get(x, :inserted_at) |> Map.get(:day)
+      now = Calendar.DateTime.now!("Europe/Berlin") |> Map.get(:day)
+      inserted_at == now
+    end)
   end
 
   defp yesterday do
