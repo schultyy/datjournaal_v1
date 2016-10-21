@@ -52,8 +52,8 @@ defmodule Datjournaal.ConnCase do
     Datjournaal.Repo.insert(changeset)
   end
 
-  def create_stats() do
-    Datjournaal.UserStat.changeset(%Datjournaal.UserStat{}, %{path: "/", ip: "127.0.0.1", logged_in: false})
+  def create_stats(%{logged_in: logged_in}) do
+    Datjournaal.UserStat.changeset(%Datjournaal.UserStat{}, %{path: "/", ip: "127.0.0.1", logged_in: logged_in})
     |> Datjournaal.Repo.insert
   end
 

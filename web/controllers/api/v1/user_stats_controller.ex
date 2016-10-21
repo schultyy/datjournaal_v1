@@ -6,8 +6,8 @@ defmodule Datjournaal.UserStatsController do
   alias Datjournaal.{Repo, UserStat}
 
   def index(conn, _params) do
-    today_query = from st in UserStat, where: st.inserted_at > ^yesterday
-    thirty_days_query = from st in UserStat, where: st.inserted_at > ^thirty_days_ago
+    today_query = from st in UserStat, where: st.inserted_at > ^yesterday and st.logged_in == false
+    thirty_days_query = from st in UserStat, where: st.inserted_at > ^thirty_days_ago and st.logged_in == false
     render(conn, "index.json", today: Repo.all(today_query), thirty_days: Repo.all(thirty_days_query))
   end
 
