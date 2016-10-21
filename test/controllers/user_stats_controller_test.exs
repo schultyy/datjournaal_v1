@@ -3,8 +3,11 @@ defmodule Datjournaal.UserStatsControllerTest do
 
   setup do
     {:ok, user} = Datjournaal.ConnCase.create_user()
-    {:ok, _stats} = Datjournaal.ConnCase.create_stats()
-    {:ok, _stats} = Datjournaal.ConnCase.create_stats()
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false})
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false})
+
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true})
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true})
 
     yesterday = Calendar.DateTime.now_utc()
             |> Calendar.Date.add!(-1)
@@ -54,7 +57,7 @@ defmodule Datjournaal.UserStatsControllerTest do
     assert response.status == 200
   end
 
-  test "GET /api/v1/userstats as authenticated user delivers stats for today", %{user: _user, jwt: jwt, oldest_date: _d} do
+  test "GET /api/v1/userstats as authenticated user delivers stats for today without logged_in user stats", %{user: _user, jwt: jwt, oldest_date: _d} do
     response = build_conn()
       |> put_req_header("authorization", jwt)
       |> get("/api/v1/user_stats")
@@ -65,7 +68,7 @@ defmodule Datjournaal.UserStatsControllerTest do
     assert length(stats) == 2
   end
 
-  test "GET /api/v1/userstats as authenticated user delivers stats for the last 30 days", %{user: _user, jwt: jwt, oldest_date: _d} do
+  test "GET /api/v1/userstats as authenticated user delivers stats for the last 30 days without logged_in user stats", %{user: _user, jwt: jwt, oldest_date: _d} do
     response = build_conn()
       |> put_req_header("authorization", jwt)
       |> get("/api/v1/user_stats")

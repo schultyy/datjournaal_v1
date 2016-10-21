@@ -52,13 +52,13 @@ defmodule Datjournaal.ConnCase do
     Datjournaal.Repo.insert(changeset)
   end
 
-  def create_stats() do
-    Datjournaal.UserStat.changeset(%Datjournaal.UserStat{}, %{path: "/", ip: "127.0.0.1"})
+  def create_stats(%{logged_in: logged_in}) do
+    Datjournaal.UserStat.changeset(%Datjournaal.UserStat{}, %{path: "/", ip: "127.0.0.1", logged_in: logged_in})
     |> Datjournaal.Repo.insert
   end
 
   def create_stats(inserted_at) do
-    %Datjournaal.UserStat{path: "/", ip: "127.0.0.1", inserted_at: inserted_at}
+    %Datjournaal.UserStat{path: "/", ip: "127.0.0.1", inserted_at: inserted_at, logged_in: false}
     |> Datjournaal.Repo.insert
   end
 end

@@ -119,8 +119,12 @@ defmodule Datjournaal.PostController do
 
   defp log_user_access(conn) do
     path = conn.request_path
+    logged_in = case Guardian.Plug.current_resource(conn) do
+      nil -> false
+      _ -> true
+    end
     ip_address = conn |> process_ip_address
-    changeset = UserStat.changeset(%UserStat{}, %{path: path, ip: ip_address})
+    changeset = UserStat.changeset(%UserStat{}, %{path: path, ip: ip_address, logged_in: logged_in})
     Repo.insert(changeset)
   end
 

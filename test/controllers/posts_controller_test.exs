@@ -37,6 +37,20 @@ defmodule Datjournaal.PostControllerTest do
     assert Map.get(stats, :path) == "/api/v1/posts"
   end
 
+  test "GET / as anonymous user logs one access with logged_in = false" do
+    get build_conn, "/api/v1/posts"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
+    assert Map.get(stats, :logged_in) == false
+  end
+
+  test "GET / as authenticated user logs one access with route '/' and logged_in = true", %{post: _post, jwt: jwt} do
+    conn = build_conn
+    |> put_req_header("authorization", jwt)
+    get conn, "/api/v1/posts"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
+    assert Map.get(stats, :logged_in) == true
+  end
+
   test "GET / logs access with hashed remote IP address" do
     get build_conn, "/api/v1/posts"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
@@ -55,6 +69,20 @@ defmodule Datjournaal.PostControllerTest do
     get build_conn, "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :path) == "/api/v1/posts/1"
+  end
+
+  test "GET /posts/:id as anonymous user logs one access with logged_in = false" do
+    get build_conn, "/api/v1/posts/1"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
+    assert Map.get(stats, :logged_in) == false
+  end
+
+  test "GET /posts/:id as authenticated user logs one access with route '/' and logged_in = true", %{post: _post, jwt: jwt} do
+    conn = build_conn
+    |> put_req_header("authorization", jwt)
+    get conn, "/api/v1/posts/1"
+    stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
+    assert Map.get(stats, :logged_in) == true
   end
 
   test "GET /posts/:id logs access with hashed remote IP address" do
