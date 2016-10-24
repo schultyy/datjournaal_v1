@@ -12,7 +12,6 @@ class PostDetailComponent extends React.Component {
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
     const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
-    dispatch(PostActions.fetchPosts());
     if (phoenixAuthToken && !currentUser) {
       dispatch(SessionActions.currentUser());
     }
