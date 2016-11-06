@@ -34,8 +34,7 @@ class ShellContainer extends React.Component {
       <div>
         <div className="application-container">
           <Header
-            currentUser={currentUser}
-            dispatch={dispatch}/>
+            currentUser={currentUser} />
 
           <div className="main-container">
             {this.props.children}
@@ -44,6 +43,7 @@ class ShellContainer extends React.Component {
         {currentPath == '/posts/new' ?
           null :
           <Footer currentUser={currentUser}
+                dispatch={dispatch}
                 showStatsClick={this.onShowStats.bind(this)}
                 newPostClick={this.onCreateNewPost.bind(this)} />
         }

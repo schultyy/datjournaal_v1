@@ -16,22 +16,6 @@ export default class Header extends React.Component {
     );
   }
 
-  _renderSignOutLink() {
-    if (!this.props.currentUser) {
-      return false;
-    }
-
-    return (
-      <a href="#" onClick={::this._handleSignOutClick}>Sign out</a>
-    );
-  }
-
-  _handleSignOutClick(e) {
-    e.preventDefault();
-
-    this.props.dispatch(SessionActions.signOut());
-  }
-
   render() {
     return (
       <header className="main-header">
@@ -46,9 +30,6 @@ export default class Header extends React.Component {
             </li>
             <li>
               <div className="menu-entry">{this._renderCurrentUser()}</div>
-            </li>
-            <li>
-              <div className="menu-entry">{this._renderSignOutLink()}</div>
             </li>
           </ul>
         </nav>
