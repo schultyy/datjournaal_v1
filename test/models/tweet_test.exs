@@ -21,12 +21,18 @@ defmodule Datjournaal.TweetTest do
     text = Tweet.to_tweet(url, post.text)
           |> String.split("\n")
           |> List.first
-    assert text == tweet_text
+    assert text == "📸 " <> tweet_text
   end
 
   test "Tweet with short text does not contain three dots" do
     post = %{slug: UUID.uuid4(:hex), text: "Amsterdam Centraal, mit Zug"}
     url = post |> Tweet.to_url
     assert String.contains?(Tweet.to_tweet(url, post.text), "...") == false
+  end
+
+  test "Tweet starts with camera emoji" do
+    post = %{slug: UUID.uuid4(:hex), text: "Amsterdam Centraal, mit Zug"}
+    url = post |> Tweet.to_url
+    assert String.first(Tweet.to_tweet(url, post.text)) == "📸"
   end
 end
