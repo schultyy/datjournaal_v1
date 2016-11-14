@@ -4,7 +4,7 @@ import SessionActions from '../actions/sessions';
 import PostActions    from '../actions/posts';
 
 export default class Header extends React.Component {
-  _renderCurrentUser() {
+  renderCurrentUser() {
     const { currentUser } = this.props;
 
     if (!currentUser) {
@@ -12,7 +12,7 @@ export default class Header extends React.Component {
     }
 
     return (
-        <span>{currentUser.handle}</span>
+      <span>{currentUser.handle}</span>
     );
   }
 
@@ -29,7 +29,14 @@ export default class Header extends React.Component {
               </div>
             </li>
             <li>
-              <div className="menu-entry">{this._renderCurrentUser()}</div>
+              <div className="menu-entry">
+                <Link to="/imprint">
+                  Imprint
+                </Link>
+              </div>
+            </li>
+            <li>
+              <div className="menu-entry">{this.renderCurrentUser()}</div>
             </li>
           </ul>
         </nav>
