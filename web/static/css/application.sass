@@ -6,7 +6,7 @@ $font-color: $color-secondary-2-4
 $background-color: $color-primary-4
 
 *
-  color: $color-secondary-2-4
+  color: $font-color
 
 body
   background-color: $background-color
@@ -106,18 +106,19 @@ body
 
 .footer
   height: $footer-height
-  background-color: $color-secondary-1-0
+  background-color: white
+  border: 0.5px solid $color-secondary-1-0
   position: fixed
   bottom: 0px
   width: 100%
-  color: $font-color
   font-weight: bolder
   button
     margin: 0px 1px
     padding: 0px 5px
     min-width: 40px
     height: 40px
-    border: 1px solid $font-color
+    border: 0.5px solid $font-color
+    border-radius: 2px
     background-color: transparent
     text-align: center
     vertical-align: middle
