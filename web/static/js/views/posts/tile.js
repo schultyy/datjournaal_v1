@@ -16,7 +16,8 @@ export class TileComponent extends React.Component {
       onDoubleClick,
       isDetailMode,
       onHide,
-      onShow
+      onShow,
+      isFirst
     } = this.props;
     let date = moment(`${post.inserted_at}Z`).tz('Europe/Berlin').format('DD.MM.YYYY HH:mm');
 
@@ -31,8 +32,12 @@ export class TileComponent extends React.Component {
 
     const tileClasses = cx({
       tile: true,
-      isHidden: postIsHidden
+      isHidden: postIsHidden,
+      'detail-view': isDetailMode,
+      'is-first': isFirst
     });
+
+    console.log(tileClasses);
 
     return (
       <div className={tileClasses} onDoubleClick={onDoubleClick}>
