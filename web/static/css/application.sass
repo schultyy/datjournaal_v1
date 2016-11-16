@@ -4,6 +4,8 @@ $footer-height: 40px
 $header-font-size: 18px
 $font-color: $color-secondary-2-4
 $background-color: $color-primary-4
+$header-background-color: rgb(255, 255, 255)
+$context-menu-font-color: #FFFFFF
 $tile-background-color: #FFFFFF
 $form-background-color: #FFFFFF
 $imprint-background-color: #FFFFFF
@@ -15,7 +17,7 @@ body
   background-color: $background-color
 
 .main-header
-  background-color: rgb(255, 255, 255)
+  background-color: $header-background-color
   border-bottom: 0.5px solid $background-color
   color: $font-color
   height: $header-height
@@ -80,7 +82,8 @@ body
       padding-left: 5px
       margin-top: 5px
       color: $font-color
-      background-color: $color-secondary-1-2
+      background-color: $header-background-color
+      border: 0.5px solid $font-color
       &:hover
         text-decoration: underline
   img
