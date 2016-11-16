@@ -37,8 +37,6 @@ export class TileComponent extends React.Component {
       'is-first': isFirst
     });
 
-    console.log(tileClasses);
-
     return (
       <div className={tileClasses} onDoubleClick={onDoubleClick}>
         <div>
