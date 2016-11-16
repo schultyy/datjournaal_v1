@@ -2,12 +2,23 @@
 $header-height: 50px
 $footer-height: 40px
 $header-font-size: 18px
+$font-color: $color-secondary-2-4
+$background-color: $color-primary-4
+$header-background-color: rgb(255, 255, 255)
+$context-menu-font-color: #FFFFFF
+$tile-background-color: #FFFFFF
+$form-background-color: #FFFFFF
+$imprint-background-color: #FFFFFF
+
+*
+  color: $font-color
 
 body
-  background-color: rgb(240, 240, 240)
+  background-color: $background-color
 
 .main-header
-  background-color: $color-secondary-1-0
+  background-color: $header-background-color
+  border-bottom: 0.5px solid $background-color
   color: $font-color
   height: $header-height
   font-size: $header-font-size
@@ -22,6 +33,12 @@ body
 .isHidden
   img
     opacity: 0.4
+.is-first
+  margin-top: 30px
+.detail-view
+  margin-top: 0px
+  @media(min-width: 750px)
+    margin-top: 30px
 .tile
   margin-bottom: 30px
   display: block
@@ -29,9 +46,7 @@ body
   margin-left: auto
   margin-right: auto
   border: 1px solid #f7f7f7
-  background-color: #ffffff
-  &:first-child
-    margin-top: 30px
+  background-color: $tile-background-color
   .date
     margin-top: 5px
     margin-left: 10px
@@ -67,7 +82,8 @@ body
       padding-left: 5px
       margin-top: 5px
       color: $font-color
-      background-color: $color-secondary-1-2
+      background-color: $header-background-color
+      border: 0.5px solid $font-color
       &:hover
         text-decoration: underline
   img
@@ -86,6 +102,12 @@ body
   font-style: italic
 
 .new-post-form
+  width: 100%
+  margin: 5px 0px
+  padding-bottom: 10px
+  border: 1px solid #ffffff
+  border-radius: 2px
+  background-color: $form-background-color
   .post-description
     outline: none
     box-shadow: none
@@ -101,18 +123,19 @@ body
 
 .footer
   height: $footer-height
-  background-color: $color-secondary-1-0
+  background-color: white
+  border: 0.5px solid $color-secondary-1-0
   position: fixed
   bottom: 0px
   width: 100%
-  color: $font-color
   font-weight: bolder
   button
     margin: 0px 1px
     padding: 0px 5px
     min-width: 40px
     height: 40px
-    border: 1px solid $font-color
+    border: 0.5px solid $font-color
+    border-radius: 2px
     background-color: transparent
     text-align: center
     vertical-align: middle
@@ -128,7 +151,8 @@ body
 
 .stats
   background-color: #FFFFFF
-  margin-top: 15px
+  width: 100%
+  margin: 5px 0px
   text-align: center
   h1
     font-size: 16px
@@ -138,7 +162,10 @@ body
     font-size: 12px
 
 .imprint
-  margin: 0px 15px
+  width: 100%
+  margin: 5px 0px
+  padding: 5px
+  background-color: $imprint-background-color
   .contact
     margin-top: 15px
     font-size: 16px

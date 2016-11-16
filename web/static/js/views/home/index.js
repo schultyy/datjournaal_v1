@@ -65,7 +65,7 @@ class HomeIndexView extends React.Component {
       <div className="container">
           <DocMeta tags={meta} />
           <div className="row">
-            {posts.map((post) =>{
+            {posts.map((post, index) =>{
               return (
                 <div className="col-xs-12" key={post.slug}>
                   <TileComponent
@@ -73,6 +73,7 @@ class HomeIndexView extends React.Component {
                     onDoubleClick={this.onTileDoubleClick.bind(this, post)}
                     onHide={bindHideClickHandler(post)}
                     onShow={bindShowClickHandler(post)}
+                    isFirst={index === 0}
                     isDetailMode={false} />
                 </div>
               );
