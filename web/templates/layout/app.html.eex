@@ -14,7 +14,7 @@
     <%= if @post != nil do %>
       <meta name="twitter:title" content="<%= Datjournaal.Post.titleize(@post) %>">
       <meta name="twitter:card" content="summary_large_image">
-      <meta name="twitter:image" content="https://datjournaal.de/<%= @post.slug %>">
+      <meta property="twitter:image" content="https://datjournaal.de<%= Datjournaal.PostView.post_with_file_url(@post) |> Map.get(:image) %>" />
       <meta property="twitter:description" content="<%= @post.description %>" />
       <link rel="canonical" href="https://datjournaal.de/<%= @post.slug %>">
       <meta property="og:description" content="<%= @post.description %>" />
