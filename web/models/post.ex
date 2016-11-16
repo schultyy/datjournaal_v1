@@ -14,6 +14,11 @@ defmodule Datjournaal.Post do
     timestamps()
   end
 
+  def titleize(post) do
+    postfix = "..."
+    String.slice(post.description, 0, 140 - String.length(postfix)) <> postfix 
+  end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """

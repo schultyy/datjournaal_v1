@@ -12,8 +12,10 @@
     <meta name="twitter:site" content="@ganzefolge" />
     <meta name="twitter:creator" content="@ganzefolge" />
     <%= if @post != nil do %>
-      <meta name="twitter:card" content="summary" />
-      <link rel="canonical" href="https://datjournaal.de/<%= @post.slug %>" >
+      <meta name="twitter:title" content="<%= Datjournaal.Post.titleize(@post) %>">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:image" content="https://datjournaal.de/<%= @post.slug %>">
+      <link rel="canonical" href="https://datjournaal.de/<%= @post.slug %>">
       <meta property="og:description" content="<%= @post.description %>" />
       <meta property="og:image" content="https://datjournaal.de<%= Datjournaal.PostView.post_with_file_url(@post) |> Map.get(:image) %>" />
     <% end %>
