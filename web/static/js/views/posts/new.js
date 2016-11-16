@@ -95,22 +95,23 @@ class NewPostComponent extends React.Component {
 
     const imagePreviewClasses = cx({
       'collapse': !previewImage,
-      'col-xs-4': true,
-      'col-md-4': true,
+      'col-xs-12': true,
+      'col-md-12': true,
       'image-preview': true
     });
 
     const descriptionFieldClasses = cx({
       'col-xs-12': !previewImage,
       'col-md-12': !previewImage,
-      'col-xs-8': previewImage,
-      'col-md-8': previewImage,
-      'form-group': true
+      'col-xs-12': previewImage,
+      'col-md-12': previewImage,
+      'form-group': true,
+      'description-container': true
     });
 
     return (
       <div className="container new-post-form">
-        <h3>Create a new post</h3>
+        <h3>Publish a new post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
         <form>
           <div className="row">
@@ -119,16 +120,16 @@ class NewPostComponent extends React.Component {
             </div>
             <div className={descriptionFieldClasses}>
               <label htmlFor="post-description">Description</label>
-              <textarea ref="description" rows="3" className="post-description form-control">
+              <textarea ref="description" rows="5" className="post-description form-control">
               </textarea>
             </div>
             <div className="form-group col-xs-12">
               <label htmlFor="post-file">Pick a file</label>
-              <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} className="form-control" />
+              <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
             </div>
             <div className="form-group col-xs-12">
               <label htmlFor="publish-on-twitter">Publish on Twitter</label>
-              <input type="checkbox" ref="twitter" className="form-control" />
+              <input type="checkbox" ref="twitter" />
             </div>
             <div className="col-xs-12">
               <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
