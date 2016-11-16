@@ -103,8 +103,8 @@ class NewPostComponent extends React.Component {
     const descriptionFieldClasses = cx({
       'col-xs-12': !previewImage,
       'col-md-12': !previewImage,
-      'col-xs-8': previewImage,
-      'col-md-8': previewImage,
+      'col-xs-12': previewImage,
+      'col-md-12': previewImage,
       'form-group': true
     });
 
