@@ -28,8 +28,8 @@ export default class Footer extends React.Component {
     return (
       <div className="footer">
         <ul className="list-inline">
-          <li><button onClick={newPostClick}>📸</button></li>
-          <li><button className="show-stats" onClick={showStatsClick}>📈</button></li>
+          <li><button className="new-post" onClick={newPostClick}>📸</button></li>
+          <li><button className="stats" onClick={showStatsClick}>📈</button></li>
           {this.renderSignOutLink()}
         </ul>
       </div>
