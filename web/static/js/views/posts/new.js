@@ -128,7 +128,7 @@ class NewPostComponent extends React.Component {
             </div>
             <div className="form-group col-xs-12">
               <label htmlFor="publish-on-twitter">Publish on Twitter</label>
-              <input type="checkbox" ref="twitter" className="form-control" />
+              <input type="checkbox" ref="twitter" />
             </div>
             <div className="col-xs-12">
               <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
