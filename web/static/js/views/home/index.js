@@ -38,7 +38,8 @@ class HomeIndexView extends React.Component {
       { property: 'og:image', content: "" },
       { property: 'twitter:card', content: "" },
       { property: 'twitter:image', content: "" },
-      { property: 'twitter:title', content: "" }
+      { property: 'twitter:title', content: "" },
+      { property: 'twitter:description', content: "" }
     ];
     return meta;
   }
