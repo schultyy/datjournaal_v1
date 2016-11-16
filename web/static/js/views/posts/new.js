@@ -105,12 +105,13 @@ class NewPostComponent extends React.Component {
       'col-md-12': !previewImage,
       'col-xs-12': previewImage,
       'col-md-12': previewImage,
-      'form-group': true
+      'form-group': true,
+      'description-container': true
     });
 
     return (
       <div className="container new-post-form">
-        <h3>Create a new post</h3>
+        <h3>Publish a new post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
         <form>
           <div className="row">
