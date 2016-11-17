@@ -1,7 +1,7 @@
 import React, {PropTypes}   from 'react';
 import { connect }          from 'react-redux';
 import { Link }             from 'react-router';
-
+import cx                   from 'classnames';
 import { setDocumentTitle } from '../../utils';
 import Actions              from '../../actions/sessions';
 
@@ -31,6 +31,14 @@ class SessionsNew extends React.Component {
   }
 
   render() {
+    const { signingIn } = this.props;
+
+    const buttonClasses = cx({
+      "btn": true,
+      "btn-info": true,
+      "disabled": signingIn
+    });
+
     return (
       <div>
         <div className="row">
@@ -47,7 +55,7 @@ class SessionsNew extends React.Component {
               <div className="field">
                 <input ref="password" type="password" placeholder="Password" required="true" />
               </div>
-              <button type="submit" className="btn btn-info">Sign in</button>
+              <button type="submit" className={buttonClasses}>Sign in</button>
             </form>
           </main>
         </div>
@@ -58,6 +66,7 @@ class SessionsNew extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    signingIn: state.session.signingIn,
     currentUser: state.session.currentUser,
     errors: state.session.errors
   };
