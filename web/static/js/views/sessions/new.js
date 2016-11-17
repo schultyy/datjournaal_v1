@@ -10,7 +10,7 @@ class SessionsNew extends React.Component {
     setDocumentTitle('Sign in');
   }
 
-  _handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
 
     const { email, password } = this.refs;
@@ -19,14 +19,13 @@ class SessionsNew extends React.Component {
     dispatch(Actions.signIn(email.value, password.value));
   }
 
-  _renderError() {
-    const { error } = this.props;
-
-    if (!error) return false;
+  renderError() {
+    const { errors } = this.props;
+    if (!errors) return false;
 
     return (
       <div className="error">
-        {error}
+        {errors}
       </div>
     );
   }
@@ -40,8 +39,8 @@ class SessionsNew extends React.Component {
               <div className="logo">dat Journaal</div>
               <h3>Login</h3>
             </header>
-            <form onSubmit={::this._handleSubmit}>
-              {::this._renderError()}
+            <form onSubmit={::this.handleSubmit}>
+              {::this.renderError()}
               <div className="field">
                 <input ref="email" type="Email" placeholder="Email" required="true" />
               </div>
@@ -57,8 +56,11 @@ class SessionsNew extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => (
-  state.session
-);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.session.currentUser,
+    errors: state.session.errors
+  };
+};
 
 export default connect(mapStateToProps)(SessionsNew);
