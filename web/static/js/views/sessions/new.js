@@ -48,7 +48,7 @@ class SessionsNew extends React.Component {
               <div className="field">
                 <input ref="password" type="password" placeholder="Password" required="true" />
               </div>
-              <button type="submit">Sign in</button>
+              <button type="submit" className="btn btn-info">Sign in</button>
             </form>
           </main>
         </div>
