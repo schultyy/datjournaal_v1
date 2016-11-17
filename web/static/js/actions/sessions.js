@@ -48,11 +48,12 @@ const Actions = {
           password: password,
         },
       };
-
+      dispatch({type: Constants.SIGNING_IN});
       httpPost('/api/v1/sessions', data)
       .then((data) => {
         localStorage.setItem('phoenixAuthToken', data.jwt);
         setCurrentUser(dispatch, data.user);
+        dispatch({type: Constants.SIGNED_IN});
         dispatch(push('/'));
       })
       .catch((error) => {

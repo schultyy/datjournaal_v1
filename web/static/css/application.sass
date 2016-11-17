@@ -16,6 +16,11 @@ $imprint-background-color: #FFFFFF
 body
   background-color: $background-color
 
+.logo
+  font-size: $header-font-size + 2px
+  font-family: "Calisto MT", "Book Antiqua"
+  font-style: italic
+
 .main-header
   background-color: $header-background-color
   border-bottom: 0.5px solid $background-color
@@ -27,10 +32,6 @@ body
     font-size: $header-font-size
     height: 100%
     padding: 5px
-    .title
-      font-size: $header-font-size + 2px
-      font-family: "Calisto MT", "Book Antiqua"
-      font-style: italic
   a
     color: $font-color
 
@@ -188,3 +189,36 @@ body
   .contact
     margin-top: 15px
     font-size: 16px
+
+.login
+  $control-width: 250px
+  $input-font-size: 20px
+  margin-top: auto
+  margin-bottom: auto
+  background-color: white
+  height: 350px
+  color: $font-color
+  .error
+    background-color: #f1c2c0
+    padding: 5px
+    font-weight: bolder
+  form, header
+    margin-left: auto
+    margin-right: auto
+    width: $control-width
+  header
+    margin-top: 35px
+  input[type="email"]
+    font-size: $input-font-size
+    width: $control-width
+    margin-top: 5px
+    margin-bottom: 5px
+  input[type="password"]
+    font-size: $input-font-size
+    width: $control-width
+    margin-top: 5px
+    margin-bottom: 5px
+  button[type="submit"]
+    margin-top: 15px
+    font-size: 16px
+    width: $control-width

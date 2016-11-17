@@ -1,7 +1,7 @@
 import React, {PropTypes}   from 'react';
 import { connect }          from 'react-redux';
 import { Link }             from 'react-router';
-
+import cx                   from 'classnames';
 import { setDocumentTitle } from '../../utils';
 import Actions              from '../../actions/sessions';
 
@@ -10,7 +10,7 @@ class SessionsNew extends React.Component {
     setDocumentTitle('Sign in');
   }
 
-  _handleSubmit(e) {
+  handleSubmit(e) {
     e.preventDefault();
 
     const { email, password } = this.refs;
@@ -19,43 +19,57 @@ class SessionsNew extends React.Component {
     dispatch(Actions.signIn(email.value, password.value));
   }
 
-  _renderError() {
-    const { error } = this.props;
-
-    if (!error) return false;
+  renderError() {
+    const { errors } = this.props;
+    if (!errors) return false;
 
     return (
       <div className="error">
-        {error}
+        {errors}
       </div>
     );
   }
 
   render() {
+    const { signingIn } = this.props;
+
+    const buttonClasses = cx({
+      "btn": true,
+      "btn-info": true,
+      "disabled": signingIn
+    });
+
     return (
-      <div className='view-container sessions new'>
-        <main>
-          <header>
-            <div className="logo" />
-          </header>
-          <form onSubmit={::this._handleSubmit}>
-            {::this._renderError()}
-            <div className="field">
-              <input ref="email" type="Email" placeholder="Email" required="true" />
-            </div>
-            <div className="field">
-              <input ref="password" type="password" placeholder="Password" required="true" />
-            </div>
-            <button type="submit">Sign in</button>
-          </form>
-        </main>
+      <div>
+        <div className="row">
+          <main className="col-xs-12 col-md-offset-4 col-md-4 container login">
+            <header>
+              <div className="logo">dat Journaal</div>
+              <h3>Login</h3>
+            </header>
+            <form onSubmit={::this.handleSubmit}>
+              {::this.renderError()}
+              <div className="field">
+                <input ref="email" type="Email" placeholder="Email" required="true" />
+              </div>
+              <div className="field">
+                <input ref="password" type="password" placeholder="Password" required="true" />
+              </div>
+              <button type="submit" className={buttonClasses}>Sign in</button>
+            </form>
+          </main>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => (
-  state.session
-);
+const mapStateToProps = (state) => {
+  return {
+    signingIn: state.session.signingIn,
+    currentUser: state.session.currentUser,
+    errors: state.session.errors
+  };
+};
 
 export default connect(mapStateToProps)(SessionsNew);
