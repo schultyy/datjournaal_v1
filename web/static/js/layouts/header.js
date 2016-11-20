@@ -32,8 +32,8 @@ export default class Header extends React.Component {
             </li>
             <li>
               <div className="menu-entry">
-                <Link to="/imprint">
-                  Imprint
+                <Link to="/about">
+                  About
                 </Link>
               </div>
             </li>

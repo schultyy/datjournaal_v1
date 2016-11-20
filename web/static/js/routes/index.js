@@ -18,7 +18,7 @@ export default function configRoutes(store) {
         <IndexRoute component={HomeIndexView} />
         <Route path="/stats" component={StatsView} />
         <Route path="/posts/new" component={PostsNew} />
-        <Route path="/imprint" component={ImprintView} />
+        <Route path="/about" component={ImprintView} />
         <Route path="/:slug" component={PostDetailView} />
       </Route>
     </Route>
