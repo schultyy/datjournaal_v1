@@ -67,7 +67,7 @@ class HomeIndexView extends React.Component {
     return (
       <div className="container">
           <DocMeta tags={meta} />
-          <div className="row">
+          <div className="row tile-list">
             {posts.map((post, index) =>{
               return (
                 <div className="col-xs-12" key={post.slug}>
