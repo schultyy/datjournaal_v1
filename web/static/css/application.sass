@@ -1,5 +1,6 @@
 @import "_colors"
 $header-height: 50px
+$menu-entry-height: 40px
 $footer-height: 50px
 $header-font-size: 18px
 $font-color: $color-secondary-2-4
@@ -17,9 +18,29 @@ body
   background-color: $background-color
 
 .logo
-  font-size: $header-font-size + 2px
-  font-family: "Calisto MT", "Book Antiqua"
-  font-style: italic
+  .image
+    background: url(/images/datjournaal_small.png) 0 0 no-repeat
+    margin-left: 5px
+    height: $menu-entry-height - 5px
+    width: $menu-entry-height - 5px
+    @media only screen and (-webkit-min-device-pixel-ratio: 2)
+      background: url(/images/datjournaal_small@2x.png) 0 0 no-repeat
+      background-size: contain
+      height: $menu-entry-height - 10px
+      width: $menu-entry-height - 10px
+      margin-left: 0px
+    display: inline-block
+
+  .text
+    @media only screen and (-webkit-min-device-pixel-ratio: 1)
+      margin-left: 0px
+    @media only screen and (-webkit-min-device-pixel-ratio: 2)
+      margin-left: 5px
+    font-size: $header-font-size + 2px
+    font-family: "Calisto MT", "Book Antiqua"
+    font-style: italic
+    margin-left: 5px
+    vertical-align: top
 
 .main-header
   background-color: $header-background-color
@@ -30,8 +51,9 @@ body
   padding: 5px
   .menu-entry
     font-size: $header-font-size
-    height: 100%
+    height: $menu-entry-height
     padding: 5px
+    vertical-align: top
   a
     color: $font-color
 
