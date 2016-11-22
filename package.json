@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "To start your Phoenix app:",
   "main": "index.js",
+  "engines": {
+    "node": "4.2.6"
+  },
   "directories": {
     "test": "test"
   },
