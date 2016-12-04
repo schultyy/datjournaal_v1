@@ -77,7 +77,8 @@ class UserDetails extends React.Component {
       'btn-default': true
     });
 
-    const buttonDisabled = (this.state.oldPassword.length > 0 && this.state.newPassword.length > 0) ? null : 'disabled';
+    const { isUpdating } = this.props;
+    const buttonDisabled = (this.state.oldPassword.length > 0 && this.state.newPassword.length > 0 && !isUpdating) ? null : 'disabled';
 
     return (
       <div className="userdetails">
