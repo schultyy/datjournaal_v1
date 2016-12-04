@@ -7,7 +7,7 @@ defmodule Datjournaal.UserSettingsView do
 
   def render("error.json", %{changeset: changeset}) do
     errors = Enum.map(changeset.errors, fn {field, detail} ->
-      message = detail |> Tuple.to_list |> List.first
+      message = detail |> render_detail
       %{} |> Map.put(field, message)
     end)
 
@@ -15,5 +15,11 @@ defmodule Datjournaal.UserSettingsView do
       success: false,
       errors: errors
     }
+  end
+
+  defp render_detail({message, values}) do
+    Enum.reduce values, message, fn { key, value }, acc ->
+      String.replace(acc, "%{#{key}}", to_string(value))
+    end
   end
 end
