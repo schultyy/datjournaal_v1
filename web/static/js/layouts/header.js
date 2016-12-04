@@ -19,26 +19,27 @@ export default class Header extends React.Component {
   render() {
     return (
       <header className="main-header">
-        <nav className="right">
+        <nav>
           <ul className="list-inline">
-            <li>
-              <div className="menu-entry">
+            <li className="menu-entry">
+              <div>
                 <Link to='/'>
                   <div title="Plattdeutsch für: die Zeitung" className="logo">
-                    dat Journaal
+                    <span className="image"></span>
+                    <span className="text">dat Journaal</span>
                   </div>
                 </Link>
               </div>
             </li>
-            <li>
-              <div className="menu-entry">
-                <Link to="/imprint">
-                  Imprint
+            <li className="menu-entry">
+              <div>
+                <Link to="/about">
+                  About
                 </Link>
               </div>
             </li>
-            <li>
-              <div className="menu-entry">{this.renderCurrentUser()}</div>
+            <li className="menu-entry">
+              <div>{this.renderCurrentUser()}</div>
             </li>
           </ul>
         </nav>
