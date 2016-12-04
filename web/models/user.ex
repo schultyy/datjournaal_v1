@@ -28,6 +28,22 @@ defmodule Datjournaal.User do
     |> generate_encrypted_password
   end
 
+  def change_password_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(password), ~w())
+    |> validate_old_password(params["old_password"])
+    |> validate_length(:password, min: 5)
+    |> generate_encrypted_password
+  end
+
+  defp validate_old_password(changeset, old_password) do
+    user = changeset.data
+    case Comeonin.Bcrypt.checkpw(old_password, user.encrypted_password) do
+      true -> changeset
+      false ->  changeset |> add_error(:password, "Old password does not match")
+    end
+  end
+
   defp generate_encrypted_password(current_changeset) do
     case current_changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->

@@ -26,6 +26,7 @@ defmodule Datjournaal.Router do
         resources "user_stats", UserStatsController, only: [:index]
         post "/posts/:id/hide", PostController, :hide
         post "/posts/:id/show", PostController, :show_post
+        post "/users/reset_password", UserSettingsController, :reset_password
     end
   end
 
