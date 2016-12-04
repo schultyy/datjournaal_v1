@@ -28,6 +28,13 @@ defmodule Datjournaal.User do
     |> generate_encrypted_password
   end
 
+  def change_password_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, ~w(password), ~w())
+    |> validate_length(:password, min: 5)
+    |> generate_encrypted_password
+  end
+
   defp generate_encrypted_password(current_changeset) do
     case current_changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
