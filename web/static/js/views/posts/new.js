@@ -19,8 +19,10 @@ class NewPostComponent extends React.Component {
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
     const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
-
-    if (phoenixAuthToken && !currentUser) {
+    if(phoenixAuthToken && currentUser) {
+      return;
+    }
+    else if (phoenixAuthToken && !currentUser) {
       dispatch(SessionActions.currentUser());
     } else {
       dispatch(push('/'));
@@ -87,7 +89,7 @@ class NewPostComponent extends React.Component {
   }
 
   render() {
-    let { formErrors } = this.props;
+    let { formErrors, currentUser } = this.props;
 
     const canPost = this.state.posting ? "disabled" : null;
 
@@ -109,6 +111,8 @@ class NewPostComponent extends React.Component {
       'description-container': true
     });
 
+    const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
+
     return (
       <div className="container new-post-form">
         <h3>Publish a new post</h3>
@@ -129,7 +133,7 @@ class NewPostComponent extends React.Component {
             </div>
             <div className="form-group col-xs-12">
               <label htmlFor="publish-on-twitter">Publish on Twitter</label>
-              <input type="checkbox" ref="twitter" />
+              <input disabled={twitterDisabled} type="checkbox" ref="twitter" />
             </div>
             <div className="col-xs-12">
               <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
@@ -144,7 +148,8 @@ class NewPostComponent extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    formErrors: state.posts.formErrors
+    formErrors: state.posts.formErrors,
+    currentUser: state.session.currentUser
   };
 };
 

@@ -59,7 +59,7 @@ defmodule Datjournaal.PostController do
 
     case Repo.insert(changeset) do
       {:ok, post} ->
-        post_with_user = Repo.preload(post, :user)
+        post_with_user = Repo.preload(post, user: :twitter_key)
         post_to_twitter(post_on_twitter, post_with_user)
         conn
         |> put_status(:created)
@@ -101,14 +101,23 @@ defmodule Datjournaal.PostController do
     end
   end
 
-  defp post_to_twitter(publish, post_with_user) do
-    case publish do
-      "true" ->
+  defp post_to_twitter("true", post_with_user) do
+    key = post_with_user.user.twitter_key
+    case key do
+      nil -> {}
+      _   ->
+        ExTwitter.configure(:process, consumer_key: key.consumer_key,
+                                      consumer_secret: key.consumer_secret,
+                                      access_token: key.access_token,
+                                      access_token_secret: key.access_token_secret)
         Datjournaal.Tweet.to_url(post_with_user)
-        |> Datjournaal.Tweet.to_tweet(post_with_user.description)
-        |> ExTwitter.update()
-      _ -> {}
+            |> Datjournaal.Tweet.to_tweet(post_with_user.description)
+            |> ExTwitter.update()
     end
+  end
+
+  defp post_to_twitter(_post_on_twitter, _post_with_user) do
+    {}
   end
 
   defp inject_unique_filename(%Plug.Upload{:filename => _filename} = image) do

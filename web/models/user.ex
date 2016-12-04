@@ -9,6 +9,7 @@ defmodule Datjournaal.User do
     field :encrypted_password, :string
     field :password, :string, virtual: true
     has_many :owned_posts, Datjournaal.Post
+    has_one :twitter_key, Datjournaal.TwitterKey
     timestamps()
   end
 
