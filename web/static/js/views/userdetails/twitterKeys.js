@@ -1,4 +1,5 @@
-import React from 'react';
+import React        from 'react';
+import UserActions  from '../../actions/user';
 
 export default class TwitterKeys extends React.Component {
   constructor() {
@@ -25,10 +26,61 @@ export default class TwitterKeys extends React.Component {
            this.state.accessTokenSecret.length > 0;
   }
 
+  renderProgressbar() {
+    const { isUpdating } = this.props;
+
+    if(!isUpdating) {
+      return null;
+    }
+
+    return (
+      <div className="progress-indicator">Updating Twitter Credentials. Stand by...</div>
+    );
+  }
+
+  renderFormErrors() {
+    const { formErrors } = this.props;
+
+    if(!formErrors) {
+      return null;
+    }
+
+    const errors = formErrors.map(error => {
+      return Object.keys(error).map(key => Object.create({
+        field: key,
+        message: error[key]
+      }))[0];
+    });
+
+    return (
+      <div className="error-message">
+        <ul>
+          {errors.map((err, index) => (<li key={index}>{err.field}: {err.message}</li>))}
+        </ul>
+      </div>
+    );
+  }
+
+  onSubmitCredentials(event) {
+    event.preventDefault();
+    const { dispatch } = this.props;
+    const credentials = {
+      consumer_secret: this.state.consumerSecret,
+      access_token_secret: this.state.accessTokenSecret,
+      access_token: this.state.accessToken,
+      consumer_key: this.state.consumerKey
+    };
+    dispatch(UserActions.postTwitterAccessToken(credentials));
+  }
+
   render() {
-    const submitEnabled = this.isValid() ? null : "disabled";
+    const { isUpdating } = this.props;
+    const submitEnabled = (!isUpdating && this.isValid()) ? null : "disabled";
+
     return (
       <form>
+        {this.renderProgressbar()}
+        {this.renderFormErrors()}
         <h1>Configure Twitter access tokens</h1>
         <div className="form-group">
           <label htmlFor="accessToken">Access Token</label>
@@ -46,7 +98,7 @@ export default class TwitterKeys extends React.Component {
           <label htmlFor="consumerKey">Consumer Key</label>
           <input onChange={this.onInputChange.bind(this, 'consumerKey')} className="form-control" type="text" name="consumerKey" />
         </div>
-        <button disabled={submitEnabled} className="form-control btn btn-default">Save</button>
+        <button onClick={this.onSubmitCredentials.bind(this)} disabled={submitEnabled} className="form-control btn btn-default">Save</button>
       </form>
     );
   }
