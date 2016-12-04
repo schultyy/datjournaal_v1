@@ -15,6 +15,5 @@ defmodule Datjournaal.UserSettingsController do
               |> put_status(:forbidden)
               |> render("reset_password.json", %{user: current_user})
     end
-
   end
 end
