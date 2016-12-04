@@ -216,4 +216,19 @@ defmodule Datjournaal.UserSettingsControllerTest do
     response = get get_conn, "/api/v1/users/twitter"
     assert response.status == 200
   end
+
+  test "GET /api/v1/users/twitter with existing twitter key returns key", %{ user: _user, jwt: jwt } do
+    post_conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post post_conn, "/api/v1/users/twitter", @twitter_keys
+
+    get_conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = get get_conn, "/api/v1/users/twitter"
+    body = response.resp_body |> Poison.decode!
+    assert body |> Map.get("access_token_secret") |> String.length > 0
+    assert body |> Map.get("access_token") |> String.length > 0
+    assert body |> Map.get("consumer_secret") |> String.length > 0
+    assert body |> Map.get("consumer_key") |> String.length > 0
+  end
 end

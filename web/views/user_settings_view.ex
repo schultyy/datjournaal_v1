@@ -5,10 +5,6 @@ defmodule Datjournaal.UserSettingsView do
     %{ errors: [], success: true }
   end
 
-  def render("twitter_keys.json", %{ }) do
-    %{ }
-  end
-
   def render("twitter_keys.json", %{ user: user }) do
     key = user.twitter_key
     %{
@@ -17,6 +13,10 @@ defmodule Datjournaal.UserSettingsView do
       consumer_secret: key.consumer_secret,
       consumer_key: key.consumer_key
     }
+  end
+
+  def render("twitter_keys.json", %{ }) do
+    %{ }
   end
 
   def render("error.json", %{changeset: changeset}) do
