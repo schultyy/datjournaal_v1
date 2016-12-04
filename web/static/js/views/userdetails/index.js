@@ -45,6 +45,33 @@ class UserDetails extends React.Component {
     dispatch(UserActions.updatePassword(oldPassword, newPassword));
   }
 
+  renderProgressbar() {
+    const { isUpdating } = this.props;
+
+    if(!isUpdating) {
+      return null;
+    }
+
+    return (
+      <div>
+        <p>Updating Password. Stand by...</p>
+      </div>
+    );
+  }
+
+  renderFormErrors() {
+    const { formErrors } = this.props;
+    if(!formErrors) {
+      return null;
+    }
+
+    return (
+      <div>
+        <p>Oops. Something went wrong!</p>
+      </div>
+    );
+  }
+
   render() {
     const submitButtonClassnames = cx({
       'form-control': true,
@@ -59,14 +86,16 @@ class UserDetails extends React.Component {
         <div className="row">
           <div className="col-xs-12">
             <h1>Change password</h1>
+            {this.renderProgressbar()}
+            {this.renderFormErrors()}
             <form>
               <div className="form-group">
                 <label htmlFor="currentPassword">Current password</label>
-                <input onChange={this.onOldPasswordChange.bind(this)} className="form-control" type="text" name="currentPassword" />
+                <input onChange={this.onOldPasswordChange.bind(this)} className="form-control" type="password" name="currentPassword" />
               </div>
               <div className="form-group">
                 <label htmlFor="newPassword">New password</label>
-                <input onChange={this.onNewPasswordChange.bind(this)} className="form-control" type="text" name="newPassword" />
+                <input onChange={this.onNewPasswordChange.bind(this)} className="form-control" type="password" name="newPassword" />
               </div>
               <button onClick={this.onSubmitPassword.bind(this)} className={submitButtonClassnames} disabled={buttonDisabled}>Set password</button>
             </form>
@@ -78,6 +107,8 @@ class UserDetails extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+  formErrors: state.user.formErrors,
+  isUpdating: state.user.updating,
   currentUser: state.session.currentUser,
 });
 
