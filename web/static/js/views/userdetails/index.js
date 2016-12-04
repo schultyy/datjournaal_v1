@@ -1,19 +1,9 @@
 import React          from 'react';
 import { connect }    from 'react-redux';
 import { push }       from 'react-router-redux';
-import cx             from 'classnames';
-import SessionActions from '../../actions/sessions';
-import UserActions    from '../../actions/user';
+import ResetPassword  from './resetPassword';
 
 class UserDetails extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      oldPassword: '',
-      newPassword: ''
-    };
-  }
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -24,89 +14,14 @@ class UserDetails extends React.Component {
     }
   }
 
-  onOldPasswordChange(event) {
-    this.setState({
-      oldPassword: event.target.value
-    });
-  }
-
-  onNewPasswordChange(event) {
-    this.setState({
-      newPassword: event.target.value
-    });
-  }
-
-  onSubmitPassword(event) {
-    event.preventDefault();
-    const { dispatch } = this.props;
-    const oldPassword = this.state.oldPassword;
-    const newPassword = this.state.newPassword;
-
-    dispatch(UserActions.updatePassword(oldPassword, newPassword));
-  }
-
-  renderProgressbar() {
-    const { isUpdating } = this.props;
-
-    if(!isUpdating) {
-      return null;
-    }
-
-    return (
-      <div className="progress-indicator">Updating Password. Stand by...</div>
-    );
-  }
-
-  renderFormErrors() {
-    const { formErrors } = this.props;
-    if(!formErrors) {
-      return null;
-    }
-
-    const errors = formErrors.map(error => {
-      return Object.keys(error).map(key => Object.create({
-        field: key,
-        message: error[key]
-      }))[0];
-    });
-
-    return (
-      <div className="error-message">
-        <ul>
-          {errors.map((err, index) => (<li key={index}>{err.field}: {err.message}</li>))}
-        </ul>
-      </div>
-    );
-  }
-
   render() {
-    const submitButtonClassnames = cx({
-      'form-control': true,
-      'btn': true,
-      'btn-default': true
-    });
-
-    const { isUpdating } = this.props;
-    const buttonDisabled = (this.state.oldPassword.length > 0 && this.state.newPassword.length > 0 && !isUpdating) ? null : 'disabled';
+    const { dispatch, isUpdating, formErrors } = this.props;
 
     return (
       <div className="userdetails">
         <div className="row">
           <div className="col-xs-12">
-            <form>
-              <h1>Change password</h1>
-              {this.renderProgressbar()}
-              {this.renderFormErrors()}
-              <div className="form-group">
-                <label htmlFor="currentPassword">Current password</label>
-                <input onChange={this.onOldPasswordChange.bind(this)} className="form-control" type="password" name="currentPassword" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="newPassword">New password</label>
-                <input onChange={this.onNewPasswordChange.bind(this)} className="form-control" type="password" name="newPassword" />
-              </div>
-              <button onClick={this.onSubmitPassword.bind(this)} className={submitButtonClassnames} disabled={buttonDisabled}>Set password</button>
-            </form>
+            <ResetPassword isUpdating={isUpdating} formErrors={formErrors} dispatch={dispatch} />
           </div>
         </div>
       </div>
