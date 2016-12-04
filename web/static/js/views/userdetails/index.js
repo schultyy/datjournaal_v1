@@ -34,8 +34,8 @@ class UserDetails extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  formErrors: state.user.formErrors,
-  isUpdating: state.user.updating,
+  formErrors: state.userPassword.formErrors,
+  isUpdating: state.userPassword.updating,
   currentUser: state.session.currentUser,
 });
 
