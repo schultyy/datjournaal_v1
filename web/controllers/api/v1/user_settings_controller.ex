@@ -16,4 +16,8 @@ defmodule Datjournaal.UserSettingsController do
               |> render("error.json", %{ user: current_user, changeset: changeset })
     end
   end
+
+  def set_twitter_keys(conn, params) do
+    render(conn, "twitter_keys.json", %{})
+  end
 end

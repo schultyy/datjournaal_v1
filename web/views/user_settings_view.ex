@@ -5,6 +5,10 @@ defmodule Datjournaal.UserSettingsView do
     %{ errors: [], success: true }
   end
 
+  def render("twitter_keys.json", %{}) do
+    %{ }
+  end
+
   def render("error.json", %{changeset: changeset}) do
     errors = Enum.map(changeset.errors, fn {field, detail} ->
       message = detail |> render_detail

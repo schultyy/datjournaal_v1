@@ -127,4 +127,23 @@ defmodule Datjournaal.UserSettingsControllerTest do
     response = post conn, "/api/v1/users/reset_password", %{ old_password: old_password, password: new_password }
     assert response.status == 403
   end
+
+  @twitter_keys %{
+    consumer_key: "abc",
+    consumer_secret: "abc",
+    access_token: "abc",
+    access_token_secret: "abc"
+  }
+
+  test "POST /api/v1/users/twitter without JWT returns 403", %{ user: _user, jwt: _jwt } do
+    response = post build_conn(), "/api/v1/users/twitter", @twitter_keys
+    assert response.status == 403
+  end
+
+  test "POST /api/v1/users/twitter with valid attributes returns 200", %{ user: _user, jwt: jwt } do
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/users/twitter", @twitter_keys
+    assert response.status == 200
+  end
 end
