@@ -169,4 +169,12 @@ defmodule Datjournaal.UserSettingsControllerTest do
     response = post conn, "/api/v1/users/twitter", %{}
     assert response.status == 422
   end
+
+  test "POST /api/v1/users/twitter associates key with current user", %{ user: user, jwt: jwt } do
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post conn, "/api/v1/users/twitter", @twitter_keys
+    key = Repo.one(from tw in Datjournaal.TwitterKey, select: tw)
+    assert key.user_id == user.id
+  end
 end

@@ -19,8 +19,11 @@ defmodule Datjournaal.UserSettingsController do
 
   def set_twitter_keys(conn, params) do
     current_user = Guardian.Plug.current_resource(conn)
-    changeset = %TwitterKey{}
-                |> TwitterKey.changeset(params)
+
+    changeset = current_user
+      |> build_assoc(:twitter_key)
+      |> TwitterKey.changeset(params)
+
     case Repo.insert(changeset) do
       {:ok, key } -> render(conn, "twitter_keys.json", %{})
       {:error, changeset } -> conn
