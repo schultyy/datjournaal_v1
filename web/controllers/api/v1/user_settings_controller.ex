@@ -12,7 +12,7 @@ defmodule Datjournaal.UserSettingsController do
     case Repo.update(changeset) do
       {:ok, user}         -> render(conn, "reset_password.json", %{user: current_user})
       {:error, _changeset} -> conn
-              |> put_status(:forbidden)
+              |> put_status(:unprocessable_entity)
               |> render("reset_password.json", %{user: current_user})
     end
   end
