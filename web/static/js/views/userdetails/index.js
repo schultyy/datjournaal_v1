@@ -3,6 +3,7 @@ import { connect }    from 'react-redux';
 import { push }       from 'react-router-redux';
 import cx             from 'classnames';
 import SessionActions from '../../actions/sessions';
+import UserActions    from '../../actions/user';
 
 class UserDetails extends React.Component {
   constructor() {
@@ -37,6 +38,11 @@ class UserDetails extends React.Component {
 
   onSubmitPassword(event) {
     event.preventDefault();
+    const { dispatch } = this.props;
+    const oldPassword = this.state.oldPassword;
+    const newPassword = this.state.newPassword;
+
+    dispatch(UserActions.updatePassword(oldPassword, newPassword));
   }
 
   render() {
