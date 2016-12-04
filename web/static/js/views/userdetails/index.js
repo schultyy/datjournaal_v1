@@ -2,6 +2,7 @@ import React          from 'react';
 import { connect }    from 'react-redux';
 import { push }       from 'react-router-redux';
 import ResetPassword  from './resetPassword';
+import TwitterKeys    from './twitterKeys';
 
 class UserDetails extends React.Component {
 
@@ -20,8 +21,11 @@ class UserDetails extends React.Component {
     return (
       <div className="userdetails">
         <div className="row">
-          <div className="col-xs-12">
+          <div className="col-xs-12 col-md-6">
             <ResetPassword isUpdating={isUpdating} formErrors={formErrors} dispatch={dispatch} />
+          </div>
+          <div className="col-xs-12 col-md-6">
+            <TwitterKeys />
           </div>
         </div>
       </div>
