@@ -18,7 +18,15 @@ export default class TwitterKeys extends React.Component {
     });
   }
 
+  isValid() {
+    return this.state.consumerKey.length > 0 &&
+           this.state.consumerSecret.length > 0 &&
+           this.state.accessToken.length > 0 &&
+           this.state.accessTokenSecret.length > 0;
+  }
+
   render() {
+    const submitEnabled = this.isValid() ? null : "disabled";
     return (
       <form>
         <h1>Configure Twitter access tokens</h1>
@@ -38,7 +46,7 @@ export default class TwitterKeys extends React.Component {
           <label htmlFor="consumerKey">Consumer Key</label>
           <input onChange={this.onInputChange.bind(this, 'consumerKey')} className="form-control" type="text" name="consumerKey" />
         </div>
-        <button className="form-control btn btn-default">Save</button>
+        <button disabled={submitEnabled} className="form-control btn btn-default">Save</button>
       </form>
     );
   }
