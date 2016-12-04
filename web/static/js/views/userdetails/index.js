@@ -1,6 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import SessionActions           from '../../actions/sessions';
+import { push }                 from 'react-router-redux';
 
-export default class UserDetails extends React.Component {
+class UserDetails extends React.Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
+
+    if (!phoenixAuthToken) {
+      dispatch(push('/'));
+    }
+  }
+
   render() {
     return (
       <div className="userdetails">
@@ -24,3 +36,9 @@ export default class UserDetails extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  currentUser: state.session.currentUser,
+});
+
+export default connect(mapStateToProps)(UserDetails);
