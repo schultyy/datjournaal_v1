@@ -12,7 +12,7 @@ export default class Header extends React.Component {
     }
 
     return (
-      <span>{currentUser.handle}</span>
+      <span><Link to="/userdetails">{currentUser.handle}</Link></span>
     );
   }
 
