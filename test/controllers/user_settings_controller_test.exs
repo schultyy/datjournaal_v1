@@ -146,4 +146,12 @@ defmodule Datjournaal.UserSettingsControllerTest do
     response = post conn, "/api/v1/users/twitter", @twitter_keys
     assert response.status == 200
   end
+
+  test "POST /api/v1/users/twitter with valid attributes saves them in database", %{ user: _user, jwt: jwt } do
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post conn, "/api/v1/users/twitter", @twitter_keys
+    count = Repo.one(from tw in Datjournaal.TwitterKey, select: count(tw.id))
+    assert count == 1
+  end
 end
