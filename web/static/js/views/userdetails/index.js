@@ -63,9 +63,18 @@ class UserDetails extends React.Component {
       return null;
     }
 
+    const errors = formErrors.map(error => {
+      return Object.keys(error).map(key => Object.create({
+        field: key,
+        message: error[key]
+      }))[0];
+    });
+
     return (
       <div className="error-message">
-        Oops. Something went wrong!
+        <ul>
+          {errors.map((err, index) => (<li key={index}>{err.field}: {err.message}</li>))}
+        </ul>
       </div>
     );
   }

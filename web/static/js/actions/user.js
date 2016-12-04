@@ -11,9 +11,13 @@ const Actions = {
         dispatch({ type: Constants.UPDATED_USER_PASSWORD });
       })
       .catch((error) => {
-        dispatch({
-          type: Constants.UPDATE_USER_PASSWORD_ERROR,
-          errors: error
+        const response = error.response;
+        response.json()
+        .then((json) => {
+          dispatch({
+            type: Constants.UPDATE_USER_PASSWORD_ERROR,
+            errors: json.errors
+          });
         });
       });
     };
