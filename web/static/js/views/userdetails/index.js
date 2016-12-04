@@ -23,6 +23,22 @@ class UserDetails extends React.Component {
     }
   }
 
+  onOldPasswordChange(event) {
+    this.setState({
+      oldPassword: event.target.value
+    });
+  }
+
+  onNewPasswordChange(event) {
+    this.setState({
+      newPassword: event.target.value
+    });
+  }
+
+  onSubmitPassword(event) {
+    event.preventDefault();
+  }
+
   render() {
     const submitButtonClassnames = cx({
       'form-control': true,
@@ -40,13 +56,13 @@ class UserDetails extends React.Component {
             <form>
               <div className="form-group">
                 <label htmlFor="currentPassword">Current password</label>
-                <input className="form-control" type="text" name="currentPassword" />
+                <input onChange={this.onOldPasswordChange.bind(this)} className="form-control" type="text" name="currentPassword" />
               </div>
               <div className="form-group">
                 <label htmlFor="newPassword">New password</label>
-                <input className="form-control" type="text" name="newPassword" />
+                <input onChange={this.onNewPasswordChange.bind(this)} className="form-control" type="text" name="newPassword" />
               </div>
-              <button className={submitButtonClassnames} disabled={buttonDisabled}>Set password</button>
+              <button onClick={this.onSubmitPassword.bind(this)} className={submitButtonClassnames} disabled={buttonDisabled}>Set password</button>
             </form>
           </div>
         </div>
