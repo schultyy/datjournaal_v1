@@ -81,4 +81,12 @@ defmodule Datjournaal.UserSettingsControllerTest do
     updated_user = Datjournaal.Repo.get_by(Datjournaal.User, id: user.id)
     assert(Comeonin.Bcrypt.checkpw(old_password, updated_user.encrypted_password))
   end
+
+  test "POST /api/v1/users/reset_password with new password but without authorization token returns 403" do
+    conn = build_conn()
+    old_password = "tester1234!"
+    new_password = "test12345!"
+    response = post conn, "/api/v1/users/reset_password", %{ old_password: old_password, password: new_password }
+    assert response.status == 403
+  end
 end
