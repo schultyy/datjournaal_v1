@@ -194,4 +194,26 @@ defmodule Datjournaal.UserSettingsControllerTest do
     count = Repo.one(from tw in Datjournaal.TwitterKey, select: count(tw.id))
     assert count == 1
   end
+
+  test "GET /api/v1/users/twitter without JWT returns 403 status code" do
+    response = get build_conn(), "/api/v1/users/twitter"
+    assert response.status == 403
+  end
+
+  test "GET /api/v1/users/twitter without JWT response does not contain any information" do
+    response = get build_conn(), "/api/v1/users/twitter"
+    response_body = response.resp_body |> Poison.decode! |> Map.get("error")
+    assert response_body == "Not Authenticated"
+  end
+
+  test "GET /api/v1/users/twitter with existing twitter key returns 200 status code", %{ user: _user, jwt: jwt } do
+    post_conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    post post_conn, "/api/v1/users/twitter", @twitter_keys
+
+    get_conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = get get_conn, "/api/v1/users/twitter"
+    assert response.status == 200
+  end
 end
