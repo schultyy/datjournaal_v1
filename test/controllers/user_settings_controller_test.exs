@@ -231,4 +231,12 @@ defmodule Datjournaal.UserSettingsControllerTest do
     assert body |> Map.get("consumer_secret") |> String.length > 0
     assert body |> Map.get("consumer_key") |> String.length > 0
   end
+
+  test "GET /api/v1/users/twitter without existing twitter key returns empty result set", %{ user: _user, jwt: jwt } do
+    get_conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = get get_conn, "/api/v1/users/twitter"
+    body = response.resp_body |> Poison.decode!
+    assert body == %{}
+  end
 end

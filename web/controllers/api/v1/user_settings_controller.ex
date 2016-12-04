@@ -20,7 +20,10 @@ defmodule Datjournaal.UserSettingsController do
   def get_twitter_keys(conn, _params) do
     current_user = Guardian.Plug.current_resource(conn)
     user_with_key = Repo.preload(current_user, :twitter_key)
-    render(conn, "twitter_keys.json", %{ user: user_with_key })
+    case user_with_key.twitter_key do
+      nil  -> render(conn, "twitter_keys.json", %{ })
+      _key -> render(conn, "twitter_keys.json", %{ user: user_with_key })
+    end
   end
 
   def set_twitter_keys(conn, params) do
