@@ -35,4 +35,13 @@ defmodule Datjournaal.UserSettingsControllerTest do
     updated_user = Datjournaal.Repo.get_by(Datjournaal.User, id: user.id)
     assert(Comeonin.Bcrypt.checkpw(old_password, updated_user.encrypted_password))
   end
+
+  test "POST /api/v1/users/reset_password with new password and invalid old password returns 403 status code", %{user: user, jwt: jwt} do
+    conn = build_conn()
+          |> put_req_header("authorization", jwt)
+    old_password = "tester1234!"
+    new_password = "test12345!"
+    response = post conn, "/api/v1/users/reset_password", %{ old_password: "fsdfsd", password: new_password }
+    assert(response.status == 403)
+  end
 end
