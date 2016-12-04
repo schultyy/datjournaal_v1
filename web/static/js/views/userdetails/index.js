@@ -53,9 +53,7 @@ class UserDetails extends React.Component {
     }
 
     return (
-      <div>
-        <p>Updating Password. Stand by...</p>
-      </div>
+      <div className="progress-indicator">Updating Password. Stand by...</div>
     );
   }
 
@@ -66,8 +64,8 @@ class UserDetails extends React.Component {
     }
 
     return (
-      <div>
-        <p>Oops. Something went wrong!</p>
+      <div className="error-message">
+        Oops. Something went wrong!
       </div>
     );
   }
@@ -85,10 +83,10 @@ class UserDetails extends React.Component {
       <div className="userdetails">
         <div className="row">
           <div className="col-xs-12">
-            <h1>Change password</h1>
-            {this.renderProgressbar()}
-            {this.renderFormErrors()}
             <form>
+              <h1>Change password</h1>
+              {this.renderProgressbar()}
+              {this.renderFormErrors()}
               <div className="form-group">
                 <label htmlFor="currentPassword">Current password</label>
                 <input onChange={this.onOldPasswordChange.bind(this)} className="form-control" type="password" name="currentPassword" />
