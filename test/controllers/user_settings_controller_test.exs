@@ -26,6 +26,16 @@ defmodule Datjournaal.UserSettingsControllerTest do
     assert was_successful == true
   end
 
+  test "POST /api/v1/users/reset_password with new password returns JSON with empty list of errors", %{user: _user, jwt: jwt} do
+    conn = build_conn()
+          |> put_req_header("authorization", jwt)
+    old_password = "tester1234!"
+    new_password = "test12345!"
+    response = post conn, "/api/v1/users/reset_password", %{ old_password: old_password, password: new_password }
+    error_list = response.resp_body |> Poison.decode! |> Map.get("errors")
+    assert length(error_list) == 0
+  end
+
   test "POST /api/v1/users/reset_password with new password sets new password in database", %{user: user, jwt: jwt} do
     conn = build_conn()
           |> put_req_header("authorization", jwt)
@@ -61,6 +71,15 @@ defmodule Datjournaal.UserSettingsControllerTest do
     response = post conn, "/api/v1/users/reset_password", %{ old_password: "fsdfsd", password: new_password }
     was_successful = response.resp_body |> Poison.decode! |> Map.get("success")
     assert was_successful == false
+  end
+
+  test "POST /api/v1/users/reset_password with new password and invalid old password returns JSON with list of errors", %{user: _user, jwt: jwt} do
+    conn = build_conn()
+          |> put_req_header("authorization", jwt)
+    new_password = "test12345!"
+    response = post conn, "/api/v1/users/reset_password", %{ old_password: "fsdfsd", password: new_password }
+    error_list = response.resp_body |> Poison.decode! |> Map.get("errors")
+    assert length(error_list) > 0
   end
 
   test "POST /api/v1/users/reset_password with too short new password returns 422 status code", %{user: _user, jwt: jwt} do

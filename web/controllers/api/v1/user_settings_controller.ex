@@ -13,7 +13,7 @@ defmodule Datjournaal.UserSettingsController do
       {:ok, user}         -> render(conn, "reset_password.json", %{ user: user, changeset: nil })
       {:error, changeset} -> conn
               |> put_status(:unprocessable_entity)
-              |> render("reset_password.json", %{ user: current_user, changeset: changeset })
+              |> render("error.json", %{ user: current_user, changeset: changeset })
     end
   end
 end
