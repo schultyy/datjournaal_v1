@@ -7,7 +7,7 @@ defmodule Datjournaal.UserSettingsControllerTest do
     {:ok, %{user: user, jwt: jwt}}
   end
 
-  test "POST /user with new password returns 200 status code", %{user: _user, jwt: jwt} do
+  test "POST /api/v1/users/reset_password with new password returns 200 status code", %{user: _user, jwt: jwt} do
     conn = build_conn()
           |> put_req_header("authorization", jwt)
     new_password = "test12345!"
@@ -15,7 +15,7 @@ defmodule Datjournaal.UserSettingsControllerTest do
     assert response.status == 200
   end
 
-  test "POST /user with new password sets new password in database", %{user: user, jwt: jwt} do
+  test "POST /api/v1/users/reset_password with new password sets new password in database", %{user: user, jwt: jwt} do
     conn = build_conn()
           |> put_req_header("authorization", jwt)
     old_password = "tester1234!"
