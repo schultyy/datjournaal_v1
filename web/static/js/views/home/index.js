@@ -1,13 +1,16 @@
 import React              from 'react';
 import { connect }        from 'react-redux';
+import DocMeta            from 'react-doc-meta';
+import { push }           from 'react-router-redux';
 import PostActions        from '../../actions/posts';
 import SessionActions     from '../../actions/sessions';
-import { push }           from 'react-router-redux';
 import { TileComponent }  from '../posts/tile';
-import DocMeta            from 'react-doc-meta';
+import { setDocumentTitle } from '../../utils';
+
 
 class HomeIndexView extends React.Component {
   componentDidMount() {
+    setDocumentTitle('Dat Journaal');
     const { dispatch, currentUser } = this.props;
     const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
     dispatch(PostActions.fetchPosts());
