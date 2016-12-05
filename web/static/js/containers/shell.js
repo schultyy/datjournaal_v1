@@ -36,7 +36,7 @@ class ShellContainer extends React.Component {
           <Header
             currentUser={currentUser} />
 
-          <div className="main-container">
+          <div className="container">
             {this.props.children}
           </div>
         </div>

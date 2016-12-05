@@ -134,16 +134,23 @@ body
 
 .new-post-form
   width: 100%
-  margin: 5px 0px
+  margin: 5px
   padding-bottom: 10px
   border: 1px solid #ffffff
   border-radius: 2px
   background-color: $form-background-color
+  .headline
+    padding-left: 10px
+  .file-upload
+    padding: 25px
   input[type="checkbox"]
     display: block
   .description-container
-    margin-left: 10px
-    margin-right: 10px
+    padding: 25px
+  .publish-on-twitter
+    margin: 10px
+  .submit-post
+    margin: 10px
   .post-description
     padding-left: 5px
     padding-right: 5px
@@ -153,9 +160,12 @@ body
     appearance: none
     font-size: 16px
   .image-preview
+    padding-left: 25px
+    padding-right: 25px
     img
       margin-top: 20px
       margin-bottom: 0px
+      margin-left: 5px
       max-height: 180px
   @media(min-width: 970px)
     .image-preview

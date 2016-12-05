@@ -103,10 +103,8 @@ class NewPostComponent extends React.Component {
     });
 
     const descriptionFieldClasses = cx({
-      'col-xs-12': !previewImage,
-      'col-md-12': !previewImage,
-      'col-xs-12': previewImage,
-      'col-md-12': previewImage,
+      'col-xs-12': true,
+      'col-md-12': true,
       'form-group': true,
       'description-container': true
     });
@@ -114,33 +112,35 @@ class NewPostComponent extends React.Component {
     const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
 
     return (
-      <div className="container new-post-form">
-        <h3>Publish a new post</h3>
+      <div className="new-post-form">
+        <h3 className="headline">Publish a new post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
-        <form>
-          <div className="row">
+
+        <div className="row">
+          <form>
             <div className={imagePreviewClasses}>
-              <img src={previewImage} className="thumbnail" />
+              <img src={previewImage} className="img-thumbnail" />
             </div>
-            <div className={descriptionFieldClasses}>
-              <label htmlFor="post-description">Description</label>
-              <textarea ref="description" rows="5" className="post-description form-control">
-              </textarea>
-            </div>
-            <div className="form-group col-xs-12">
-              <label htmlFor="post-file">Pick a file</label>
+            <div className="form-group col-xs-12 col-md-12 file-upload">
+              <label htmlFor="post-file">Select the file you would like to share</label>
               <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
             </div>
-            <div className="form-group col-xs-12">
-              <label htmlFor="publish-on-twitter">Publish on Twitter</label>
-              <input disabled={twitterDisabled} type="checkbox" ref="twitter" />
+            <div className={descriptionFieldClasses}>
+              <label htmlFor="post-description">Describe it</label>
+              <textarea ref="description" rows="5" className="post-description form-control" placeholder="What's special about this image...">
+              </textarea>
             </div>
-            <div className="col-xs-12">
-              <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+            <div className="form-group col-xs-12 col-md-12">
+              <label className="publish-on-twitter" htmlFor="publish-on-twitter">Publish on Twitter
+                <input disabled={twitterDisabled} type="checkbox" ref="twitter" />
+              </label>
+            </div>
+            <div className="col-xs-12 col-md-12">
+              <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
               {canPost ? this.renderLoadingIndicator() : null}
             </div>
+            </form>
           </div>
-        </form>
       </div>
     );
   }
