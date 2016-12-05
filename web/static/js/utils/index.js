@@ -51,7 +51,7 @@ export function httpPostFormData(url, data) {
     Accept: 'application/json'
   };
 
-  let formData = new FormData("post");
+  let formData = new FormData();
   for(var key in data) {
     formData.append(key, data[key]);
   }
