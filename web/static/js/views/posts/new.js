@@ -115,28 +115,29 @@ class NewPostComponent extends React.Component {
 
     return (
       <div className="container new-post-form">
-        <h3>Publish a new post</h3>
+        <h3 className="headline">Publish a new post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
         <form>
           <div className="row">
             <div className={imagePreviewClasses}>
               <img src={previewImage} className="thumbnail" />
             </div>
+            <div className="form-group col-xs-12 file-upload">
+              <label htmlFor="post-file">Select the file you would like to share</label>
+              <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
+            </div>
             <div className={descriptionFieldClasses}>
-              <label htmlFor="post-description">Description</label>
-              <textarea ref="description" rows="5" className="post-description form-control">
+              <label htmlFor="post-description">Describe it</label>
+              <textarea ref="description" rows="5" className="post-description form-control" placeholder="What's special about this image...">
               </textarea>
             </div>
             <div className="form-group col-xs-12">
-              <label htmlFor="post-file">Pick a file</label>
-              <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
-            </div>
-            <div className="form-group col-xs-12">
-              <label htmlFor="publish-on-twitter">Publish on Twitter</label>
-              <input disabled={twitterDisabled} type="checkbox" ref="twitter" />
+              <label className="publish-on-twitter" htmlFor="publish-on-twitter">Publish on Twitter
+                <input disabled={twitterDisabled} type="checkbox" ref="twitter" />
+              </label>
             </div>
             <div className="col-xs-12">
-              <button disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+              <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
               {canPost ? this.renderLoadingIndicator() : null}
             </div>
           </div>
