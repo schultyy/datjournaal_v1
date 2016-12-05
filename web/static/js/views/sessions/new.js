@@ -44,8 +44,8 @@ class SessionsNew extends React.Component {
         <div className="row">
           <main className="col-xs-12 col-md-offset-4 col-md-4 container login">
             <header>
-              <div className="logo">dat Journaal</div>
-              <h3>Login</h3>
+              <div className="logo"><span className="text">dat Journaal</span></div>
+              <h4>Login</h4>
             </header>
             <form onSubmit={::this.handleSubmit}>
               {::this.renderError()}
