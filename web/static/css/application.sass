@@ -142,7 +142,6 @@ body
 
 .new-post-form
   width: 100%
-  margin: 5px
   padding-bottom: 10px
   border: 1px solid #ffffff
   border-radius: 2px
@@ -151,6 +150,9 @@ body
     padding-left: 10px
   .file-upload
     padding: 25px
+    input[type="file"]
+      @media(max-width: $sm-breakpoint)
+        max-width: 200px
   input[type="checkbox"]
     display: block
   .description-container
