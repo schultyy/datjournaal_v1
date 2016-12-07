@@ -130,10 +130,9 @@ class NewPostComponent extends React.Component {
               <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
               </textarea>
             </div>
-            <div className="form-group col-xs-12 col-md-12">
-              <label className="publish-on-twitter" htmlFor="publish-on-twitter">Publish on Twitter
-                <input disabled={twitterDisabled} type="checkbox" ref="twitter" />
-              </label>
+            <div className="form-group col-xs-12 col-md-12 publish-on-twitter">
+              <label htmlFor="publish">Publish on Twitter</label>
+              <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
             </div>
             <div className="col-xs-12 col-md-12">
               <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
