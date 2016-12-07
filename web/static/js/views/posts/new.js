@@ -113,7 +113,7 @@ class NewPostComponent extends React.Component {
 
     return (
       <div className="new-post-form">
-        <h3 className="headline">Publish a new post</h3>
+        <h3 className="headline">New post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
 
         <div className="row">
