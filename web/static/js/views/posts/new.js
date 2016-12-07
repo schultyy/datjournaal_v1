@@ -113,7 +113,7 @@ class NewPostComponent extends React.Component {
 
     return (
       <div className="new-post-form">
-        <h3 className="headline">Publish a new post</h3>
+        <h3 className="headline">New post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
 
         <div className="row">
@@ -127,13 +127,12 @@ class NewPostComponent extends React.Component {
             </div>
             <div className={descriptionFieldClasses}>
               <label htmlFor="post-description">Describe it</label>
-              <textarea ref="description" rows="5" className="post-description form-control" placeholder="What's special about this image...">
+              <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
               </textarea>
             </div>
-            <div className="form-group col-xs-12 col-md-12">
-              <label className="publish-on-twitter" htmlFor="publish-on-twitter">Publish on Twitter
-                <input disabled={twitterDisabled} type="checkbox" ref="twitter" />
-              </label>
+            <div className="form-group col-xs-12 col-md-12 publish-on-twitter">
+              <label htmlFor="publish">Publish on Twitter</label>
+              <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
             </div>
             <div className="col-xs-12 col-md-12">
               <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
