@@ -119,6 +119,35 @@ defmodule Datjournaal.PostControllerTest do
     assert post.slug != nil
   end
 
+  test "POST /api/v1/posts creates a new post with empty lat/lng", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts", %{image: upload, description: "Dies und das", postOnTwitter: "false"}
+    post_slug = response.resp_body
+      |> Poison.decode!
+      |> Map.get("slug")
+    post = Repo.get_by(Datjournaal.Post, slug: post_slug)
+    assert post.lat == nil
+    assert post.lng == nil
+  end
+
+  test "POST /api/v1/posts with lat/long in params creates a new post and stores lat/lng", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    lat = 53.5553857
+    lng = 9.9861725
+    form_data = %{image: upload, description: "Dies und das", postOnTwitter: "false", lat: lat, lng: lng}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = post conn, "/api/v1/posts", form_data
+    post_slug = response.resp_body
+      |> Poison.decode!
+      |> Map.get("slug")
+    post = Repo.get_by(Datjournaal.Post, slug: post_slug)
+    assert post.lat == lat
+    assert post.lng == lng
+  end
+
   test "GET /api/v1/posts/:slug returns post by its slug", %{post: post_from_db, jwt: _jwt} do
     response = get build_conn(), "/api/v1/posts/#{post_from_db.slug}"
     post_from_service = response.resp_body

@@ -46,12 +46,16 @@ defmodule Datjournaal.PostController do
     end
   end
 
-  def create(conn, %{"description" => description, "image" => image, "postOnTwitter" => post_on_twitter}) do
+  def create(conn, params) do
     current_user = Guardian.Plug.current_resource(conn)
     post_params = %{
-      "description": description,
-      "image": inject_unique_filename(image)
+      "description": Map.get(params, "description"),
+      "image": inject_unique_filename(Map.get(params, "image")),
+      "lat": Map.get(params, "lat"),
+      "lng": Map.get(params, "lng")
     }
+
+    post_on_twitter = Map.get(params, "postOnTwitter")
 
     changeset = current_user
       |> build_assoc(:owned_posts)
