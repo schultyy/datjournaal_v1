@@ -57,10 +57,7 @@ const Actions = {
       requestLocationPromise
       .then(position => {
         let formData = new FormData(data);
-        console.log(position);
-        console.log(position.coords);
         if(position) {
-
           formData.lat = position.coords.latitude;
           formData.lng = position.coords.longitude;
         }
@@ -70,13 +67,21 @@ const Actions = {
         dispatch(push("/"));
       })
       .catch((error) => {
-        error.response.json()
-        .then((errorJSON) => {
+        if(error.constructor.name === 'PositionError') {
           dispatch({
             type: Constants.CREATE_POST_ERROR,
-            errors: errorJSON.errors
+            errors: [{message: error.message, code: 1}]
           });
-        });
+        }
+        else {
+          error.response.json()
+          .then((errorJSON) => {
+            dispatch({
+              type: Constants.CREATE_POST_ERROR,
+              errors: errorJSON.errors
+            });
+          });
+        }
       });
     };
   },

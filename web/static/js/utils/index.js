@@ -108,7 +108,7 @@ export function absoluteUrlForPost(post) {
 export function requestLocation() {
   const options = {
     enableHighAccuracy: true,
-    timeout: 5000,
+    timeout: 1000,
     maximumAge: 0
   };
 
