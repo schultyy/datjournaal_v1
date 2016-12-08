@@ -11,8 +11,6 @@ function FormData(data) {
   this.description = data.description;
   this.postOnTwitter = data.postOnTwitter;
   this.image = data.image;
-  this.lat = null;
-  this.lng = null;
 }
 
 const Actions = {
