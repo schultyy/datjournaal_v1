@@ -36,7 +36,8 @@ class NewPostComponent extends React.Component {
     let formData = {
       description: this.refs.description.value,
       postOnTwitter: this.refs.twitter.checked,
-      image: this.refs.file.files[0]
+      image: this.refs.file.files[0],
+      includeLocation: this.refs.geolocation.checked
     };
 
     this.setState({posting: true});
@@ -130,9 +131,15 @@ class NewPostComponent extends React.Component {
               <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
               </textarea>
             </div>
-            <div className="form-group col-xs-12 col-md-12 publish-on-twitter">
-              <label htmlFor="publish">Publish on Twitter</label>
-              <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
+            <div className="form-group col-xs-12 col-md-6 location">
+              <label htmlFor="request-geolocation">Add current location
+                <input name="request-geolocation" type="checkbox" ref="geolocation" />
+              </label>
+            </div>
+            <div className="form-group col-xs-12 col-md-6 publish-on-twitter">
+              <label htmlFor="publish">Publish on Twitter
+                <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
+              </label>
             </div>
             <div className="col-xs-12 col-md-12">
               <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>

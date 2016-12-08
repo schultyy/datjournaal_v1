@@ -104,3 +104,17 @@ export function renderErrorsFor(errors, ref) {
 export function absoluteUrlForPost(post) {
   return `${window.location.origin}/${post.slug}`;
 }
+
+export function requestLocation() {
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 1000,
+    maximumAge: 0
+  };
+
+  return new Promise(function(resolve, reject) {
+    const success = (coords) => resolve(coords);
+    const error = (error) => reject(error);
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  });
+}

@@ -1,6 +1,17 @@
 import Constants              from '../constants';
 import { push }               from 'react-router-redux';
-import { httpGet, httpPost, httpPostFormData }  from '../utils';
+import {
+  httpGet,
+  httpPost,
+  httpPostFormData,
+  requestLocation
+}  from '../utils';
+
+function FormData(data) {
+  this.description = data.description;
+  this.postOnTwitter = data.postOnTwitter;
+  this.image = data.image;
+}
 
 const Actions = {
   fetchPosts: () => {
@@ -41,19 +52,37 @@ const Actions = {
   createPost: (data) => {
     return dispatch => {
       dispatch({ type: Constants.POST_CREATED });
+      const requestLocationPromise = data.includeLocation ? requestLocation() : Promise.resolve();
 
-      httpPostFormData('/api/v1/posts', data)
+      requestLocationPromise
+      .then(position => {
+        let formData = new FormData(data);
+        if(position) {
+          formData.lat = position.coords.latitude;
+          formData.lng = position.coords.longitude;
+        }
+        return httpPostFormData('/api/v1/posts', formData);
+      })
       .then((data) => {
         dispatch(push("/"));
       })
       .catch((error) => {
-        error.response.json()
-        .then((errorJSON) => {
+        if(typeof error.json === 'undefined') {
+          //Mostly a geolocation error
           dispatch({
             type: Constants.CREATE_POST_ERROR,
-            errors: errorJSON.errors
+            errors: [{message: error.message}]
           });
-        });
+        }
+        else {
+          error.response.json()
+          .then((errorJSON) => {
+            dispatch({
+              type: Constants.CREATE_POST_ERROR,
+              errors: errorJSON.errors
+            });
+          });
+        }
       });
     };
   },
