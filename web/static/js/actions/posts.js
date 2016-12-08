@@ -67,10 +67,11 @@ const Actions = {
         dispatch(push("/"));
       })
       .catch((error) => {
-        if(error.constructor.name === 'PositionError') {
+        if(typeof error.json === 'undefined') {
+          //Mostly a geolocation error
           dispatch({
             type: Constants.CREATE_POST_ERROR,
-            errors: [{message: error.message, code: 1}]
+            errors: [{message: error.message}]
           });
         }
         else {
