@@ -16,8 +16,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bourbon": "^4.2.7",
-    "bourbon-neat": "^1.8.0",
     "classnames": "^2.2.5",
     "es6-promise": "^3.2.1",
     "history": "^3.0.0",
