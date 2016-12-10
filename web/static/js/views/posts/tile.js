@@ -10,6 +10,11 @@ export class TileComponent extends React.Component {
     return absoluteUrlForPost(post);
   }
 
+  googleMapsUrl() {
+    const { post } = this.props;
+    return `http://maps.google.com?q=${post.lat},${post.lng}`;
+  }
+
   render() {
     const {
       post,
@@ -51,6 +56,7 @@ export class TileComponent extends React.Component {
         </div>
         <img src={post.image} />
         <div className="date">{date}</div>
+        <div className="location"><a href={this.googleMapsUrl()} target="_blank">{post.short_location_name}</a></div>
         <div className="description">{post.description}</div>
       </div>
     );
