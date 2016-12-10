@@ -174,6 +174,27 @@ defmodule Datjournaal.PostControllerTest do
     end
   end
 
+  # This test looks the same as the one above.
+  # The reason for this test is to ensure that location displaynames are generated properly when we're not in town but somewhere outside
+  # in the countryside
+  test "POST /api/v1/posts with geoposition in the countryside generates meaningful displaynames", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    lat = 51.36824
+    lng = 8.4140813
+    form_data = %{image: upload, description: "Dies und das", postOnTwitter: "false", lat: lat, lng: lng}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    use_cassette "nuttlar_schneider_korn_location" do
+      response = post conn, "/api/v1/posts", form_data
+      post_slug = response.resp_body
+                  |> Poison.decode!
+                  |> Map.get("slug")
+      post = Repo.get_by(Datjournaal.Post, slug: post_slug)
+      assert post.short_location_name == "Ostwig, Bestwig"
+      assert post.long_location_name == "Alfert 2, 59909 Bestwig, Germany"
+    end
+  end
+
   test "GET /api/v1/posts/:slug returns post by its slug", %{post: post_from_db, jwt: _jwt} do
     response = get build_conn(), "/api/v1/posts/#{post_from_db.slug}"
     post_from_service = response.resp_body

@@ -21,7 +21,9 @@ defmodule Datjournaal.GmapsApiClient do
   defp extract_district(params) do
     # e.g. HafenCity
     sublocality = Enum.find(params, fn(component) ->
-      Map.get(component, "types") == ["political", "sublocality", "sublocality_level_2"]
+      Map.get(component, "types")
+        |> Enum.take(2) # We need to have at maximum "political" and "sublocality" in our list
+        |> Enum.all?(fn(t) -> Enum.member?(["political", "sublocality"], t) end)
     end)
 
     # e.g. Hamburg
