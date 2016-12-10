@@ -42,3 +42,5 @@ config :datjournaal, Datjournaal.Repo,
   database: "datjournaal_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :datjournaal, gmaps_api_key: "<YOUR KEY HERE>"
