@@ -68,7 +68,7 @@ class HomeIndexView extends React.Component {
     const meta = this.getMetaTags();
 
     return (
-      <div className="container">
+      <div>
           <DocMeta tags={meta} />
           <div className="row tile-list">
             {posts.map((post, index) =>{
