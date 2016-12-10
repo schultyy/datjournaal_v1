@@ -1,5 +1,11 @@
 defmodule Datjournaal.PostControllerTest do
   use Datjournaal.ConnCase
+  use ExVCR.Mock
+
+  setup_all do
+    ExVCR.Config.cassette_library_dir("test/fixtures/vcr_cassettes")
+    :ok
+  end
 
   setup do
     upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
@@ -139,13 +145,54 @@ defmodule Datjournaal.PostControllerTest do
     form_data = %{image: upload, description: "Dies und das", postOnTwitter: "false", lat: lat, lng: lng}
     conn = build_conn()
       |> put_req_header("authorization", jwt)
-    response = post conn, "/api/v1/posts", form_data
-    post_slug = response.resp_body
-      |> Poison.decode!
-      |> Map.get("slug")
-    post = Repo.get_by(Datjournaal.Post, slug: post_slug)
-    assert post.lat == lat
-    assert post.lng == lng
+    use_cassette "valentinskamp_location" do
+      response = post conn, "/api/v1/posts", form_data
+      post_slug = response.resp_body
+        |> Poison.decode!
+        |> Map.get("slug")
+      post = Repo.get_by(Datjournaal.Post, slug: post_slug)
+      assert post.lat == lat
+      assert post.lng == lng
+    end
+  end
+
+  test "POST /api/v1/posts with lat/long adds short and long displayname", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    lat = 53.5409384
+    lng = 9.9843591
+    form_data = %{image: upload, description: "Dies und das", postOnTwitter: "false", lat: lat, lng: lng}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    use_cassette "elbphilharmonie_location" do
+      response = post conn, "/api/v1/posts", form_data
+      post_slug = response.resp_body
+                  |> Poison.decode!
+                  |> Map.get("slug")
+      post = Repo.get_by(Datjournaal.Post, slug: post_slug)
+      assert post.short_location_name == "HafenCity, Hamburg"
+      assert post.long_location_name == "Platz der Deutschen Einheit 2, 20457 Hamburg, Germany"
+    end
+  end
+
+  # This test looks the same as the one above.
+  # The reason for this test is to ensure that location displaynames are generated properly when we're not in town but somewhere outside
+  # in the countryside
+  test "POST /api/v1/posts with geoposition in the countryside generates meaningful displaynames", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    lat = 51.36824
+    lng = 8.4140813
+    form_data = %{image: upload, description: "Dies und das", postOnTwitter: "false", lat: lat, lng: lng}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    use_cassette "nuttlar_schneider_korn_location" do
+      response = post conn, "/api/v1/posts", form_data
+      post_slug = response.resp_body
+                  |> Poison.decode!
+                  |> Map.get("slug")
+      post = Repo.get_by(Datjournaal.Post, slug: post_slug)
+      assert post.short_location_name == "Ostwig, Bestwig"
+      assert post.long_location_name == "Alfert 2, 59909 Bestwig, Germany"
+    end
   end
 
   test "GET /api/v1/posts/:slug returns post by its slug", %{post: post_from_db, jwt: _jwt} do

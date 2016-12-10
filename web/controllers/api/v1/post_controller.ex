@@ -1,5 +1,6 @@
 defmodule Datjournaal.PostController do
   use Datjournaal.Web, :controller
+  import Ecto.Changeset
 
   plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide]
 
@@ -48,6 +49,7 @@ defmodule Datjournaal.PostController do
 
   def create(conn, params) do
     current_user = Guardian.Plug.current_resource(conn)
+
     post_params = %{
       "description": Map.get(params, "description"),
       "image": inject_unique_filename(Map.get(params, "image")),
@@ -60,6 +62,7 @@ defmodule Datjournaal.PostController do
     changeset = current_user
       |> build_assoc(:owned_posts)
       |> Post.changeset(post_params)
+      |> fetch_location
 
     case Repo.insert(changeset) do
       {:ok, post} ->
@@ -81,6 +84,15 @@ defmodule Datjournaal.PostController do
 
   def show_post(conn, %{"id" => id}) do
     set_hidden_status(conn, id, false)
+  end
+
+  defp fetch_location(changeset) do
+    lat  = changeset |> get_change(:lat)
+    long = changeset |> get_change(:lng)
+    {long_name, short_name} = Datjournaal.GmapsApiClient.get_location_name(lat, long)
+    changeset
+      |> put_change(:short_location_name, short_name)
+      |> put_change(:long_location_name, long_name)
   end
 
   defp set_hidden_status(conn, slug, hidden_status) do
