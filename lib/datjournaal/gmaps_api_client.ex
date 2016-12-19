@@ -18,6 +18,14 @@ defmodule Datjournaal.GmapsApiClient do
     {long_location_name, short_location_name}
   end
 
+  def place_autocomplete(place_name) do
+    api_key = Application.get_env(:datjournaal, :gmaps_api_key)
+    response = GoogleMapsClient.get("place/autocomplete/json?input=#{place_name}&key=#{api_key}")
+    response
+      |> Map.get(:body)
+      |> Poison.decode!
+  end
+
   defp extract_district(params) do
     # e.g. HafenCity
     sublocality = Enum.find(params, fn(component) ->
@@ -34,5 +42,13 @@ defmodule Datjournaal.GmapsApiClient do
     [sublocality, locality]
     |> Enum.map(fn (l) -> Map.get(l, "long_name") end)
     |> Enum.join(", ")
+  end
+end
+
+defmodule GoogleMapsClient do
+    use HTTPotion.Base
+
+  def process_url(url) do
+    "https://maps.googleapis.com/maps/api/" <> url
   end
 end
