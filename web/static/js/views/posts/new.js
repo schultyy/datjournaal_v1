@@ -91,26 +91,14 @@ class NewPostComponent extends React.Component {
 
   render() {
     let { formErrors, currentUser } = this.props;
-
     const canPost = this.state.posting ? "disabled" : null;
-
     const previewImage = this.state.previewImage;
-
+    const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
     const imagePreviewClasses = cx({
-      'collapse': !previewImage,
       'col-xs-12': true,
       'col-md-12': true,
       'image-preview': true
     });
-
-    const descriptionFieldClasses = cx({
-      'col-xs-12': true,
-      'col-md-12': true,
-      'form-group': true,
-      'description-container': true
-    });
-
-    const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
 
     return (
       <div className="new-post-form">
@@ -120,13 +108,13 @@ class NewPostComponent extends React.Component {
         <div className="row">
           <form>
             <div className={imagePreviewClasses}>
-              <img src={previewImage} className="img-thumbnail" />
+              <img src={previewImage} />
             </div>
             <div className="form-group col-xs-12 col-md-12 file-upload">
               <label htmlFor="post-file">Select the file you would like to share</label>
               <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
             </div>
-            <div className={descriptionFieldClasses}>
+            <div className="col-xs-12 col-md-12 form-group description-container">
               <label htmlFor="post-description">Describe it</label>
               <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
               </textarea>
