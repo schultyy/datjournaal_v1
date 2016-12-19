@@ -2,7 +2,7 @@ defmodule Datjournaal.GmapsApiClient do
   def get_location_name(nil, nil), do: {nil, nil}
   def get_location_name(lat, lng) do
     api_key = Application.get_env(:datjournaal, :gmaps_api_key)
-    response = HTTPotion.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=#{lat},#{lng}&key=#{api_key}")
+    response = GoogleMapsClient.get("geocode/json?latlng=#{lat},#{lng}&key=#{api_key}")
     map_results = response.body
       |> Poison.decode!
       |> Map.get("results")
