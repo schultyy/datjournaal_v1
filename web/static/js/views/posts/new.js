@@ -106,35 +106,49 @@ class NewPostComponent extends React.Component {
         {formErrors ? this.renderFormErrors(formErrors) : null}
 
         <div className="row">
-          <form>
-            <div className={imagePreviewClasses}>
-              <img src={previewImage} />
-            </div>
-            <div className="form-group col-xs-12 col-md-12 file-upload">
-              <label htmlFor="post-file">Select the file you would like to share</label>
-              <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
-            </div>
-            <div className="col-xs-12 col-md-12 form-group description-container">
-              <label htmlFor="post-description">Describe it</label>
-              <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
-              </textarea>
-            </div>
-            <div className="form-group col-xs-12 col-md-6 location">
-              <label htmlFor="request-geolocation">Add current location
-                <input name="request-geolocation" type="checkbox" ref="geolocation" />
-              </label>
-            </div>
-            <div className="form-group col-xs-12 col-md-6 publish-on-twitter">
-              <label htmlFor="publish">Publish on Twitter
-                <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
-              </label>
-            </div>
-            <div className="col-xs-12 col-md-12">
-              <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
-              {canPost ? this.renderLoadingIndicator() : null}
-            </div>
-            </form>
+          <div className={imagePreviewClasses}>
+            <img src={previewImage} />
           </div>
+          <div className="form-group col-xs-12 col-md-12 file-upload">
+            <label htmlFor="post-file">Select the file you would like to share</label>
+            <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
+          </div>
+          <div className="col-xs-12 col-md-12 form-group description-container">
+            <label htmlFor="post-description">Describe it</label>
+            <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
+            </textarea>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xs-12 col-md-6">
+            <p className="sheet">
+              Add current location
+            </p>
+          </div>
+
+          <div className="col-xs-12 col-md-6">
+            <div className="sheet">
+              <input name="request-geolocation" type="checkbox" ref="geolocation" />
+            </div>
+          </div>
+
+          <div className="clearfix"></div>
+
+          <div className="col-xs-12 col-md-6">
+            <p className="sheet">
+              Publish on Twitter
+            </p>
+          </div>
+          <div className="col-xs-12 col-md-6">
+            <div className="sheet">
+              <input  disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
+            </div>
+          </div>
+          <div className="col-xs-12 col-md-12">
+            <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+            {canPost ? this.renderLoadingIndicator() : null}
+          </div>
+        </div>
       </div>
     );
   }
