@@ -95,17 +95,13 @@ class NewPostComponent extends React.Component {
     this.setState({renderLocation: !this.state.renderLocation});
   }
 
-  renderLocationForm() {
-    if(this.state.renderLocation) {
-      return (
-        <Location />
-      );
-    }
-    return null;
+  onLocationNameChange(newLocationName) {
+    const { dispatch } = this.props;
+    dispatch(PostActions.queryLocationName(newLocationName));
   }
 
   render() {
-    let { formErrors, currentUser } = this.props;
+    let { formErrors, currentUser, locationResults } = this.props;
     const canPost = this.state.posting ? "disabled" : null;
     const previewImage = this.state.previewImage;
     const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
@@ -135,9 +131,6 @@ class NewPostComponent extends React.Component {
           </div>
         </div>
         <div className="row">
-          {this.renderLocationForm()}
-        </div>
-        <div className="row">
           <div className="col-xs-12 col-md-6">
             <p className="sheet">
               Add current location
@@ -162,6 +155,13 @@ class NewPostComponent extends React.Component {
               <input  disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
             </div>
           </div>
+        </div>
+        <div className="row">
+          {this.state.renderLocation ?
+            <Location locations={locationResults} onLocationNameChange={this.onLocationNameChange.bind(this)} />
+            : null}
+        </div>
+        <div className="row">
           <div className="col-xs-12 col-md-12">
             <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
             {canPost ? this.renderLoadingIndicator() : null}
@@ -175,7 +175,9 @@ class NewPostComponent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     formErrors: state.posts.formErrors,
-    currentUser: state.session.currentUser
+    currentUser: state.session.currentUser,
+    locationsLoading: state.location.loading,
+    locationResults: state.location.locations
   };
 };
 
