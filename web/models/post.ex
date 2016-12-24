@@ -13,6 +13,7 @@ defmodule Datjournaal.Post do
     field :lng, :float
     field :short_location_name, :string
     field :long_location_name, :string
+    field :places_id, :string
     belongs_to :user, Datjournaal.User
 
     timestamps()
@@ -28,7 +29,7 @@ defmodule Datjournaal.Post do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:description, :lat, :lng, :short_location_name, :long_location_name])
+    |> cast(params, [:description, :lat, :lng, :short_location_name, :long_location_name, :places_id])
     |> cast_attachments(params, [:image])
     |> validate_required([:image])
     |> validate_lat

@@ -54,7 +54,8 @@ defmodule Datjournaal.PostController do
       "description": Map.get(params, "description"),
       "image": inject_unique_filename(Map.get(params, "image")),
       "lat": Map.get(params, "lat"),
-      "lng": Map.get(params, "lng")
+      "lng": Map.get(params, "lng"),
+      "places_id": Map.get(params, "places_id")
     }
 
     post_on_twitter = Map.get(params, "postOnTwitter")
@@ -87,12 +88,31 @@ defmodule Datjournaal.PostController do
   end
 
   defp fetch_location(changeset) do
-    lat  = changeset |> get_change(:lat)
-    long = changeset |> get_change(:lng)
-    {long_name, short_name} = Datjournaal.GmapsApiClient.get_location_name(lat, long)
-    changeset
-      |> put_change(:short_location_name, short_name)
-      |> put_change(:long_location_name, long_name)
+    lat       = changeset |> get_change(:lat)
+    long      = changeset |> get_change(:lng)
+    places_id = changeset |> get_change(:places_id)
+
+    cond do
+      lat != nil && long != nil && places_id == nil ->
+        {long_name, short_name} = Datjournaal.GmapsApiClient.get_location_name(lat, long)
+        changeset
+          |> put_change(:short_location_name, short_name)
+          |> put_change(:long_location_name, long_name)
+      lat == nil && long == nil && places_id != nil ->
+        case Datjournaal.GmapsApiClient.get_place_details(places_id) do
+          { lat, long, long_name, short_name } ->
+            changeset
+              |> put_change(:short_location_name, short_name)
+              |> put_change(:long_location_name, long_name)
+              |> put_change(:lat, lat)
+              |> put_change(:lng, long)
+          nil -> changeset |> add_error(:places_id, "Invalid Google Places ID")
+        end
+      lat != nil && long != nil && places_id != nil ->
+        changeset
+        |> add_error(:location, "You cannot specify both lat/long and places_id")
+      true -> changeset
+    end
   end
 
   defp set_hidden_status(conn, slug, hidden_status) do

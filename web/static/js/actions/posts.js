@@ -11,6 +11,9 @@ function FormData(data) {
   this.description = data.description;
   this.postOnTwitter = data.postOnTwitter;
   this.image = data.image;
+  if(data.places_id) {
+    this.places_id = data.places_id;
+  }
 }
 
 const Actions = {
@@ -124,6 +127,30 @@ const Actions = {
         .then((errorJSON) => {
           dispatch({
             type: Constants.HIDE_POST_ERROR,
+            errors: errorJSON.errors
+          });
+        });
+      });
+    };
+  },
+  queryLocationName: (locationName) => {
+    return dispatch => {
+      dispatch({ type: Constants.START_LOCATION_NAME_QUERY });
+
+      const encodedLocationName = encodeURIComponent(locationName);
+
+      httpGet(`/api/v1/location?location_name=${encodedLocationName}`)
+      .then((data) => {
+        dispatch({
+          type: Constants.LOCATION_NAME_QUERY_RESULT,
+          locations: data
+        });
+      })
+      .catch((error) => {
+        error.response.json()
+        .then((errorJSON) => {
+          dispatch({
+            type: Constants.LOCATION_NAME_QUERY_ERROR,
             errors: errorJSON.errors
           });
         });

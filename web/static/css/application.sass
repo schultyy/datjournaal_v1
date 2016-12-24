@@ -158,16 +158,19 @@ body
     input[type="file"]
       @media(max-width: $sm-breakpoint)
         max-width: 200px
-  input[type="checkbox"]
-    display: block
   .description-container
     padding: 25px
-  .publish-on-twitter
-    label
-      padding-left: 10px
-  .location
-    label
-      padding-left: 10px
+  .sheet
+    display: block
+    background-color: rgb(250, 250, 250)
+    margin-left: 15px
+    margin-right: 15px
+    margin-bottom: 15px
+    padding: 5px
+    height: 100%
+    input[type="checkbox"]
+      margin-left: auto
+      margin-right: auto
   .submit-post
     margin: 10px
   .post-description
@@ -185,12 +188,37 @@ body
     img
       margin-top: 20px
       margin-bottom: 0px
-      margin-left: 5px
-      max-height: 180px
+      margin-right: 5px
+      max-height: 160px
+      height: 100%
+      width: 100%
   @media(min-width: $md-breakpoint)
     .image-preview
       img
-        max-height: 160px
+        max-height: 500px
+  .location-form
+    .location-input
+      margin-left: 5px
+      margin-right: 5px
+      width: 100%
+    @media(min-width: $md-breakpoint)
+      .search-button
+        margin-left: 15px
+      .location-input
+        margin-left: 40px
+    ul
+      margin-top: 15px
+      padding-left: 40px
+      padding-right: 40px
+      list-style-type: none
+      li
+        padding: 10px
+    .location
+      font-size: 12px
+      :hover
+        cursor: pointer
+    .active
+      background-color: rgb(235, 235, 235)
 
 .footer
   height: $footer-height

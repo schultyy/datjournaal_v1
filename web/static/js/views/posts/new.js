@@ -1,9 +1,10 @@
 import React, { PropTypes }     from 'react';
 import { connect }              from 'react-redux';
-import PostActions              from '../../actions/posts';
-import SessionActions           from '../../actions/sessions';
 import { push }                 from 'react-router-redux';
 import cx                       from 'classnames';
+import PostActions              from '../../actions/posts';
+import SessionActions           from '../../actions/sessions';
+import Location                 from './location';
 
 
 class NewPostComponent extends React.Component {
@@ -13,7 +14,10 @@ class NewPostComponent extends React.Component {
 
     this.state = {
       posting: false,
-      previewImage: null
+      previewImage: null,
+      useCustomLocation: false,
+      useCurrentLocation: false,
+      currentLocationId: null
     };
   }
   componentDidMount() {
@@ -39,6 +43,10 @@ class NewPostComponent extends React.Component {
       image: this.refs.file.files[0],
       includeLocation: this.refs.geolocation.checked
     };
+
+    if(this.refs.custom_geolocation.checked && this.state.currentLocationId) {
+      Object.assign(formData, { places_id: this.state.currentLocationId });
+    }
 
     this.setState({posting: true});
     dispatch(PostActions.createPost(formData));
@@ -89,28 +97,43 @@ class NewPostComponent extends React.Component {
     }
   }
 
+  onQueryLocationChange() {
+    if(this.state.useCustomLocation === true) {
+      this.setState({ useCustomLocation: false, useCurrentLocation: false });
+    }
+    else {
+      this.setState({ useCustomLocation: true, useCurrentLocation: false });
+    }
+  }
+
+  onLocationNameChange(newLocationName) {
+    const { dispatch } = this.props;
+    dispatch(PostActions.queryLocationName(newLocationName));
+  }
+
+  onLocationSelected(placesId) {
+    this.setState({ currentLocationId: placesId });
+  }
+
+  onUseCurrentLocationChange(event) {
+    const useCurrentLocation = this.state.useCurrentLocation;
+    if(useCurrentLocation) {
+      this.setState({useCustomLocation: false, useCurrentLocation: false});
+    } else {
+      this.setState({useCustomLocation: false, useCurrentLocation: true});
+    }
+  }
+
   render() {
-    let { formErrors, currentUser } = this.props;
-
+    let { formErrors, currentUser, locationResults } = this.props;
     const canPost = this.state.posting ? "disabled" : null;
-
     const previewImage = this.state.previewImage;
-
+    const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
     const imagePreviewClasses = cx({
-      'collapse': !previewImage,
       'col-xs-12': true,
       'col-md-12': true,
       'image-preview': true
     });
-
-    const descriptionFieldClasses = cx({
-      'col-xs-12': true,
-      'col-md-12': true,
-      'form-group': true,
-      'description-container': true
-    });
-
-    const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
 
     return (
       <div className="new-post-form">
@@ -118,35 +141,74 @@ class NewPostComponent extends React.Component {
         {formErrors ? this.renderFormErrors(formErrors) : null}
 
         <div className="row">
-          <form>
-            <div className={imagePreviewClasses}>
-              <img src={previewImage} className="img-thumbnail" />
-            </div>
-            <div className="form-group col-xs-12 col-md-12 file-upload">
-              <label htmlFor="post-file">Select the file you would like to share</label>
-              <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
-            </div>
-            <div className={descriptionFieldClasses}>
-              <label htmlFor="post-description">Describe it</label>
-              <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
-              </textarea>
-            </div>
-            <div className="form-group col-xs-12 col-md-6 location">
-              <label htmlFor="request-geolocation">Add current location
-                <input name="request-geolocation" type="checkbox" ref="geolocation" />
-              </label>
-            </div>
-            <div className="form-group col-xs-12 col-md-6 publish-on-twitter">
-              <label htmlFor="publish">Publish on Twitter
-                <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
-              </label>
-            </div>
-            <div className="col-xs-12 col-md-12">
-              <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
-              {canPost ? this.renderLoadingIndicator() : null}
-            </div>
-            </form>
+          <div className={imagePreviewClasses}>
+            <img src={previewImage} />
           </div>
+          <div className="form-group col-xs-12 col-md-12 file-upload">
+            <label htmlFor="post-file">Select the file you would like to share</label>
+            <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
+          </div>
+          <div className="col-xs-12 col-md-12 form-group description-container">
+            <label htmlFor="post-description">Describe it</label>
+            <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
+            </textarea>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xs-12 col-md-6">
+            <p className="sheet">
+              Add custom location
+            </p>
+          </div>
+
+          <div className="col-xs-12 col-md-6">
+            <div className="sheet">
+              <input onChange={this.onQueryLocationChange.bind(this)} checked={this.state.useCustomLocation} name="custom-geolocation" type="checkbox" ref="custom_geolocation" />
+            </div>
+          </div>
+
+          <div className="clearfix"></div>
+
+          <div className="col-xs-12 col-md-6">
+            <p className="sheet">
+              Publish on Twitter
+            </p>
+          </div>
+          <div className="col-xs-12 col-md-6">
+            <div className="sheet">
+              <input  disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
+            </div>
+          </div>
+
+          <div className="clearfix"></div>
+
+          <div className="col-xs-12 col-md-6">
+            <p className="sheet">
+              Use my current location
+            </p>
+          </div>
+          <div className="col-xs-12 col-md-6">
+            <div className="sheet">
+              <input onChange={this.onUseCurrentLocationChange.bind(this)} checked={this.state.useCurrentLocation} name="request-geolocation" type="checkbox" ref="geolocation" />
+            </div>
+          </div>
+
+        </div>
+
+        <div className="row">
+          {this.state.useCustomLocation ?
+            <Location locations={locationResults}
+                      selectedLocation={this.state.currentLocationId}
+                      onLocationSelected={this.onLocationSelected.bind(this)}
+                      onLocationNameChange={this.onLocationNameChange.bind(this)} />
+            : null}
+        </div>
+        <div className="row">
+          <div className="col-xs-12 col-md-12">
+            <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+            {canPost ? this.renderLoadingIndicator() : null}
+          </div>
+        </div>
       </div>
     );
   }
@@ -155,7 +217,9 @@ class NewPostComponent extends React.Component {
 const mapStateToProps = (state) => {
   return {
     formErrors: state.posts.formErrors,
-    currentUser: state.session.currentUser
+    currentUser: state.session.currentUser,
+    locationsLoading: state.location.loading,
+    locationResults: state.location.locations
   };
 };
 
