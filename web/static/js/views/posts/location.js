@@ -32,12 +32,13 @@ export default class PickLocation extends React.Component {
 
     return (
       <div className="location-form">
-        <div className="col-xs-11">
-          <input ref="locationname" className="location-input" type="text" name="location" />
+        <div className="col-xs-8 col-md-8">
+          <input ref="locationname" className="location-input form-control" type="text" name="location" />
         </div>
-        <div className="col-xs-1">
-          <button onClick={this.onQueryLocationClick.bind(this)} className="btn btn-default">Search</button>
+        <div className="col-xs-4 col-md-2">
+          <button onClick={this.onQueryLocationClick.bind(this)} className="btn btn-default search-button">Search</button>
         </div>
+        <div className="clearfix"></div>
         <div className="col-xs-12">
           <ul>
             {this.renderSearchResults(locations)}
