@@ -1,12 +1,17 @@
 import React from 'react';
+import cx from 'classnames';
 
 export default class PickLocation extends React.Component {
   renderSearchResults(locations) {
-    const { onLocationSelected } = this.props;
+    const { onLocationSelected, selectedLocation } = this.props;
 
     return locations.map((location) => {
+      const placeClassnames = cx({
+        active: selectedLocation && location.places_id === selectedLocation,
+        location: true
+      });
       return (
-        <li key={location.places_id} onClick={() => onLocationSelected(location.places_id)}>
+        <li className={placeClassnames} key={location.places_id} onClick={() => onLocationSelected(location.places_id)}>
           <h3>{location.main_text}</h3>
           <p>
             {location.description}

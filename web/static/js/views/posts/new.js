@@ -197,7 +197,10 @@ class NewPostComponent extends React.Component {
 
         <div className="row">
           {this.state.useCustomLocation ?
-            <Location onLocationSelected={this.onLocationSelected.bind(this)} locations={locationResults} onLocationNameChange={this.onLocationNameChange.bind(this)} />
+            <Location locations={locationResults}
+                      selectedLocation={this.state.currentLocationId}
+                      onLocationSelected={this.onLocationSelected.bind(this)}
+                      onLocationNameChange={this.onLocationNameChange.bind(this)} />
             : null}
         </div>
         <div className="row">
