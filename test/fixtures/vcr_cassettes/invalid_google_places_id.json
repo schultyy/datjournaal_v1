@@ -1,0 +1,30 @@
+[
+  {
+    "request": {
+      "body": "",
+      "headers": [],
+      "method": "get",
+      "options": [],
+      "request_body": "",
+      "url": "https://maps.googleapis.com/maps/api/place/details/json?placeid=ABCDEF&key=AIzaSyDzhYWai8the4r5LvyiSo4TTULZqoLk5a4"
+    },
+    "response": {
+      "body": "{\n   \"html_attributions\" : [],\n   \"status\" : \"INVALID_REQUEST\"\n}\n",
+      "headers": {
+        "Content-Type": "application/json; charset=UTF-8",
+        "Date": "Sat, 24 Dec 2016 15:32:22 GMT",
+        "Expires": "Sat, 24 Dec 2016 15:37:22 GMT",
+        "Cache-Control": "public, max-age=300",
+        "Server": "pablo",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Frame-Options": "SAMEORIGIN",
+        "Alt-Svc": "quic=\":443\"; ma=2592000; v=\"35,34\"",
+        "Accept-Ranges": "none",
+        "Vary": "Accept-Language,Accept-Encoding",
+        "Transfer-Encoding": "chunked"
+      },
+      "status_code": 200,
+      "type": "ok"
+    }
+  }
+]

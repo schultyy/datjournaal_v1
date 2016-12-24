@@ -226,6 +226,20 @@ defmodule Datjournaal.PostControllerTest do
     assert response.status == 422
   end
 
+  test "POST /api/v1/posts with invalid Google Places Id results in 422 status code", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    lat = 51.36824
+    lng = 8.4140813
+    places_id = "ABCDEF"
+    form_data = %{image: upload, description: "Dies und das", postOnTwitter: "false", places_id: places_id}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    use_cassette "invalid_google_places_id" do
+      response = post conn, "/api/v1/posts", form_data
+      assert response.status == 422
+    end
+  end
+
   test "GET /api/v1/posts/:slug returns post by its slug", %{post: post_from_db, jwt: _jwt} do
     response = get build_conn(), "/api/v1/posts/#{post_from_db.slug}"
     post_from_service = response.resp_body

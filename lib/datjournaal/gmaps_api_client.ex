@@ -31,10 +31,14 @@ defmodule Datjournaal.GmapsApiClient do
     api_key = Application.get_env(:datjournaal, :gmaps_api_key)
     response = GoogleMapsClient.get("place/details/json?placeid=#{places_id}&key=#{api_key}")
     json = response.body
-      |> Poison.decode!
-      |> Map.get("result")
-    location = Map.get(json, "geometry") |> Map.get("location")
-    { Map.get(location, "lat"), Map.get(location, "lng"), Map.get(json, "formatted_address"), Map.get(json, "name") }
+          |> Poison.decode!
+    case Map.get(json, "status") do
+      "OK" ->
+        result = json |> Map.get("result")
+        location = Map.get(result, "geometry") |> Map.get("location")
+        { Map.get(location, "lat"), Map.get(location, "lng"), Map.get(result, "formatted_address"), Map.get(result, "name") }
+      "INVALID_REQUEST" -> nil
+    end
   end
 
   defp extract_district(params) do

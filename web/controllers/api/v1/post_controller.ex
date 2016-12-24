@@ -99,12 +99,15 @@ defmodule Datjournaal.PostController do
           |> put_change(:short_location_name, short_name)
           |> put_change(:long_location_name, long_name)
       lat == nil && long == nil && places_id != nil ->
-        { lat, long, long_name, short_name } = Datjournaal.GmapsApiClient.get_place_details(places_id)
-        changeset
-          |> put_change(:short_location_name, short_name)
-          |> put_change(:long_location_name, long_name)
-          |> put_change(:lat, lat)
-          |> put_change(:lng, long)
+        case Datjournaal.GmapsApiClient.get_place_details(places_id) do
+          { lat, long, long_name, short_name } ->
+            changeset
+              |> put_change(:short_location_name, short_name)
+              |> put_change(:long_location_name, long_name)
+              |> put_change(:lat, lat)
+              |> put_change(:lng, long)
+          nil -> changeset |> add_error(:places_id, "Invalid Google Places ID")
+        end
       lat != nil && long != nil && places_id != nil ->
         changeset
         |> add_error(:location, "You cannot specify both lat/long and places_id")
