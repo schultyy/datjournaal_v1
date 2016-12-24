@@ -11,6 +11,9 @@ function FormData(data) {
   this.description = data.description;
   this.postOnTwitter = data.postOnTwitter;
   this.image = data.image;
+  if(data.places_id) {
+    this.places_id = data.places_id;
+  }
 }
 
 const Actions = {

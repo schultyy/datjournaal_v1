@@ -16,7 +16,8 @@ class NewPostComponent extends React.Component {
       posting: false,
       previewImage: null,
       useCustomLocation: false,
-      useCurrentLocation: false
+      useCurrentLocation: false,
+      currentLocationId: null
     };
   }
   componentDidMount() {
@@ -42,6 +43,10 @@ class NewPostComponent extends React.Component {
       image: this.refs.file.files[0],
       includeLocation: this.refs.geolocation.checked
     };
+
+    if(this.refs.custom_geolocation.checked && this.state.currentLocationId) {
+      Object.assign(formData, { places_id: this.state.currentLocationId });
+    }
 
     this.setState({posting: true});
     dispatch(PostActions.createPost(formData));
@@ -107,7 +112,7 @@ class NewPostComponent extends React.Component {
   }
 
   onLocationSelected(placesId) {
-    console.log(placesId);
+    this.setState({ currentLocationId: placesId });
   }
 
   onUseCurrentLocationChange(event) {
