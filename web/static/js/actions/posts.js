@@ -129,6 +129,28 @@ const Actions = {
         });
       });
     };
+  },
+  queryLocationName: (locationName) => {
+    return dispatch => {
+      dispatch({ type: Constants.START_LOCATION_NAME_QUERY });
+
+      httpGet(`/api/v1/location?location_name=${locationName}`)
+      .then((data) => {
+        dispatch({
+          type: Constants.LOCATION_NAME_QUERY_RESULT,
+          locations: data
+        });
+      })
+      .catch((error) => {
+        error.response.json()
+        .then((errorJSON) => {
+          dispatch({
+            type: Constants.LOCATION_NAME_QUERY_ERROR,
+            errors: errorJSON.errors
+          });
+        });
+      });
+    };
   }
 };
 

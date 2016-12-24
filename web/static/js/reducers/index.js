@@ -6,6 +6,7 @@ import posts                from './posts';
 import stats                from './stats';
 import userPassword         from './userPassword';
 import twitter              from './twitterKeys';
+import location             from './location';
 
 export default combineReducers({
   routing: routerReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   posts: posts,
   stats: stats,
   userPassword: userPassword,
-  twitter: twitter
+  twitter: twitter,
+  location: location
 });
