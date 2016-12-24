@@ -195,6 +195,25 @@ defmodule Datjournaal.PostControllerTest do
     end
   end
 
+  test "POST /api/v1/posts with Google Places Id queries for lat/long and displayname", %{post: _post, jwt: jwt} do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    places_id = "ChIJT8RwZwaPsUcRhkKYaCqr5LI" #Elbphilharmonie Hamburg, Platz der Deutschen Einheit, Hamburg, Germany
+    form_data = %{image: upload, description: "Dies und das", postOnTwitter: "false", places_id: places_id}
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    use_cassette "elbphilharmonie_places_id_query" do
+      response = post conn, "/api/v1/posts", form_data
+      post_slug = response.resp_body
+                  |> Poison.decode!
+                  |> Map.get("slug")
+      post = Repo.get_by(Datjournaal.Post, slug: post_slug)
+      assert post.lat == 53.54133059999999
+      assert post.lng == 9.9841274
+      assert post.short_location_name == "Elbphilharmonie Hamburg"
+      assert post.long_location_name == "Platz der Deutschen Einheit 1, 20457 Hamburg, Germany"
+    end
+  end
+
   test "GET /api/v1/posts/:slug returns post by its slug", %{post: post_from_db, jwt: _jwt} do
     response = get build_conn(), "/api/v1/posts/#{post_from_db.slug}"
     post_from_service = response.resp_body

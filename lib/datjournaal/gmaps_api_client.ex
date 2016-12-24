@@ -27,6 +27,16 @@ defmodule Datjournaal.GmapsApiClient do
       |> Poison.decode!
   end
 
+  def get_place_details(places_id) do
+    api_key = Application.get_env(:datjournaal, :gmaps_api_key)
+    response = GoogleMapsClient.get("place/details/json?placeid=#{places_id}&key=#{api_key}")
+    json = response.body
+      |> Poison.decode!
+      |> Map.get("result")
+    location = Map.get(json, "geometry") |> Map.get("location")
+    { Map.get(location, "lat"), Map.get(location, "lng"), Map.get(json, "formatted_address"), Map.get(json, "name") }
+  end
+
   defp extract_district(params) do
     # e.g. HafenCity
     sublocality = Enum.find(params, fn(component) ->
