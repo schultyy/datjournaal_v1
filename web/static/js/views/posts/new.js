@@ -15,7 +15,8 @@ class NewPostComponent extends React.Component {
     this.state = {
       posting: false,
       previewImage: null,
-      useCustomLocation: false
+      useCustomLocation: false,
+      useCurrentLocation: false
     };
   }
   componentDidMount() {
@@ -93,10 +94,10 @@ class NewPostComponent extends React.Component {
 
   onQueryLocationChange() {
     if(this.state.useCustomLocation === true) {
-      this.setState({useCustomLocation: false});
+      this.setState({ useCustomLocation: false, useCurrentLocation: false });
     }
     else {
-      this.setState({useCustomLocation: true});
+      this.setState({ useCustomLocation: true, useCurrentLocation: false });
     }
   }
 
@@ -110,9 +111,11 @@ class NewPostComponent extends React.Component {
   }
 
   onUseCurrentLocationChange(event) {
-    const isEnabled = event.target.checked;
-    if(isEnabled) {
-      this.setState({useCustomLocation: false});
+    const useCurrentLocation = this.state.useCurrentLocation;
+    if(useCurrentLocation) {
+      this.setState({useCustomLocation: false, useCurrentLocation: false});
+    } else {
+      this.setState({useCustomLocation: false, useCurrentLocation: true});
     }
   }
 
@@ -181,7 +184,7 @@ class NewPostComponent extends React.Component {
           </div>
           <div className="col-xs-12 col-md-6">
             <div className="sheet">
-              <input onChange={this.onUseCurrentLocationChange.bind(this)} name="request-geolocation" type="checkbox" ref="geolocation" />
+              <input onChange={this.onUseCurrentLocationChange.bind(this)} checked={this.state.useCurrentLocation} name="request-geolocation" type="checkbox" ref="geolocation" />
             </div>
           </div>
 
