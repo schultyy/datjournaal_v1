@@ -1,9 +1,10 @@
 import React, { PropTypes }     from 'react';
 import { connect }              from 'react-redux';
-import PostActions              from '../../actions/posts';
-import SessionActions           from '../../actions/sessions';
 import { push }                 from 'react-router-redux';
 import cx                       from 'classnames';
+import PostActions              from '../../actions/posts';
+import SessionActions           from '../../actions/sessions';
+import Location                 from './location';
 
 
 class NewPostComponent extends React.Component {
@@ -13,7 +14,8 @@ class NewPostComponent extends React.Component {
 
     this.state = {
       posting: false,
-      previewImage: null
+      previewImage: null,
+      renderLocation: false
     };
   }
   componentDidMount() {
@@ -89,6 +91,19 @@ class NewPostComponent extends React.Component {
     }
   }
 
+  onQueryLocationChange() {
+    this.setState({renderLocation: !this.state.renderLocation});
+  }
+
+  renderLocationForm() {
+    if(this.state.renderLocation) {
+      return (
+        <Location />
+      );
+    }
+    return null;
+  }
+
   render() {
     let { formErrors, currentUser } = this.props;
     const canPost = this.state.posting ? "disabled" : null;
@@ -120,6 +135,9 @@ class NewPostComponent extends React.Component {
           </div>
         </div>
         <div className="row">
+          {this.renderLocationForm()}
+        </div>
+        <div className="row">
           <div className="col-xs-12 col-md-6">
             <p className="sheet">
               Add current location
@@ -128,7 +146,7 @@ class NewPostComponent extends React.Component {
 
           <div className="col-xs-12 col-md-6">
             <div className="sheet">
-              <input name="request-geolocation" type="checkbox" ref="geolocation" />
+              <input onChange={this.onQueryLocationChange.bind(this)} name="request-geolocation" type="checkbox" ref="geolocation" />
             </div>
           </div>
 
