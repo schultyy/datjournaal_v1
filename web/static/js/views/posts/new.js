@@ -15,7 +15,7 @@ class NewPostComponent extends React.Component {
     this.state = {
       posting: false,
       previewImage: null,
-      renderLocation: false
+      useCustomLocation: false
     };
   }
   componentDidMount() {
@@ -92,7 +92,12 @@ class NewPostComponent extends React.Component {
   }
 
   onQueryLocationChange() {
-    this.setState({renderLocation: !this.state.renderLocation});
+    if(this.state.useCustomLocation === true) {
+      this.setState({useCustomLocation: false});
+    }
+    else {
+      this.setState({useCustomLocation: true});
+    }
   }
 
   onLocationNameChange(newLocationName) {
@@ -102,6 +107,13 @@ class NewPostComponent extends React.Component {
 
   onLocationSelected(placesId) {
     console.log(placesId);
+  }
+
+  onUseCurrentLocationChange(event) {
+    const isEnabled = event.target.checked;
+    if(isEnabled) {
+      this.setState({useCustomLocation: false});
+    }
   }
 
   render() {
@@ -137,13 +149,13 @@ class NewPostComponent extends React.Component {
         <div className="row">
           <div className="col-xs-12 col-md-6">
             <p className="sheet">
-              Add current location
+              Add custom location
             </p>
           </div>
 
           <div className="col-xs-12 col-md-6">
             <div className="sheet">
-              <input onChange={this.onQueryLocationChange.bind(this)} name="request-geolocation" type="checkbox" ref="geolocation" />
+              <input onChange={this.onQueryLocationChange.bind(this)} checked={this.state.useCustomLocation} name="custom-geolocation" type="checkbox" ref="custom_geolocation" />
             </div>
           </div>
 
@@ -159,9 +171,24 @@ class NewPostComponent extends React.Component {
               <input  disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
             </div>
           </div>
+
+          <div className="clearfix"></div>
+
+          <div className="col-xs-12 col-md-6">
+            <p className="sheet">
+              Use my current location
+            </p>
+          </div>
+          <div className="col-xs-12 col-md-6">
+            <div className="sheet">
+              <input onChange={this.onUseCurrentLocationChange.bind(this)} name="request-geolocation" type="checkbox" ref="geolocation" />
+            </div>
+          </div>
+
         </div>
+
         <div className="row">
-          {this.state.renderLocation ?
+          {this.state.useCustomLocation ?
             <Location onLocationSelected={this.onLocationSelected.bind(this)} locations={locationResults} onLocationNameChange={this.onLocationNameChange.bind(this)} />
             : null}
         </div>
