@@ -134,7 +134,9 @@ const Actions = {
     return dispatch => {
       dispatch({ type: Constants.START_LOCATION_NAME_QUERY });
 
-      httpGet(`/api/v1/location?location_name=${locationName}`)
+      const encodedLocationName = encodeURIComponent(locationName);
+
+      httpGet(`/api/v1/location?location_name=${encodedLocationName}`)
       .then((data) => {
         dispatch({
           type: Constants.LOCATION_NAME_QUERY_RESULT,

@@ -20,7 +20,8 @@ defmodule Datjournaal.GmapsApiClient do
 
   def place_autocomplete(place_name) do
     api_key = Application.get_env(:datjournaal, :gmaps_api_key)
-    response = GoogleMapsClient.get("place/autocomplete/json?input=#{place_name}&key=#{api_key}")
+    response = URI.encode("place/autocomplete/json?input=#{place_name}&key=#{api_key}")
+                |> GoogleMapsClient.get
     response
       |> Map.get(:body)
       |> Poison.decode!
