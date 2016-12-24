@@ -105,6 +105,9 @@ defmodule Datjournaal.PostController do
           |> put_change(:long_location_name, long_name)
           |> put_change(:lat, lat)
           |> put_change(:lng, long)
+      lat != nil && long != nil && places_id != nil ->
+        changeset
+        |> add_error(:location, "You cannot specify both lat/long and places_id")
       true -> changeset
     end
   end
