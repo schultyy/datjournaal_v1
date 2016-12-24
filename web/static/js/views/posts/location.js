@@ -2,9 +2,11 @@ import React from 'react';
 
 export default class PickLocation extends React.Component {
   renderSearchResults(locations) {
+    const { onLocationSelected } = this.props;
+
     return locations.map((location) => {
       return (
-        <li key={location.places_id}>
+        <li key={location.places_id} onClick={() => onLocationSelected(location.places_id)}>
           <h3>{location.main_text}</h3>
           <p>
             {location.description}

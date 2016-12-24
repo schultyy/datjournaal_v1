@@ -100,6 +100,10 @@ class NewPostComponent extends React.Component {
     dispatch(PostActions.queryLocationName(newLocationName));
   }
 
+  onLocationSelected(placesId) {
+    console.log(placesId);
+  }
+
   render() {
     let { formErrors, currentUser, locationResults } = this.props;
     const canPost = this.state.posting ? "disabled" : null;
@@ -158,7 +162,7 @@ class NewPostComponent extends React.Component {
         </div>
         <div className="row">
           {this.state.renderLocation ?
-            <Location locations={locationResults} onLocationNameChange={this.onLocationNameChange.bind(this)} />
+            <Location onLocationSelected={this.onLocationSelected.bind(this)} locations={locationResults} onLocationNameChange={this.onLocationNameChange.bind(this)} />
             : null}
         </div>
         <div className="row">
