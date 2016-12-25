@@ -263,6 +263,26 @@ defmodule Datjournaal.PostControllerTest do
     assert is_hidden
   end
 
+  test "POST /api/v1/posts/:slug/show returns 403 if user is not logged in" do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: true, user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    Datjournaal.Post.set_hidden_changeset(post, %{hidden: true}) |> Datjournaal.Repo.update
+    conn = build_conn()
+    response = post conn, "/api/v1/posts/#{post.slug}/show"
+    assert response.status == 403
+  end
+
+  test "POST /api/v1/posts/:slug/show does not show post if user is not logged in" do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    Datjournaal.Post.set_hidden_changeset(post, %{hidden: true}) |> Datjournaal.Repo.update
+    post build_conn(), "/api/v1/posts/#{post.slug}/show"
+    is_hidden = Repo.get(Datjournaal.Post, post.id) |> Map.get(:hidden)
+    assert is_hidden == true
+  end
+
   test "POST /api/v1/posts/:slug/show returns 200 status code", %{post: _post, jwt: jwt} do
     upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
     {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: true, user: 1, image: upload})
