@@ -293,4 +293,10 @@ defmodule Datjournaal.PostControllerTest do
     assert lat == nil
     assert lng == nil
   end
+
+  test "GET /api/v1/posts as anonymous user does not return lat/long for all posts" do
+    response = get build_conn(), "/api/v1/posts/"
+    coordinates = response.resp_body |> Poison.decode! |> Map.get("posts") |> Enum.map(fn(p) -> { Map.get(p, "lat"), Map.get(p, "lng")} end)
+    assert Enum.all?(coordinates, fn(co) -> co == { nil, nil } end) == true
+  end
 end

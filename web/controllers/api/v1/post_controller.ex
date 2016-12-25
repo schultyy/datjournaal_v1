@@ -24,7 +24,7 @@ defmodule Datjournaal.PostController do
 
     posts_with_user = Repo.preload(posts, :user)
 
-    render(conn, "index.json", posts: posts_with_user)
+    render(conn, "index.json", posts: posts_with_user, is_authenticated: current_user != nil)
   end
 
   def show(conn, %{"id" => id}) do

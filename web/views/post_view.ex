@@ -1,9 +1,9 @@
 defmodule Datjournaal.PostView do
   use Datjournaal.Web, :view
 
-  def render("index.json", %{posts: posts}) do
+  def render("index.json", %{posts: posts, is_authenticated: is_authenticated}) do
     %{
-      posts: Enum.map(posts, &post_with_file_url/1)
+      posts: Enum.map(posts, &post_with_file_url/1) |> strip_coords(is_authenticated)
     }
   end
 
@@ -35,9 +35,13 @@ defmodule Datjournaal.PostView do
     Map.put(post, :image, image_url)
   end
 
+  defp strip_coords(posts, is_logged_in) when is_list(posts) do
+    Enum.map(posts, fn(p) -> strip_coords(p, is_logged_in) end)
+  end
+
   defp strip_coords(post, is_logged_in) do
     case is_logged_in do
-      true -> post
+      true  -> post
       false ->
         post
           |> Map.put(:lat, nil)
