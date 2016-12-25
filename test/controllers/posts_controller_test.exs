@@ -294,9 +294,28 @@ defmodule Datjournaal.PostControllerTest do
     assert lng == nil
   end
 
+  test "GET /api/v1/posts/<slug> as logged in user does return lat/long for a post", %{ post: post, jwt: jwt } do
+    conn = build_conn()
+           |> put_req_header("authorization", jwt)
+    response = get conn, "/api/v1/posts/#{post.slug}"
+    post_json = response.resp_body |> Poison.decode!
+    lat = Map.get(post_json, "lat")
+    lng = Map.get(post_json, "lng")
+    assert lat != nil
+    assert lng != nil
+  end
+
   test "GET /api/v1/posts as anonymous user does not return lat/long for all posts" do
     response = get build_conn(), "/api/v1/posts/"
     coordinates = response.resp_body |> Poison.decode! |> Map.get("posts") |> Enum.map(fn(p) -> { Map.get(p, "lat"), Map.get(p, "lng")} end)
     assert Enum.all?(coordinates, fn(co) -> co == { nil, nil } end) == true
+  end
+
+  test "GET /api/v1/posts as logged in user does return lat/long for all posts", %{ post: _post, jwt: jwt } do
+    conn = build_conn()
+           |> put_req_header("authorization", jwt)
+    response = get conn, "/api/v1/posts/"
+    coordinates = response.resp_body |> Poison.decode! |> Map.get("posts") |> Enum.map(fn(p) -> { Map.get(p, "lat"), Map.get(p, "lng")} end)
+    assert Enum.all?(coordinates, fn(co) -> co != { nil, nil } end) == true
   end
 end
