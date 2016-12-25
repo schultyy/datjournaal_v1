@@ -15,6 +15,25 @@ export class TileComponent extends React.Component {
     return `http://maps.google.com?q=${post.lat},${post.lng}`;
   }
 
+  renderLocation(post) {
+    const hasCoordinates = post.lat && post.lng;
+    if(post.short_location_name && hasCoordinates) {
+      return (
+        <div className="location">
+          <a href={this.googleMapsUrl()} target="_blank">{post.short_location_name}</a>
+        </div>
+      );
+    } else if(post.short_location_name && !hasCoordinates) {
+      return (
+        <div className="location">
+          {post.short_location_name}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     const {
       post,
@@ -47,7 +66,7 @@ export class TileComponent extends React.Component {
         <div>
           <span className="pull-left author">
             {post.user.handle}
-            {post.short_location_name ? <div className="location"><a href={this.googleMapsUrl()} target="_blank">{post.short_location_name}</a></div> : null}
+            {this.renderLocation(post)}
           </span>
           <span className="pull-right">
             <ContextMenu
