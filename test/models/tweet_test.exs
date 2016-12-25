@@ -35,4 +35,10 @@ defmodule Datjournaal.TweetTest do
     url = post |> Tweet.to_url
     assert String.first(Tweet.to_tweet(url, post.text)) == "📸"
   end
+
+  test "Tweet where text is nil does not crash" do
+    post = %{slug: UUID.uuid4(:hex), text: nil}
+    url = post |> Tweet.to_url
+    assert Tweet.to_tweet(url, post.text) == "📸 \n#{url}"
+  end
 end
