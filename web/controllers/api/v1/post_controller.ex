@@ -29,7 +29,8 @@ defmodule Datjournaal.PostController do
 
   def show(conn, %{"id" => id}) do
     log_user_access(conn)
-    query = if Guardian.Plug.current_resource(conn) do
+    current_user = Guardian.Plug.current_resource(conn)
+    query = if current_user != nil do
       Repo.one(from p in Post, where: p.slug == ^id)
     else
       Repo.one(from p in Post, where: p.slug == ^id and p.hidden == type(^false, :boolean))
@@ -43,7 +44,7 @@ defmodule Datjournaal.PostController do
       post ->
         conn
         |> put_status(:ok)
-        |> render("show.json", post: Repo.preload(post, :user))
+        |> render("show.json", post: Repo.preload(post, :user), is_authenticated: current_user != nil)
     end
   end
 
@@ -71,7 +72,7 @@ defmodule Datjournaal.PostController do
         post_to_twitter(post_on_twitter, post_with_user)
         conn
         |> put_status(:created)
-        |> render("show.json", post: post_with_user )
+        |> render("show.json", post: post_with_user, is_authenticated: true)
       {:error, changeset} ->
         conn
         |> put_status(:unprocessable_entity)
@@ -128,7 +129,7 @@ defmodule Datjournaal.PostController do
             post_with_user = Repo.preload(post, :user)
             conn
             |> put_status(:ok)
-            |> render("show.json", post: post_with_user )
+            |> render("show.json", post: post_with_user, is_authenticated: true)
           {:error, changeset} ->
             conn
             |> put_status(:unprocessable_entity)

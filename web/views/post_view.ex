@@ -7,8 +7,8 @@ defmodule Datjournaal.PostView do
     }
   end
 
-  def render("show.json", %{post: post}) do
-    post |> post_with_file_url
+  def render("show.json", %{post: post, is_authenticated: is_authenticated}) do
+    post |> post_with_file_url |> strip_coords(is_authenticated)
   end
 
   def render("not_found.json", %{id: id}) do
@@ -33,5 +33,15 @@ defmodule Datjournaal.PostView do
                 |> Path.basename
     image_url = "/uploads/" <> filename
     Map.put(post, :image, image_url)
+  end
+
+  defp strip_coords(post, is_logged_in) do
+    case is_logged_in do
+      true -> post
+      false ->
+        post
+          |> Map.put(:lat, nil)
+          |> Map.put(:lng, nil)
+    end
   end
 end

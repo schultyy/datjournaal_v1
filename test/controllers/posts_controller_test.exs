@@ -9,7 +9,7 @@ defmodule Datjournaal.PostControllerTest do
 
   setup do
     upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
-    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: false, user: 1, image: upload})
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: false, user: 1, image: upload, lat: 15.5, lng: 9.5})
       |> Datjournaal.Repo.insert
     {:ok, user} = Datjournaal.ConnCase.create_user
     {:ok, jwt, _full_claims} = user |> Guardian.encode_and_sign(:token)
@@ -283,5 +283,14 @@ defmodule Datjournaal.PostControllerTest do
 
     is_hidden = Repo.get(Datjournaal.Post, post.id) |> Map.get(:hidden)
     assert !is_hidden
+  end
+
+  test "GET /api/v1/posts/<slug> as anonymous user does not return lat/long for a post", %{ post: post, jwt: _jwt } do
+    response = get build_conn(), "/api/v1/posts/#{post.slug}"
+    post_json = response.resp_body |> Poison.decode!
+    lat = Map.get(post_json, "lat")
+    lng = Map.get(post_json, "lng")
+    assert lat == nil
+    assert lng == nil
   end
 end
