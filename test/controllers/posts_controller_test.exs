@@ -389,4 +389,16 @@ defmodule Datjournaal.PostControllerTest do
 
     assert updated_post.description == "Hey, I updated my description"
   end
+
+  test "PATCH /api/v1/posts/:slug does not update fields in database which are not whitelisted", %{ post: _post, jwt: jwt } do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    patch conn, "/api/v1/posts/#{post.slug}", %{ post: %{ slug: "12345" } }
+    updated_post = Repo.get(Datjournaal.Post, post.id)
+
+    assert updated_post.slug == post.slug
+  end
 end

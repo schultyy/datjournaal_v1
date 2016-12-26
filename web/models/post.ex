@@ -24,6 +24,15 @@ defmodule Datjournaal.Post do
     String.slice(post.description, 0, 140 - String.length(postfix)) <> postfix
   end
 
+  def update_post_changeset(struct, params \\ %{}) do
+    struct
+      |> cast(params, [:description, :lat, :lng, :short_location_name, :long_location_name, :places_id])
+      |> cast_attachments(params, [:image])
+      |> validate_required([:image])
+      |> validate_lat
+      |> validate_lng
+  end
+
   @doc """
   Builds a changeset based on the `struct` and `params`.
   """
