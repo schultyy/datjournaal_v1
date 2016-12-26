@@ -89,9 +89,11 @@ defmodule Datjournaal.PostController do
           |> put_status(:not_found)
           |> render("not_found.json", id: slug)
       post ->
+        {:ok, updated_post } = Post.changeset(post, params |> Map.get("post"))
+          |> Repo.update
         conn
           |> put_status(:ok)
-          |> render("show.json", post: Repo.preload(post, :user), is_authenticated: current_user != nil)
+          |> render("show.json", post: Repo.preload(updated_post, :user), is_authenticated: current_user != nil)
     end
   end
 

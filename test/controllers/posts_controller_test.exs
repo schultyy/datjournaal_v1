@@ -342,7 +342,7 @@ defmodule Datjournaal.PostControllerTest do
   test "PATCH /api/v1/posts/:slug with unknown slug returns 404", %{ post: _post, jwt: jwt } do
     conn = build_conn()
       |> put_req_header("authorization", jwt)
-    response = patch conn, "/api/v1/posts/12345", %{ description: "Hey, I updated my description" }
+    response = patch conn, "/api/v1/posts/12345", %{ post: %{ description: "Hey, I updated my description" } }
     assert response.status == 404
   end
 
@@ -351,7 +351,7 @@ defmodule Datjournaal.PostControllerTest do
     {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", user: 1, image: upload})
       |> Datjournaal.Repo.insert
     conn = build_conn()
-    response = patch conn, "/api/v1/posts/#{post.slug}", %{ description: "Hey, I updated my description" }
+    response = patch conn, "/api/v1/posts/#{post.slug}", %{ post: %{ description: "Hey, I updated my description" } }
     assert response.status == 403
   end
 
@@ -361,7 +361,32 @@ defmodule Datjournaal.PostControllerTest do
       |> Datjournaal.Repo.insert
     conn = build_conn()
       |> put_req_header("authorization", jwt)
-    response = patch conn, "/api/v1/posts/#{post.slug}", %{ description: "Hey, I updated my description" }
+    response = patch conn, "/api/v1/posts/#{post.slug}", %{ post: %{ description: "Hey, I updated my description" } }
     assert response.status == 200
+  end
+
+  test "PATCH /api/v1/posts/:slug as logged in user returns the updated post", %{ post: _post, jwt: jwt } do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = patch conn, "/api/v1/posts/#{post.slug}", %{ post: %{ description: "Hey, I updated my description" } }
+    updated_description = response.resp_body
+                            |> Poison.decode!
+                            |> Map.get("description")
+    assert updated_description == "Hey, I updated my description"
+  end
+
+  test "PATCH /api/v1/posts/:slug as logged in user updates the specified field", %{ post: _post, jwt: jwt } do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    patch conn, "/api/v1/posts/#{post.slug}", %{ post: %{ description: "Hey, I updated my description" } }
+    updated_post = Repo.get(Datjournaal.Post, post.id)
+
+    assert updated_post.description == "Hey, I updated my description"
   end
 end
