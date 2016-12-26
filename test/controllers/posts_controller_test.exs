@@ -338,4 +338,30 @@ defmodule Datjournaal.PostControllerTest do
     coordinates = response.resp_body |> Poison.decode! |> Map.get("posts") |> Enum.map(fn(p) -> { Map.get(p, "lat"), Map.get(p, "lng")} end)
     assert Enum.all?(coordinates, fn(co) -> co != { nil, nil } end) == true
   end
+
+  test "PATCH /api/v1/posts/:slug with unknown slug returns 404", %{ post: _post, jwt: jwt } do
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = patch conn, "/api/v1/posts/12345", %{ description: "Hey, I updated my description" }
+    assert response.status == 404
+  end
+
+  test "PATCH /api/v1/posts/:slug as anonymous user returns HTTP 403 forbidden" do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+    response = patch conn, "/api/v1/posts/#{post.slug}", %{ description: "Hey, I updated my description" }
+    assert response.status == 403
+  end
+
+  test "PATCH /api/v1/posts/:slug as logged in user returns HTTP 200", %{ post: _post, jwt: jwt } do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = patch conn, "/api/v1/posts/#{post.slug}", %{ description: "Hey, I updated my description" }
+    assert response.status == 200
+  end
 end

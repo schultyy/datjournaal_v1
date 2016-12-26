@@ -2,7 +2,7 @@ defmodule Datjournaal.PostController do
   use Datjournaal.Web, :controller
   import Ecto.Changeset
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide, :show_post]
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide, :show_post, :update]
 
   alias Datjournaal.{Repo, Post, UserStat}
 
@@ -77,6 +77,21 @@ defmodule Datjournaal.PostController do
         conn
         |> put_status(:unprocessable_entity)
         |> render("error.json", changeset: changeset)
+    end
+  end
+
+  def update(conn, params) do
+    current_user = Guardian.Plug.current_resource(conn)
+    slug = Map.get(params, "id")
+    case Repo.one(from p in Post, where: p.slug == ^slug) do
+      nil ->
+        conn
+          |> put_status(:not_found)
+          |> render("not_found.json", id: slug)
+      post ->
+        conn
+          |> put_status(:ok)
+          |> render("show.json", post: Repo.preload(post, :user), is_authenticated: current_user != nil)
     end
   end
 
