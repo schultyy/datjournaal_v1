@@ -401,4 +401,15 @@ defmodule Datjournaal.PostControllerTest do
 
     assert updated_post.slug == post.slug
   end
+
+  test "PATCH /api/v1/posts/:slug trying to update non whitelisted fields does return the original post", %{ post: _post, jwt: jwt } do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", user: 1, image: upload})
+      |> Datjournaal.Repo.insert
+    conn = build_conn()
+      |> put_req_header("authorization", jwt)
+    response = patch conn, "/api/v1/posts/#{post.slug}", %{ post: %{ slug: "12345" } }
+    slug = response.resp_body |> Poison.decode! |> Map.get("slug")
+    assert post.slug == slug
+  end
 end
