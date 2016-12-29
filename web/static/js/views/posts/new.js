@@ -129,11 +129,6 @@ class NewPostComponent extends React.Component {
     const canPost = this.state.posting ? "disabled" : null;
     const previewImage = this.state.previewImage;
     const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
-    const imagePreviewClasses = cx({
-      'col-xs-12': true,
-      'col-md-12': true,
-      'image-preview': true
-    });
 
     return (
       <div className="new-post-form">
@@ -141,8 +136,10 @@ class NewPostComponent extends React.Component {
         {formErrors ? this.renderFormErrors(formErrors) : null}
 
         <div className="row">
-          <div className={imagePreviewClasses}>
-            <img src={previewImage} />
+          <div className="col-xs-12 col-md-12">
+            <div className="image-preview">
+              <img src={previewImage} />
+            </div>
           </div>
           <div className="form-group col-xs-12 col-md-12 file-upload">
             <label htmlFor="post-file">Select the file you would like to share</label>
