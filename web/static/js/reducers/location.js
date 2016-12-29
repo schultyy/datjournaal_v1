@@ -8,6 +8,8 @@ const initialState = {
 
 export default function locationReducer(state = initialState, action) {
   switch(action.type) {
+    case Constants.CLEAR_LOCATION_SUGGESTIONS:
+      return initialState;
     case Constants.START_LOCATION_NAME_QUERY:
       return { ...state, loading: true, locations: [], errors: null };
     case Constants.LOCATION_NAME_QUERY_RESULT:

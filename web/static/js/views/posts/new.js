@@ -24,6 +24,7 @@ class NewPostComponent extends React.Component {
     const { dispatch, currentUser } = this.props;
     const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
     if(phoenixAuthToken && currentUser) {
+      dispatch(PostActions.clearLocationSuggestions());
       return;
     }
     else if (phoenixAuthToken && !currentUser) {
