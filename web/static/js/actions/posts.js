@@ -156,6 +156,11 @@ const Actions = {
         });
       });
     };
+  },
+  clearLocationSuggestions() {
+    return {
+      type: Constants.CLEAR_LOCATION_SUGGESTIONS
+    };
   }
 };
 
