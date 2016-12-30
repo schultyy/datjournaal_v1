@@ -19,6 +19,7 @@ defmodule Datjournaal.Tweet do
     Enum.join([prefix <> location, url], "\n")
   end
   def to_tweet(url, original_text, nil), do: to_tweet(url, original_text)
+  def to_tweet(url, nil, location), do: to_tweet(url, "", location)
   def to_tweet(url, original_text, location) do
     max_text_length = 140 - String.length(url) - String.length(location) - location_prefix_length - dotlength - String.length(prefix)
     if String.length(original_text) > max_text_length do
