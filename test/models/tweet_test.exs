@@ -72,4 +72,10 @@ defmodule Datjournaal.TweetTest do
     url = post |> Tweet.to_url
     assert Tweet.to_tweet(url, post.text, post.location) == "📸 @ Hamburg, CCH\n#{url}"
   end
+
+  test "Tweet where location is nil and where text is nil should generate tweet with url" do
+    post = %{slug: UUID.uuid4(:hex), text: nil, location: nil}
+    url = post |> Tweet.to_url
+    assert Tweet.to_tweet(url, post.text, post.location) == "📸 \n#{url}"
+  end
 end
