@@ -54,4 +54,10 @@ defmodule Datjournaal.TweetTest do
     assert String.contains?(Tweet.to_tweet(url, post.text, post.location), "@ Hamburg, CCH")
     assert String.contains?(Tweet.to_tweet(url, post.text, post.location), url)
   end
+
+  test "Tweet contains just the location when text is empty" do
+    post = %{slug: UUID.uuid4(:hex), text: "", location: "Hamburg, CCH"}
+    url = post |> Tweet.to_url
+    assert String.contains?(Tweet.to_tweet(url, post.text, post.location), "📸 @ Hamburg, CCH")
+  end
 end
