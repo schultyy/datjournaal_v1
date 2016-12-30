@@ -148,7 +148,7 @@ defmodule Datjournaal.PostController do
                                       access_token: key.access_token,
                                       access_token_secret: key.access_token_secret)
         Datjournaal.Tweet.to_url(post_with_user)
-            |> Datjournaal.Tweet.to_tweet(post_with_user.description)
+            |> Datjournaal.Tweet.to_tweet(post_with_user.description, post_with_user.long_location_name)
             |> ExTwitter.update()
     end
   end
