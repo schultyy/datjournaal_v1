@@ -47,4 +47,11 @@ defmodule Datjournaal.TweetTest do
     url = post |> Tweet.to_url
     assert String.contains?(Tweet.to_tweet(url, post.text, post.location), "@ Hamburg, CCH")
   end
+
+  test "Location shall be included in the tweet with very long text" do
+    post = %{slug: UUID.uuid4(:hex), text: "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet", location: "Hamburg, CCH"}
+    url = post |> Tweet.to_url
+    assert String.contains?(Tweet.to_tweet(url, post.text, post.location), "@ Hamburg, CCH")
+    assert String.contains?(Tweet.to_tweet(url, post.text, post.location), url)
+  end
 end

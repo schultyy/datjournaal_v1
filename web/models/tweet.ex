@@ -14,6 +14,7 @@ defmodule Datjournaal.Tweet do
 
     Enum.join([prefix <> sliced_text, url], "\n")
   end
+
   def to_tweet(url, original_text, location) do
     max_text_length = 140 - String.length(url) - String.length(location) - location_prefix_length - dotlength - String.length(prefix)
     if String.length(original_text) > max_text_length do
