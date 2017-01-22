@@ -1,6 +1,6 @@
-import React          from 'react';
-import cx             from 'classnames';
-import UserActions    from '../../actions/user';
+import React from 'react';
+import cx from 'classnames';
+import UserActions from '../../actions/user';
 
 export default class ResetPassword extends React.Component {
   constructor() {
@@ -8,19 +8,19 @@ export default class ResetPassword extends React.Component {
 
     this.state = {
       oldPassword: '',
-      newPassword: ''
+      newPassword: '',
     };
   }
 
   onOldPasswordChange(event) {
     this.setState({
-      oldPassword: event.target.value
+      oldPassword: event.target.value,
     });
   }
 
   onNewPasswordChange(event) {
     this.setState({
-      newPassword: event.target.value
+      newPassword: event.target.value,
     });
   }
 
@@ -36,7 +36,7 @@ export default class ResetPassword extends React.Component {
   renderProgressbar() {
     const { isUpdating } = this.props;
 
-    if(!isUpdating) {
+    if (!isUpdating) {
       return null;
     }
 
@@ -47,16 +47,14 @@ export default class ResetPassword extends React.Component {
 
   renderFormErrors() {
     const { formErrors } = this.props;
-    if(!formErrors) {
+    if (!formErrors) {
       return null;
     }
 
-    const errors = formErrors.map(error => {
-      return Object.keys(error).map(key => Object.create({
-        field: key,
-        message: error[key]
-      }))[0];
-    });
+    const errors = formErrors.map(error => Object.keys(error).map(key => Object.create({
+      field: key,
+      message: error[key],
+    }))[0]);
 
     return (
       <div className="error-message">
@@ -70,8 +68,8 @@ export default class ResetPassword extends React.Component {
   render() {
     const submitButtonClassnames = cx({
       'form-control': true,
-      'btn': true,
-      'btn-default': true
+      btn: true,
+      'btn-default': true,
     });
 
     const { isUpdating } = this.props;

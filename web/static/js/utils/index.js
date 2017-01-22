@@ -1,5 +1,5 @@
-import React        from 'react';
-import fetch        from 'isomorphic-fetch';
+import React from 'react';
+import fetch from 'isomorphic-fetch';
 import { polyfill } from 'es6-promise';
 
 const defaultHeaders = {
@@ -10,11 +10,10 @@ const defaultHeaders = {
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
-  } else {
-    var error = new Error(response.statusText);
-    error.response = response;
-    throw error;
   }
+  const error = new Error(response.statusText);
+  error.response = response;
+  throw error;
 }
 
 function buildHeaders() {
@@ -48,17 +47,17 @@ export function httpGet(url) {
 export function httpPostFormData(url, data) {
   const headers = {
     Authorization: localStorage.getItem('phoenixAuthToken'),
-    Accept: 'application/json'
+    Accept: 'application/json',
   };
 
-  let formData = new FormData();
-  for(var key in data) {
+  const formData = new FormData();
+  for (const key in data) {
     formData.append(key, data[key]);
   }
 
   return fetch(url, {
     method: 'post',
-    headers: headers,
+    headers,
     body: formData,
   })
   .then(checkStatus)
@@ -70,14 +69,14 @@ export function httpPost(url, data) {
     Authorization: localStorage.getItem('phoenixAuthToken'),
     Accept: 'application/json',
     'Content-Type': 'application/json',
-  }
+  };
 
   const body = JSON.stringify(data);
 
   return fetch(url, {
     method: 'post',
-    headers: headers,
-    body: body,
+    headers,
+    body,
   })
   .then(checkStatus)
   .then(parseJSON);
@@ -109,12 +108,12 @@ export function requestLocation() {
   const options = {
     enableHighAccuracy: true,
     timeout: 1000,
-    maximumAge: 0
+    maximumAge: 0,
   };
 
-  return new Promise(function(resolve, reject) {
-    const success = (coords) => resolve(coords);
-    const error = (error) => reject(error);
+  return new Promise((resolve, reject) => {
+    const success = coords => resolve(coords);
+    const error = error => reject(error);
     navigator.geolocation.getCurrentPosition(success, error, options);
   });
 }

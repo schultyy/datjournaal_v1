@@ -2,7 +2,7 @@ import Constants from '../constants';
 
 const initialState = {
   stats: [],
-  fetching: true
+  fetching: true,
 };
 
 export default function reducer(state = initialState, action = {}) {

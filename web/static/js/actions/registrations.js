@@ -1,12 +1,11 @@
 import { push } from 'react-router-redux';
-import Constants     from '../constants';
-import { httpPost }  from '../utils';
+import Constants from '../constants';
+import { httpPost } from '../utils';
 
 const Actions = {};
 
-Actions.signUp = (data) => {
-  return dispatch => {
-    httpPost('/api/v1/registrations', {user: data})
+Actions.signUp = data => (dispatch) => {
+  httpPost('/api/v1/registrations', { user: data })
     .then((data) => {
       localStorage.setItem('phoenixAuthToken', data.jwt);
 
@@ -27,7 +26,6 @@ Actions.signUp = (data) => {
         });
       });
     });
-  };
 };
 
 export default Actions;

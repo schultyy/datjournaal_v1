@@ -1,59 +1,54 @@
-import { push }                   from 'react-router-redux';
-import Constants                          from '../constants';
-import { Socket }                         from '../phoenix.js';
-import { httpGet, httpPost, httpDelete }  from '../utils';
+import { push } from 'react-router-redux';
+import Constants from '../constants';
+import { Socket } from '../phoenix.js';
+import { httpGet, httpPost, httpDelete } from '../utils';
 
 function setCurrentUser(dispatch, user) {
   dispatch({
     type: Constants.CURRENT_USER,
     currentUser: user,
   });
-};
+}
 
 const Actions = {
-  currentUser: () => {
-    return dispatch => {
-      httpGet('/api/v1/current_user')
-      .then(function(data) {
+  currentUser: () => (dispatch) => {
+    httpGet('/api/v1/current_user')
+      .then((data) => {
         setCurrentUser(dispatch, data);
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.log(error);
       });
-    };
   },
-  signOut: () => {
-    return dispatch => {
-      httpDelete('/api/v1/sessions')
+  signOut: () => (dispatch) => {
+    httpDelete('/api/v1/sessions')
       .then((data) => {
         localStorage.removeItem('phoenixAuthToken');
 
         dispatch({
-          type: Constants.USER_SIGNED_OUT
+          type: Constants.USER_SIGNED_OUT,
         });
 
-        dispatch({type: Constants.FLUSH_POSTS});
+        dispatch({ type: Constants.FLUSH_POSTS });
         dispatch(push('/'));
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.log(error);
       });
-    };
   },
-  signIn: (email, password) => {
-    return dispatch => {
-      const data = {
-        session: {
-          email: email,
-          password: password,
-        },
-      };
-      dispatch({type: Constants.SIGNING_IN});
-      httpPost('/api/v1/sessions', data)
+  signIn: (email, password) => (dispatch) => {
+    const data = {
+      session: {
+        email,
+        password,
+      },
+    };
+    dispatch({ type: Constants.SIGNING_IN });
+    httpPost('/api/v1/sessions', data)
       .then((data) => {
         localStorage.setItem('phoenixAuthToken', data.jwt);
         setCurrentUser(dispatch, data.user);
-        dispatch({type: Constants.SIGNED_IN});
+        dispatch({ type: Constants.SIGNED_IN });
         dispatch(push('/'));
       })
       .catch((error) => {
@@ -65,7 +60,6 @@ const Actions = {
           });
         });
       });
-    };
   },
 
   // ...
