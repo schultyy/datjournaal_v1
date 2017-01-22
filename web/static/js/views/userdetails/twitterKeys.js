@@ -89,21 +89,47 @@ export default class TwitterKeys extends React.Component {
         </a>
         <div className="form-group">
           <label htmlFor="accessToken">Access Token</label>
-          <input onChange={this.onInputChange.bind(this, 'accessToken')} className="form-control" type="text" name="accessToken" />
+          <input
+              onChange={this.onInputChange.bind(this, 'accessToken')}
+              className="form-control"
+              type="text"
+              name="accessToken"
+          />
         </div>
         <div className="form-group">
           <label htmlFor="accessTokenSecret">Access Token Secret</label>
-          <input onChange={this.onInputChange.bind(this, 'accessTokenSecret')} className="form-control" type="text" name="accessTokenSecret" />
+          <input
+            onChange={this.onInputChange.bind(this, 'accessTokenSecret')}
+            className="form-control"
+            type="text"
+            name="accessTokenSecret"
+          />
         </div>
         <div className="form-group">
           <label htmlFor="consumerSecret">Consumer Secret</label>
-          <input onChange={this.onInputChange.bind(this, 'consumerSecret')} className="form-control" type="text" name="consumerSecret" />
+          <input
+            onChange={this.onInputChange.bind(this, 'consumerSecret')}
+            className="form-control"
+            type="text"
+            name="consumerSecret"
+          />
         </div>
         <div className="form-group">
           <label htmlFor="consumerKey">Consumer Key</label>
-          <input onChange={this.onInputChange.bind(this, 'consumerKey')} className="form-control" type="text" name="consumerKey" />
+          <input
+            onChange={this.onInputChange.bind(this, 'consumerKey')}
+            className="form-control"
+            type="text"
+            name="consumerKey"
+          />
         </div>
-        <button onClick={this.onSubmitCredentials.bind(this)} disabled={submitEnabled} className="form-control btn btn-default">Save</button>
+        <button
+          onClick={this.onSubmitCredentials.bind(this)}
+          disabled={submitEnabled}
+          className="form-control btn btn-default"
+        >
+          Save
+        </button>
       </form>
     );
   }
