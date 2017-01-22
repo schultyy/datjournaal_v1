@@ -1,16 +1,18 @@
 import React from 'react';
 import UserActions from '../../actions/user';
 
+const initialState = {
+  consumerSecret: '',
+  accessTokenSecret: '',
+  accessToken: '',
+  consumerKey: '',
+};
+
 export default class TwitterKeys extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      consumerSecret: '',
-      accessTokenSecret: '',
-      accessToken: '',
-      consumerKey: '',
-    };
+    this.state = initialState;
   }
 
   onInputChange(type, event) {
