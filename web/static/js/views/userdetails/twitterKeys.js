@@ -80,7 +80,13 @@ export default class TwitterKeys extends React.Component {
         {this.renderProgressbar()}
         {this.renderFormErrors()}
         <h1>Configure new Twitter access token</h1>
-        <a target="_blank" href="https://apps.twitter.com"><p>Get yours here</p></a>
+        <a
+          target="_blank"
+          rel="noreferrer noopener"
+          href="https://apps.twitter.com"
+        >
+          <p>Get yours here</p>
+        </a>
         <div className="form-group">
           <label htmlFor="accessToken">Access Token</label>
           <input onChange={this.onInputChange.bind(this, 'accessToken')} className="form-control" type="text" name="accessToken" />
