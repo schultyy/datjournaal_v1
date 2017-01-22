@@ -19,6 +19,18 @@ export default class TwitterKeys extends React.Component {
     });
   }
 
+  onSubmitCredentials(event) {
+    event.preventDefault();
+    const { dispatch } = this.props;
+    const credentials = {
+      consumer_secret: this.state.consumerSecret,
+      access_token_secret: this.state.accessTokenSecret,
+      access_token: this.state.accessToken,
+      consumer_key: this.state.consumerKey,
+    };
+    dispatch(UserActions.postTwitterAccessToken(credentials));
+  }
+
   isValid() {
     return this.state.consumerKey.length > 0 &&
            this.state.consumerSecret.length > 0 &&
@@ -57,18 +69,6 @@ export default class TwitterKeys extends React.Component {
         </ul>
       </div>
     );
-  }
-
-  onSubmitCredentials(event) {
-    event.preventDefault();
-    const { dispatch } = this.props;
-    const credentials = {
-      consumer_secret: this.state.consumerSecret,
-      access_token_secret: this.state.accessTokenSecret,
-      access_token: this.state.accessToken,
-      consumer_key: this.state.consumerKey,
-    };
-    dispatch(UserActions.postTwitterAccessToken(credentials));
   }
 
   render() {
