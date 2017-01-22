@@ -1,11 +1,11 @@
-import React, { PropTypes }     from 'react';
-import { connect }              from 'react-redux';
-import PostActions              from '../../actions/posts';
-import SessionActions           from '../../actions/sessions';
-import { push }                 from 'react-router-redux';
-import { TileComponent }        from '../posts/tile';
-import DocMeta                  from 'react-doc-meta';
-import { absoluteUrlForPost }   from '../../utils';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import PostActions from '../../actions/posts';
+import SessionActions from '../../actions/sessions';
+import { push } from 'react-router-redux';
+import { TileComponent } from '../posts/tile';
+import DocMeta from 'react-doc-meta';
+import { absoluteUrlForPost } from '../../utils';
 
 
 class PostDetailComponent extends React.Component {
@@ -31,33 +31,32 @@ class PostDetailComponent extends React.Component {
 
   getMetaTags() {
     const { post } = this.props;
-    if(!post) {
+    if (!post) {
       return {};
     }
     const meta = [
-      { property: "title", content: "Dat Journaal" },
-      { property: "description", content: post.description }
+      { property: 'title', content: 'Dat Journaal' },
+      { property: 'description', content: post.description },
     ];
     return meta;
   }
 
   render() {
     const { fetching, errors, post, currentUser } = this.props;
-    if(fetching) {
+    if (fetching) {
       return (
         <div>Fetching...</div>
       );
-    }
-    else if(errors) {
+    } else if (errors) {
       return (
         <div>{errors[0].message}</div>
       );
     }
-    if(!post) {
+    if (!post) {
       return false;
     }
 
-    if(currentUser) {
+    if (currentUser) {
       var onHideClick = this.onHideClick.bind(this, post);
       var onShowClick = this.onShowClick.bind(this, post);
     } else {
@@ -75,19 +74,18 @@ class PostDetailComponent extends React.Component {
             post={post}
             onHide={onHideClick}
             onShow={onShowClick}
-            isDetailMode={true} />
+            isDetailMode
+          />
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    fetching: state.posts.fetching,
-    post: state.posts.currentPost,
-    errors: state.posts.formErrors,
-    currentUser: state.session.currentUser
-  };
-};
+const mapStateToProps = state => ({
+  fetching: state.posts.fetching,
+  post: state.posts.currentPost,
+  errors: state.posts.formErrors,
+  currentUser: state.session.currentUser,
+});
 
 export default connect(mapStateToProps)(PostDetailComponent);

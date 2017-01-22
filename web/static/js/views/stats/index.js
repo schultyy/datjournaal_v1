@@ -1,9 +1,9 @@
-import React            from 'react';
-import { connect }      from 'react-redux';
-import SessionActions   from '../../actions/sessions';
-import StatsActions     from '../../actions/stats';
-import { push }         from 'react-router-redux';
-import fp               from 'lodash/fp';
+import React from 'react';
+import { connect } from 'react-redux';
+import SessionActions from '../../actions/sessions';
+import StatsActions from '../../actions/stats';
+import { push } from 'react-router-redux';
+import fp from 'lodash/fp';
 
 class StatsView extends React.Component {
   componentDidMount() {
@@ -12,14 +12,13 @@ class StatsView extends React.Component {
     if (phoenixAuthToken && !currentUser) {
       dispatch(SessionActions.currentUser());
       dispatch(StatsActions.fetchStats());
-    }
-    else {
+    } else {
       dispatch(push('/'));
     }
   }
 
   uniqueStats(stats) {
-    return fp.uniqBy((stat) => stat.ip)(stats);
+    return fp.uniqBy(stat => stat.ip)(stats);
   }
 
   renderStats(headline, visitorsToday, visitorsThirtyDays) {
@@ -46,7 +45,7 @@ class StatsView extends React.Component {
 
   render() {
     const { fetching, stats } = this.props;
-    if(fetching) {
+    if (fetching) {
       return (
         <div className="container">
           <div>Loading stats</div>
@@ -62,18 +61,16 @@ class StatsView extends React.Component {
 
     return (
       <div className="container">
-      {this.renderStats("Unique Visits", uniqueVisitorsToday, uniqueVisitorsThirtyDays)}
-      {this.renderStats("Overall Visits", overallVisitorsToday, overallVisitorsThirtyDays)}
+        {this.renderStats('Unique Visits', uniqueVisitorsToday, uniqueVisitorsThirtyDays)}
+        {this.renderStats('Overall Visits', overallVisitorsToday, overallVisitorsThirtyDays)}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    fetching: state.stats.fetching,
-    ...state.stats
-  };
-};
+const mapStateToProps = state => ({
+  fetching: state.stats.fetching,
+  ...state.stats,
+});
 
 export default connect(mapStateToProps)(StatsView);

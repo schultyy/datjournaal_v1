@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment-timezone';
 import ContextMenu from './contextmenu';
-import {absoluteUrlForPost} from '../../utils';
+import { absoluteUrlForPost } from '../../utils';
 import cx from 'classnames';
 
 export class TileComponent extends React.Component {
@@ -17,21 +17,20 @@ export class TileComponent extends React.Component {
 
   renderLocation(post) {
     const hasCoordinates = post.lat && post.lng;
-    if(post.short_location_name && hasCoordinates) {
+    if (post.short_location_name && hasCoordinates) {
       return (
         <div className="location">
           <a href={this.googleMapsUrl()} target="_blank">{post.short_location_name}</a>
         </div>
       );
-    } else if(post.short_location_name && !hasCoordinates) {
+    } else if (post.short_location_name && !hasCoordinates) {
       return (
         <div className="location">
           {post.short_location_name}
         </div>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 
   render() {
@@ -41,14 +40,13 @@ export class TileComponent extends React.Component {
       isDetailMode,
       onHide,
       onShow,
-      isFirst
+      isFirst,
     } = this.props;
-    let date = moment(`${post.inserted_at}Z`).tz('Europe/Berlin').format('DD.MM.YYYY HH:mm');
+    const date = moment(`${post.inserted_at}Z`).tz('Europe/Berlin').format('DD.MM.YYYY HH:mm');
 
     if (isDetailMode) {
       var doubleClickHandler = null;
-    }
-    else {
+    } else {
       var doubleClickHandler = onDoubleClick;
     }
 
@@ -58,7 +56,7 @@ export class TileComponent extends React.Component {
       tile: true,
       isHidden: postIsHidden,
       'detail-view': isDetailMode,
-      'is-first': isFirst
+      'is-first': isFirst,
     });
 
     return (
@@ -73,7 +71,8 @@ export class TileComponent extends React.Component {
               onCopyURLToClipboard={this.onCopyURLToClipboard.bind(this)}
               onShowDetail={doubleClickHandler}
               onHide={postIsHidden ? null : onHide}
-              onShow={postIsHidden ? onShow : null} />
+              onShow={postIsHidden ? onShow : null}
+            />
           </span>
         </div>
         <img src={post.image} />

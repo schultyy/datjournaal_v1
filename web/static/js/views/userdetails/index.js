@@ -1,8 +1,8 @@
-import React          from 'react';
-import { connect }    from 'react-redux';
-import { push }       from 'react-router-redux';
-import ResetPassword  from './resetPassword';
-import TwitterKeys    from './twitterKeys';
+import React from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import ResetPassword from './resetPassword';
+import TwitterKeys from './twitterKeys';
 
 class UserDetails extends React.Component {
 
@@ -21,7 +21,7 @@ class UserDetails extends React.Component {
       isPasswordUpdating,
       isTwitterUpdating,
       passwordFormErrors,
-      twitterFormErrors
+      twitterFormErrors,
     } = this.props;
 
     return (
@@ -39,7 +39,7 @@ class UserDetails extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   passwordFormErrors: state.userPassword.formErrors,
   isPasswordUpdating: state.userPassword.updating,
   twitterFormErrors: state.twitter.formErrors,

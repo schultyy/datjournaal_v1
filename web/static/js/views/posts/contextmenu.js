@@ -5,8 +5,8 @@ export default class ContextMenuComponent extends React.Component {
   constructor() {
     super();
     this.state = {
-      expanded: false
-    }
+      expanded: false,
+    };
   }
   renderMenuEntries() {
     const {
@@ -14,7 +14,7 @@ export default class ContextMenuComponent extends React.Component {
       onShare,
       onHide,
       onShow,
-      onCopyURLToClipboard
+      onCopyURLToClipboard,
     } = this.props;
     const clipboardPayload = onCopyURLToClipboard();
     return (
@@ -30,7 +30,7 @@ export default class ContextMenuComponent extends React.Component {
         </li>
         {
           onShare ?
-          <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
+            <li onClick={onShare}><div className="entry">Share on Twitter</div></li>
           : false
         }
         {
@@ -50,7 +50,7 @@ export default class ContextMenuComponent extends React.Component {
     const previousState = this.state.expanded;
 
     this.setState({
-      expanded: !previousState
+      expanded: !previousState,
     });
   }
   render() {

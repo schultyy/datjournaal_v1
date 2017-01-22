@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class ImprintView extends React.Component {
   static aboutText() {
-    return(
+    return (
       <div>
         <h4>The name</h4>
         <p>

@@ -1,14 +1,14 @@
-import { IndexRoute, Route }        from 'react-router';
-import React                        from 'react';
-import MainLayout                   from '../layouts/main';
-import ShellContainer               from '../containers/shell';
-import HomeIndexView                from '../views/home';
-import SessionsNew                  from '../views/sessions/new';
-import PostsNew                     from '../views/posts/new';
-import PostDetailView               from '../views/posts/detail';
-import StatsView                    from '../views/stats';
-import ImprintView                  from '../views/imprint';
-import UserDetailView               from '../views/userdetails';
+import { IndexRoute, Route } from 'react-router';
+import React from 'react';
+import MainLayout from '../layouts/main';
+import ShellContainer from '../containers/shell';
+import HomeIndexView from '../views/home';
+import SessionsNew from '../views/sessions/new';
+import PostsNew from '../views/posts/new';
+import PostDetailView from '../views/posts/detail';
+import StatsView from '../views/stats';
+import ImprintView from '../views/imprint';
+import UserDetailView from '../views/userdetails';
 
 export default function configRoutes(store) {
   return (
@@ -25,4 +25,4 @@ export default function configRoutes(store) {
       </Route>
     </Route>
   );
-};
+}

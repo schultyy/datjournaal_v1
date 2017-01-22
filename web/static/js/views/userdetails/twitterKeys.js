@@ -1,5 +1,5 @@
-import React        from 'react';
-import UserActions  from '../../actions/user';
+import React from 'react';
+import UserActions from '../../actions/user';
 
 export default class TwitterKeys extends React.Component {
   constructor() {
@@ -9,13 +9,13 @@ export default class TwitterKeys extends React.Component {
       consumerSecret: '',
       accessTokenSecret: '',
       accessToken: '',
-      consumerKey: ''
+      consumerKey: '',
     };
   }
 
   onInputChange(type, event) {
     this.setState({
-      [type]: event.target.value
+      [type]: event.target.value,
     });
   }
 
@@ -29,7 +29,7 @@ export default class TwitterKeys extends React.Component {
   renderProgressbar() {
     const { isUpdating } = this.props;
 
-    if(!isUpdating) {
+    if (!isUpdating) {
       return null;
     }
 
@@ -41,16 +41,14 @@ export default class TwitterKeys extends React.Component {
   renderFormErrors() {
     const { formErrors } = this.props;
 
-    if(!formErrors) {
+    if (!formErrors) {
       return null;
     }
 
-    const errors = formErrors.map(error => {
-      return Object.keys(error).map(key => Object.create({
-        field: key,
-        message: error[key]
-      }))[0];
-    });
+    const errors = formErrors.map(error => Object.keys(error).map(key => Object.create({
+      field: key,
+      message: error[key],
+    }))[0]);
 
     return (
       <div className="error-message">
@@ -68,14 +66,14 @@ export default class TwitterKeys extends React.Component {
       consumer_secret: this.state.consumerSecret,
       access_token_secret: this.state.accessTokenSecret,
       access_token: this.state.accessToken,
-      consumer_key: this.state.consumerKey
+      consumer_key: this.state.consumerKey,
     };
     dispatch(UserActions.postTwitterAccessToken(credentials));
   }
 
   render() {
     const { isUpdating } = this.props;
-    const submitEnabled = (!isUpdating && this.isValid()) ? null : "disabled";
+    const submitEnabled = (!isUpdating && this.isValid()) ? null : 'disabled';
 
     return (
       <form>

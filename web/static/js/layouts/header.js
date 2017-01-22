@@ -1,7 +1,7 @@
-import React          from 'react';
-import { Link }       from 'react-router';
+import React from 'react';
+import { Link } from 'react-router';
 import SessionActions from '../actions/sessions';
-import PostActions    from '../actions/posts';
+import PostActions from '../actions/posts';
 
 export default class Header extends React.Component {
   renderCurrentUser() {
@@ -23,9 +23,9 @@ export default class Header extends React.Component {
           <ul className="list-inline">
             <li className="menu-entry">
               <div>
-                <Link to='/'>
+                <Link to="/">
                   <div title="Plattdeutsch für: die Zeitung" className="logo">
-                    <span className="image"></span>
+                    <span className="image" />
                     <span className="text">dat Journaal</span>
                   </div>
                 </Link>

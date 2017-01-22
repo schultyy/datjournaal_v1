@@ -1,10 +1,10 @@
-import React, { PropTypes }     from 'react';
-import { connect }              from 'react-redux';
-import { push }                 from 'react-router-redux';
-import cx                       from 'classnames';
-import PostActions              from '../../actions/posts';
-import SessionActions           from '../../actions/sessions';
-import Location                 from './location';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import cx from 'classnames';
+import PostActions from '../../actions/posts';
+import SessionActions from '../../actions/sessions';
+import Location from './location';
 
 
 class NewPostComponent extends React.Component {
@@ -17,17 +17,15 @@ class NewPostComponent extends React.Component {
       previewImage: null,
       useCustomLocation: false,
       useCurrentLocation: false,
-      currentLocationId: null
+      currentLocationId: null,
     };
   }
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
     const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
-    if(phoenixAuthToken && currentUser) {
+    if (phoenixAuthToken && currentUser) {
       dispatch(PostActions.clearLocationSuggestions());
-      return;
-    }
-    else if (phoenixAuthToken && !currentUser) {
+    } else if (phoenixAuthToken && !currentUser) {
       dispatch(SessionActions.currentUser());
     } else {
       dispatch(push('/'));
@@ -38,18 +36,18 @@ class NewPostComponent extends React.Component {
     event.preventDefault();
     const { dispatch } = this.props;
 
-    let formData = {
+    const formData = {
       description: this.refs.description.value,
       postOnTwitter: this.refs.twitter.checked,
       image: this.refs.file.files[0],
-      includeLocation: this.refs.geolocation.checked
+      includeLocation: this.refs.geolocation.checked,
     };
 
-    if(this.refs.custom_geolocation.checked && this.state.currentLocationId) {
+    if (this.refs.custom_geolocation.checked && this.state.currentLocationId) {
       Object.assign(formData, { places_id: this.state.currentLocationId });
     }
 
-    this.setState({posting: true});
+    this.setState({ posting: true });
     dispatch(PostActions.createPost(formData));
   }
 
@@ -57,7 +55,7 @@ class NewPostComponent extends React.Component {
     return (
       <div className="alert alert-danger" role="alert">
         <ul>
-          {formErrors.map(error => {
+          {formErrors.map((error) => {
             const propertyName = Object.keys(error)[0];
             return (
               <li key={propertyName}>{propertyName} - {error[propertyName]}</li>
@@ -77,9 +75,9 @@ class NewPostComponent extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if(newProps.formErrors) {
+    if (newProps.formErrors) {
       this.setState({
-        posting: false
+        posting: false,
       });
     }
   }
@@ -87,22 +85,21 @@ class NewPostComponent extends React.Component {
   onPreviewChange() {
     const inputControl = this.refs.file;
     const that = this;
-    if(inputControl.files && inputControl.files.length > 0) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          that.setState({
-            previewImage: e.target.result
-          });
-        }
-        reader.readAsDataURL(inputControl.files[0]);
+    if (inputControl.files && inputControl.files.length > 0) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        that.setState({
+          previewImage: e.target.result,
+        });
+      };
+      reader.readAsDataURL(inputControl.files[0]);
     }
   }
 
   onQueryLocationChange() {
-    if(this.state.useCustomLocation === true) {
+    if (this.state.useCustomLocation === true) {
       this.setState({ useCustomLocation: false, useCurrentLocation: false });
-    }
-    else {
+    } else {
       this.setState({ useCustomLocation: true, useCurrentLocation: false });
     }
   }
@@ -118,18 +115,18 @@ class NewPostComponent extends React.Component {
 
   onUseCurrentLocationChange(event) {
     const useCurrentLocation = this.state.useCurrentLocation;
-    if(useCurrentLocation) {
-      this.setState({useCustomLocation: false, useCurrentLocation: false});
+    if (useCurrentLocation) {
+      this.setState({ useCustomLocation: false, useCurrentLocation: false });
     } else {
-      this.setState({useCustomLocation: false, useCurrentLocation: true});
+      this.setState({ useCustomLocation: false, useCurrentLocation: true });
     }
   }
 
   render() {
-    let { formErrors, currentUser, locationResults } = this.props;
-    const canPost = this.state.posting ? "disabled" : null;
+    const { formErrors, currentUser, locationResults } = this.props;
+    const canPost = this.state.posting ? 'disabled' : null;
     const previewImage = this.state.previewImage;
-    const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : "disabled";
+    const twitterDisabled = (currentUser && currentUser.twitter_configured) ? null : 'disabled';
 
     return (
       <div className="new-post-form">
@@ -148,8 +145,7 @@ class NewPostComponent extends React.Component {
           </div>
           <div className="col-xs-12 col-md-12 form-group description-container">
             <label htmlFor="post-description">Describe it</label>
-            <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption...">
-            </textarea>
+            <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption..." />
           </div>
         </div>
         <div className="row">
@@ -165,7 +161,7 @@ class NewPostComponent extends React.Component {
             </div>
           </div>
 
-          <div className="clearfix"></div>
+          <div className="clearfix" />
 
           <div className="col-xs-12 col-md-6">
             <p className="sheet">
@@ -174,11 +170,11 @@ class NewPostComponent extends React.Component {
           </div>
           <div className="col-xs-12 col-md-6">
             <div className="sheet">
-              <input  disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
+              <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
             </div>
           </div>
 
-          <div className="clearfix"></div>
+          <div className="clearfix" />
 
           <div className="col-xs-12 col-md-6">
             <p className="sheet">
@@ -195,10 +191,12 @@ class NewPostComponent extends React.Component {
 
         <div className="row">
           {this.state.useCustomLocation ?
-            <Location locations={locationResults}
-                      selectedLocation={this.state.currentLocationId}
-                      onLocationSelected={this.onLocationSelected.bind(this)}
-                      onLocationNameChange={this.onLocationNameChange.bind(this)} />
+            <Location
+              locations={locationResults}
+              selectedLocation={this.state.currentLocationId}
+              onLocationSelected={this.onLocationSelected.bind(this)}
+              onLocationNameChange={this.onLocationNameChange.bind(this)}
+            />
             : null}
         </div>
         <div className="row">
@@ -212,13 +210,11 @@ class NewPostComponent extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    formErrors: state.posts.formErrors,
-    currentUser: state.session.currentUser,
-    locationsLoading: state.location.loading,
-    locationResults: state.location.locations
-  };
-};
+const mapStateToProps = state => ({
+  formErrors: state.posts.formErrors,
+  currentUser: state.session.currentUser,
+  locationsLoading: state.location.loading,
+  locationResults: state.location.locations,
+});
 
 export default connect(mapStateToProps)(NewPostComponent);

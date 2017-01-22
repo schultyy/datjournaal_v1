@@ -2,13 +2,20 @@ import React from 'react';
 import cx from 'classnames';
 
 export default class PickLocation extends React.Component {
+
+  onQueryLocationClick() {
+    const { onLocationNameChange } = this.props;
+
+    onLocationNameChange(this.refs.locationname.value);
+  }
+
   renderSearchResults(locations) {
     const { onLocationSelected, selectedLocation } = this.props;
 
     return locations.map((location) => {
       const placeClassnames = cx({
         active: selectedLocation && location.places_id === selectedLocation,
-        location: true
+        location: true,
       });
       return (
         <li className={placeClassnames} key={location.places_id} onClick={() => onLocationSelected(location.places_id)}>
@@ -19,12 +26,6 @@ export default class PickLocation extends React.Component {
         </li>
       );
     });
-  }
-
-  onQueryLocationClick() {
-    const { onLocationNameChange } = this.props;
-
-    onLocationNameChange(this.refs.locationname.value);
   }
 
   render() {
@@ -38,7 +39,7 @@ export default class PickLocation extends React.Component {
         <div className="col-xs-4 col-md-2">
           <button onClick={this.onQueryLocationClick.bind(this)} className="btn btn-default search-button">Search</button>
         </div>
-        <div className="clearfix"></div>
+        <div className="clearfix" />
         <div className="col-xs-12">
           <ul>
             {this.renderSearchResults(locations)}

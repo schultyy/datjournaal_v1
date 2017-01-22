@@ -1,5 +1,5 @@
-import React        from 'react';
-import { connect }  from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Header from '../layouts/header';
 import Footer from '../layouts/footer';
@@ -18,13 +18,13 @@ class ShellContainer extends React.Component {
   onCreateNewPost() {
     const { dispatch } = this.props;
 
-    dispatch(push("/posts/new"));
+    dispatch(push('/posts/new'));
   }
 
   onShowStats() {
     const { dispatch } = this.props;
 
-    dispatch(push("/stats"));
+    dispatch(push('/stats'));
   }
 
   render() {
@@ -34,7 +34,8 @@ class ShellContainer extends React.Component {
       <div>
         <div className="application-container">
           <Header
-            currentUser={currentUser} />
+            currentUser={currentUser}
+          />
 
           <div className="container">
             {this.props.children}
@@ -42,17 +43,19 @@ class ShellContainer extends React.Component {
         </div>
         {currentPath == '/posts/new' ?
           null :
-          <Footer currentUser={currentUser}
-                dispatch={dispatch}
-                showStatsClick={this.onShowStats.bind(this)}
-                newPostClick={this.onCreateNewPost.bind(this)} />
+          <Footer
+            currentUser={currentUser}
+            dispatch={dispatch}
+            showStatsClick={this.onShowStats.bind(this)}
+            newPostClick={this.onCreateNewPost.bind(this)}
+          />
         }
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   currentPath: state.routing.locationBeforeTransitions.pathname,
   currentUser: state.session.currentUser,
 });
