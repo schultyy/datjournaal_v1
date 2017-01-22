@@ -1,22 +1,46 @@
 import React from 'react';
 import UserActions from '../../actions/user';
 
+const initialState = {
+  consumerSecret: '',
+  accessTokenSecret: '',
+  accessToken: '',
+  consumerKey: '',
+};
+
 export default class TwitterKeys extends React.Component {
   constructor() {
     super();
 
-    this.state = {
-      consumerSecret: '',
-      accessTokenSecret: '',
-      accessToken: '',
-      consumerKey: '',
-    };
+    this.state = initialState;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.formErrors) {
+      return;
+    }
+
+    if (this.props.isUpdating && nextProps.isUpdating === false) {
+      this.setState(initialState);
+    }
   }
 
   onInputChange(type, event) {
     this.setState({
       [type]: event.target.value,
     });
+  }
+
+  onSubmitCredentials(event) {
+    event.preventDefault();
+    const { dispatch } = this.props;
+    const credentials = {
+      consumer_secret: this.state.consumerSecret,
+      access_token_secret: this.state.accessTokenSecret,
+      access_token: this.state.accessToken,
+      consumer_key: this.state.consumerKey,
+    };
+    dispatch(UserActions.postTwitterAccessToken(credentials));
   }
 
   isValid() {
@@ -59,18 +83,6 @@ export default class TwitterKeys extends React.Component {
     );
   }
 
-  onSubmitCredentials(event) {
-    event.preventDefault();
-    const { dispatch } = this.props;
-    const credentials = {
-      consumer_secret: this.state.consumerSecret,
-      access_token_secret: this.state.accessTokenSecret,
-      access_token: this.state.accessToken,
-      consumer_key: this.state.consumerKey,
-    };
-    dispatch(UserActions.postTwitterAccessToken(credentials));
-  }
-
   render() {
     const { isUpdating } = this.props;
     const submitEnabled = (!isUpdating && this.isValid()) ? null : 'disabled';
@@ -80,25 +92,67 @@ export default class TwitterKeys extends React.Component {
         {this.renderProgressbar()}
         {this.renderFormErrors()}
         <h1>Configure new Twitter access token</h1>
-        <a target="_blank" href="https://apps.twitter.com"><p>Get yours here</p></a>
+        <a
+          target="_blank"
+          rel="noreferrer noopener"
+          href="https://apps.twitter.com"
+        >
+          <p>Get yours here</p>
+        </a>
         <div className="form-group">
           <label htmlFor="accessToken">Access Token</label>
-          <input onChange={this.onInputChange.bind(this, 'accessToken')} className="form-control" type="text" name="accessToken" />
+          <input
+            onChange={this.onInputChange.bind(this, 'accessToken')}
+            className="form-control"
+            type="text"
+            name="accessToken"
+            value={this.state.accessToken}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="accessTokenSecret">Access Token Secret</label>
-          <input onChange={this.onInputChange.bind(this, 'accessTokenSecret')} className="form-control" type="text" name="accessTokenSecret" />
+          <input
+            onChange={this.onInputChange.bind(this, 'accessTokenSecret')}
+            className="form-control"
+            type="text"
+            name="accessTokenSecret"
+            value={this.state.accessTokenSecret}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="consumerSecret">Consumer Secret</label>
-          <input onChange={this.onInputChange.bind(this, 'consumerSecret')} className="form-control" type="text" name="consumerSecret" />
+          <input
+            onChange={this.onInputChange.bind(this, 'consumerSecret')}
+            className="form-control"
+            type="text"
+            name="consumerSecret"
+            value={this.state.consumerSecret}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="consumerKey">Consumer Key</label>
-          <input onChange={this.onInputChange.bind(this, 'consumerKey')} className="form-control" type="text" name="consumerKey" />
+          <input
+            onChange={this.onInputChange.bind(this, 'consumerKey')}
+            className="form-control"
+            type="text"
+            name="consumerKey"
+            value={this.state.consumerKey}
+          />
         </div>
-        <button onClick={this.onSubmitCredentials.bind(this)} disabled={submitEnabled} className="form-control btn btn-default">Save</button>
+        <button
+          onClick={this.onSubmitCredentials.bind(this)}
+          disabled={submitEnabled}
+          className="form-control btn btn-default"
+        >
+          Save
+        </button>
       </form>
     );
   }
 }
+
+TwitterKeys.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  isUpdating: React.PropTypes.bool.isRequired,
+  formErrors: React.PropTypes.array,
+};
