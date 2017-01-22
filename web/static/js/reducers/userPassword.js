@@ -1,7 +1,7 @@
 import Constants from '../constants';
 
 const initialState = {
-  formErrors: false,
+  formErrors: null,
   updating: false,
 };
 

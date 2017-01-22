@@ -2,14 +2,30 @@ import React from 'react';
 import cx from 'classnames';
 import UserActions from '../../actions/user';
 
+const initialState = {
+  oldPassword: '',
+  newPassword: '',
+};
+
 export default class ResetPassword extends React.Component {
+
   constructor() {
     super();
 
-    this.state = {
-      oldPassword: '',
-      newPassword: '',
-    };
+    this.onOldPasswordChange = this.onOldPasswordChange.bind(this);
+    this.onNewPasswordChange = this.onNewPasswordChange.bind(this);
+    this.onSubmitPassword = this.onSubmitPassword.bind(this);
+
+    this.state = initialState;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.formErrors) {
+      return;
+    }
+    if (this.props.isUpdating && nextProps.isUpdating === false) {
+      this.setState(initialState);
+    }
   }
 
   onOldPasswordChange(event) {
@@ -82,14 +98,38 @@ export default class ResetPassword extends React.Component {
         {this.renderFormErrors()}
         <div className="form-group">
           <label htmlFor="currentPassword">Current password</label>
-          <input onChange={this.onOldPasswordChange.bind(this)} className="form-control" type="password" name="currentPassword" />
+          <input
+            onChange={this.onOldPasswordChange}
+            className="form-control"
+            type="password"
+            name="currentPassword"
+            value={this.state.oldPassword}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="newPassword">New password</label>
-          <input onChange={this.onNewPasswordChange.bind(this)} className="form-control" type="password" name="newPassword" />
+          <input
+            onChange={this.onNewPasswordChange}
+            className="form-control"
+            type="password"
+            name="newPassword"
+            value={this.state.newPassword}
+          />
         </div>
-        <button onClick={this.onSubmitPassword.bind(this)} className={submitButtonClassnames} disabled={buttonDisabled}>Set password</button>
+        <button
+          onClick={this.onSubmitPassword}
+          className={submitButtonClassnames}
+          disabled={buttonDisabled}
+        >
+          Set password
+        </button>
       </form>
     );
   }
 }
+
+ResetPassword.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  isUpdating: React.PropTypes.bool.isRequired,
+  formErrors: React.PropTypes.array,
+};
