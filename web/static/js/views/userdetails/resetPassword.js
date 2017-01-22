@@ -2,7 +2,13 @@ import React from 'react';
 import cx from 'classnames';
 import UserActions from '../../actions/user';
 
+const initialState = {
+  oldPassword: '',
+  newPassword: '',
+};
+
 export default class ResetPassword extends React.Component {
+
   constructor() {
     super();
 
@@ -10,10 +16,16 @@ export default class ResetPassword extends React.Component {
     this.onNewPasswordChange = this.onNewPasswordChange.bind(this);
     this.onSubmitPassword = this.onSubmitPassword.bind(this);
 
-    this.state = {
-      oldPassword: '',
-      newPassword: '',
-    };
+    this.state = initialState;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.formErrors) {
+      return;
+    }
+    if (this.props.isUpdating && nextProps.isUpdating === false) {
+      this.setState(initialState);
+    }
   }
 
   onOldPasswordChange(event) {
@@ -91,6 +103,7 @@ export default class ResetPassword extends React.Component {
             className="form-control"
             type="password"
             name="currentPassword"
+            value={this.state.oldPassword}
           />
         </div>
         <div className="form-group">
@@ -100,6 +113,7 @@ export default class ResetPassword extends React.Component {
             className="form-control"
             type="password"
             name="newPassword"
+            value={this.state.newPassword}
           />
         </div>
         <button
@@ -117,5 +131,5 @@ export default class ResetPassword extends React.Component {
 ResetPassword.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
   isUpdating: React.PropTypes.bool.isRequired,
-  formErrors: React.PropTypes.array.isRequired
+  formErrors: React.PropTypes.array,
 };
