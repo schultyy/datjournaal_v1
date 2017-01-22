@@ -15,6 +15,16 @@ export default class TwitterKeys extends React.Component {
     this.state = initialState;
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.formErrors) {
+      return;
+    }
+
+    if (this.props.isUpdating && nextProps.isUpdating === false) {
+      this.setState(initialState);
+    }
+  }
+
   onInputChange(type, event) {
     this.setState({
       [type]: event.target.value,
@@ -92,10 +102,11 @@ export default class TwitterKeys extends React.Component {
         <div className="form-group">
           <label htmlFor="accessToken">Access Token</label>
           <input
-              onChange={this.onInputChange.bind(this, 'accessToken')}
-              className="form-control"
-              type="text"
-              name="accessToken"
+            onChange={this.onInputChange.bind(this, 'accessToken')}
+            className="form-control"
+            type="text"
+            name="accessToken"
+            value={this.state.accessToken}
           />
         </div>
         <div className="form-group">
@@ -105,6 +116,7 @@ export default class TwitterKeys extends React.Component {
             className="form-control"
             type="text"
             name="accessTokenSecret"
+            value={this.state.accessTokenSecret}
           />
         </div>
         <div className="form-group">
@@ -114,6 +126,7 @@ export default class TwitterKeys extends React.Component {
             className="form-control"
             type="text"
             name="consumerSecret"
+            value={this.state.consumerSecret}
           />
         </div>
         <div className="form-group">
@@ -123,6 +136,7 @@ export default class TwitterKeys extends React.Component {
             className="form-control"
             type="text"
             name="consumerKey"
+            value={this.state.consumerKey}
           />
         </div>
         <button
