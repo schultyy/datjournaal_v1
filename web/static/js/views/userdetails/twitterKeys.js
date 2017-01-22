@@ -102,3 +102,9 @@ export default class TwitterKeys extends React.Component {
     );
   }
 }
+
+TwitterKeys.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  isUpdating: React.PropTypes.bool.isRequired,
+  formErrors: React.PropTypes.array,
+};
