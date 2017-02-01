@@ -1,7 +1,7 @@
 import Constants from '../constants';
 
 const initialState = {
-  stats: [],
+  stats: {},
   fetching: true,
 };
 

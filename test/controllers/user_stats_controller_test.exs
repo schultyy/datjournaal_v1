@@ -78,4 +78,15 @@ defmodule Datjournaal.UserStatsControllerTest do
       |> Map.get("thirty_days")
     assert length(stats) == 4
   end
+
+  test "GET /api/v1/userstats as authenticated user delivers stats for yesterday", %{user: _user, jwt: jwt, oldest_date: _d} do
+    response = build_conn()
+      |> put_req_header("authorization", jwt)
+      |> get("/api/v1/user_stats")
+    stats = response.resp_body
+      |> Poison.decode!
+      |> Map.get("stats")
+      |> Map.get("yesterday")
+    assert length(stats) == 2
+  end
 end
