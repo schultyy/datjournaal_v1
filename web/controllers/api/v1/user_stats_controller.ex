@@ -6,12 +6,16 @@ defmodule Datjournaal.UserStatsController do
   alias Datjournaal.{Repo, UserStat}
 
   def index(conn, _params) do
-    today_query = from st in UserStat, where: st.inserted_at > ^yesterday and st.logged_in == false
+    today_query = from st in UserStat, where: st.inserted_at > ^yesterday_end and st.logged_in == false
+    yesterday_query = from st in UserStat, where: st.inserted_at >= ^yesterday_begin and st.inserted_at <= ^yesterday_end and st.logged_in == false
     thirty_days_query = from st in UserStat, where: st.inserted_at > ^thirty_days_ago and st.logged_in == false
     today = Repo.all(today_query)
             |> to_local_time
             |> clean
-    render(conn, "index.json", today: today, thirty_days: Repo.all(thirty_days_query) |> to_local_time)
+    render(conn, "index.json",
+              today: today,
+              yesterday: Repo.all(yesterday_query) |> to_local_time,
+              thirty_days: Repo.all(thirty_days_query) |> to_local_time)
   end
 
   defp to_local_time([]) do
@@ -38,7 +42,17 @@ defmodule Datjournaal.UserStatsController do
     end)
   end
 
-  defp yesterday do
+  defp yesterday_begin do
+    date = Calendar.DateTime.now_utc()
+      |> Calendar.Date.add!(-1)
+      |> Map.put(:hour, 0)
+      |> Map.put(:minute, 0)
+      |> Map.put(:second, 0)
+      |> Ecto.DateTime.cast!
+    date
+  end
+
+  defp yesterday_end do
     date = Calendar.DateTime.now_utc()
       |> Calendar.Date.add!(-1)
       |> Map.put(:hour, 23)
