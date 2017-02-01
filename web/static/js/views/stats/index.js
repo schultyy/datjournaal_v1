@@ -21,19 +21,25 @@ class StatsView extends React.Component {
     return fp.uniqBy(stat => stat.ip)(stats);
   }
 
-  renderStats(headline, visitorsToday, visitorsThirtyDays) {
+  renderStats(headline, visitorsToday, visitorsYesterday, visitorsThirtyDays) {
     return (
       <div className="row stats">
         <div className="col-xs-12">
           <h1>{headline}</h1>
         </div>
-        <div className="col-xs-6">
+        <div className="col-xs-3">
           <div className="today">
             <h3>Today</h3>
             <div className="visitor-count">{visitorsToday} visits</div>
           </div>
         </div>
-        <div className="col-xs-6">
+        <div className="col-xs-3">
+          <div className="yesterday">
+            <h3>Yesterday</h3>
+            <div className="visitor-count">{visitorsYesterday} visits</div>
+          </div>
+        </div>
+        <div className="col-xs-3">
           <div className="thirty-days">
             <h3>Last 30 days</h3>
             <div className="visitor-count">{visitorsThirtyDays} visits</div>
@@ -54,15 +60,17 @@ class StatsView extends React.Component {
     }
 
     const uniqueVisitorsToday = this.uniqueStats(stats.today).length;
+    const uniqueVisitorsYesterday = this.uniqueStats(stats.yesterday).length;
     const uniqueVisitorsThirtyDays = this.uniqueStats(stats.thirty_days).length;
 
     const overallVisitorsToday = stats.today.length;
+    const overallVisitorsYesterday = stats.yesterday.length;
     const overallVisitorsThirtyDays = stats.thirty_days.length;
 
     return (
       <div className="container">
-        {this.renderStats('Unique Visits', uniqueVisitorsToday, uniqueVisitorsThirtyDays)}
-        {this.renderStats('Overall Visits', overallVisitorsToday, overallVisitorsThirtyDays)}
+        {this.renderStats('Unique Visits', uniqueVisitorsToday, uniqueVisitorsYesterday, uniqueVisitorsThirtyDays)}
+        {this.renderStats('Overall Visits', overallVisitorsToday, overallVisitorsYesterday, overallVisitorsThirtyDays)}
       </div>
     );
   }
