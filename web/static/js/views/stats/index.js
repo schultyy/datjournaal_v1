@@ -76,6 +76,13 @@ class StatsView extends React.Component {
   }
 }
 
+StatsView.propTypes = {
+  fetching: React.PropTypes.bool.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
+  stats: React.PropTypes.object.isRequired,
+  currentUser: React.PropTypes.object,
+};
+
 const mapStateToProps = state => ({
   fetching: state.stats.fetching,
   ...state.stats,
