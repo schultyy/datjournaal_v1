@@ -66,18 +66,20 @@ export class TileComponent extends React.Component {
             {post.user.handle}
           </span>
           {this.renderLocation(post)}
-          <span className="pull-right">
+        </div>
+        <img src={post.image} />
+        <div className="menu-bar">
             <ContextMenu
               onCopyURLToClipboard={this.onCopyURLToClipboard.bind(this)}
               onShowDetail={doubleClickHandler}
               onHide={postIsHidden ? null : onHide}
               onShow={postIsHidden ? onShow : null}
             />
-          </span>
         </div>
-        <img src={post.image} />
-        <div className="date">{date}</div>
-        <div className="description">{post.description}</div>
+        <div>
+          <div className="date">{date}</div>
+          <div className="description">{post.description}</div>
+        </div>
       </div>
     );
   }
