@@ -3,23 +3,15 @@ $header-height: 50px
 $menu-entry-height: 40px
 $footer-height: 50px
 $header-font-size: 18px
-$font-color: $color-secondary-2-4
-$background-color: $color-primary-4
-$header-background-color: rgb(255, 255, 255)
-$context-menu-font-color: #FFFFFF
-$tile-background-color: #FFFFFF
-$form-background-color: #FFFFFF
-$imprint-background-color: #FFFFFF
-$userdetails-background-color: #FFFFFF
 $xs-breakpoint: 768px
 $sm-breakpoint: 768px
 $md-breakpoint: 992px
 
 *
-  color: $font-color
+  background-color: white
 
 body
-  background-color: $background-color
+  // background-color: $background-color
 
 .logo
   .image
@@ -47,9 +39,8 @@ body
     vertical-align: top
 
 .main-header
-  background-color: $header-background-color
-  border-bottom: 0.5px solid $background-color
-  color: $font-color
+  border-bottom: 0.5px solid
+  // color: $font-color
   height: $header-height
   font-size: $header-font-size
   padding: 5px
@@ -59,7 +50,7 @@ body
     padding: 5px
     vertical-align: top
   a
-    color: $font-color
+    // color: $font-color
 
 .isHidden
   img
@@ -85,12 +76,12 @@ body
     margin-right: auto
     margin-bottom: 30px
   border: 1px solid #f7f7f7
-  background-color: $tile-background-color
+  // background-color: $tile-background-color
   .location
     font-size: 10px
     a
       font-weight: lighter
-      color: $color-secondary-1-2
+      // color: $color-secondary-1-2
   .date
     margin-top: 5px
     margin-left: 10px
@@ -125,9 +116,9 @@ body
       font-size: 18px
       padding-left: 5px
       margin-top: 5px
-      color: $font-color
-      background-color: $header-background-color
-      border: 0.5px solid $font-color
+      // color: $font-color
+      // background-color: $header-background-color
+      border: 0.5px solid // $font-color
       &:hover
         text-decoration: underline
   img
@@ -150,7 +141,7 @@ body
   padding-bottom: 10px
   border: 1px solid #ffffff
   border-radius: 2px
-  background-color: $form-background-color
+  // background-color: $form-background-color
   .headline
     padding-left: 10px
   .file-upload
@@ -162,7 +153,7 @@ body
     padding: 25px
   .sheet
     display: block
-    background-color: rgb(250, 250, 250)
+    // background-color: rgb(250, 250, 250)
     margin-left: 15px
     margin-right: 15px
     margin-bottom: 15px
@@ -219,27 +210,27 @@ body
       :hover
         cursor: pointer
     .active
-      background-color: rgb(235, 235, 235)
+      // background-color: rgb(235, 235, 235)
 
 .footer
   height: $footer-height
-  background-color: white
-  border: 0.5px solid $font-color
+  // background-color: white
+  border: 0.5px solid // $font-color
   position: fixed
   bottom: 0px
   width: 100%
   font-weight: bolder
   .new-post
-    background-color: #262626
+    // background-color: #262626
   .stats
-    background-color: #2c4388
+    // background-color: #2c4388
   .sign-out
-    background-color: #53b43d
+    // background-color: #53b43d
   button
     margin: 0px 0px
     padding: 10px 10px
     border: none
-    background-color: transparent
+    // background-color: transparent
     text-align: center
     vertical-align: middle
     height: 100%
@@ -255,7 +246,7 @@ body
       padding: 0px
 
 .stats
-  background-color: #FFFFFF
+  // background-color: #FFFFFF
   width: 100%
   margin: 5px 0px
   text-align: center
@@ -270,7 +261,7 @@ body
   width: 100%
   margin: $footer-height + 20px 0px
   padding: 15px
-  background-color: $imprint-background-color
+  // background-color: $imprint-background-color
   font-size: 16px
   .contact
     margin-top: 15px
@@ -281,11 +272,11 @@ body
   $input-font-size: 20px
   margin-top: auto
   margin-bottom: auto
-  background-color: white
+  // background-color: white
   height: 350px
-  color: $font-color
+  // color: $font-color
   .error
-    background-color: #f1c2c0
+    // background-color: #f1c2c0
     padding: 5px
     font-weight: bolder
   form, header
@@ -310,8 +301,8 @@ body
     width: $control-width
 
 .userdetails
-  color: $font-color
-  background-color: $userdetails-background-color
+  // color: $font-color
+  // background-color: $userdetails-background-color
   padding-left: 15px
   .progress-indicator
     display: block
@@ -321,7 +312,7 @@ body
     margin-bottom: 5px
     border: 0.5px solid red
     padding: 15px
-    color: red
+    // color: red
     display: block
     font-size: 16px
     font-style: italic
