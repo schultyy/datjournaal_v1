@@ -7,11 +7,8 @@ $xs-breakpoint: 768px
 $sm-breakpoint: 768px
 $md-breakpoint: 992px
 
-*
-  background-color: white
-
 body
-  // background-color: $background-color
+  background-color: white
 
 .logo
   .image
@@ -39,8 +36,9 @@ body
     vertical-align: top
 
 .main-header
+  background-color: $header-background-color
   border-bottom: 0.5px solid
-  // color: $font-color
+  color: $header-foreground-color
   height: $header-height
   font-size: $header-font-size
   padding: 5px
@@ -50,7 +48,7 @@ body
     padding: 5px
     vertical-align: top
   a
-    // color: $font-color
+    color: $header-foreground-color
 
 .isHidden
   img
