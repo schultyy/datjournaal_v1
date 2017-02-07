@@ -19,15 +19,15 @@ export class TileComponent extends React.Component {
     const hasCoordinates = post.lat && post.lng;
     if (post.short_location_name && hasCoordinates) {
       return (
-        <div className="location">
+        <span className="header-control location">
           <a href={this.googleMapsUrl()} target="_blank">{post.short_location_name}</a>
-        </div>
+        </span>
       );
     } else if (post.short_location_name && !hasCoordinates) {
       return (
-        <div className="location">
+        <span className="header-control location">
           {post.short_location_name}
-        </div>
+        </span>
       );
     }
     return null;
@@ -62,10 +62,10 @@ export class TileComponent extends React.Component {
     return (
       <div className={tileClasses} onDoubleClick={onDoubleClick}>
         <div>
-          <span className="pull-left author">
+          <span className="header-control author">
             {post.user.handle}
-            {this.renderLocation(post)}
           </span>
+          {this.renderLocation(post)}
           <span className="pull-right">
             <ContextMenu
               onCopyURLToClipboard={this.onCopyURLToClipboard.bind(this)}
