@@ -35,7 +35,6 @@ class SessionsNew extends React.Component {
 
     const buttonClasses = cx({
       "btn": true,
-      "btn-info": true,
       "disabled": signingIn
     });
 

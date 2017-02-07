@@ -19,15 +19,15 @@ export class TileComponent extends React.Component {
     const hasCoordinates = post.lat && post.lng;
     if (post.short_location_name && hasCoordinates) {
       return (
-        <div className="location">
+        <span className="header-control location">
           <a href={this.googleMapsUrl()} target="_blank">{post.short_location_name}</a>
-        </div>
+        </span>
       );
     } else if (post.short_location_name && !hasCoordinates) {
       return (
-        <div className="location">
+        <span className="header-control location">
           {post.short_location_name}
-        </div>
+        </span>
       );
     }
     return null;
@@ -61,23 +61,25 @@ export class TileComponent extends React.Component {
 
     return (
       <div className={tileClasses} onDoubleClick={onDoubleClick}>
-        <div>
-          <span className="pull-left author">
+        <div className="header-controls">
+          <span className="header-control author">
             {post.user.handle}
-            {this.renderLocation(post)}
           </span>
-          <span className="pull-right">
+          {this.renderLocation(post)}
+        </div>
+        <img src={post.image} />
+        <div className="menu-bar">
             <ContextMenu
               onCopyURLToClipboard={this.onCopyURLToClipboard.bind(this)}
               onShowDetail={doubleClickHandler}
               onHide={postIsHidden ? null : onHide}
               onShow={postIsHidden ? onShow : null}
             />
-          </span>
         </div>
-        <img src={post.image} />
-        <div className="date">{date}</div>
-        <div className="description">{post.description}</div>
+        <div className="about">
+          <div className="date">{date}</div>
+          <div className="description">{post.description}</div>
+        </div>
       </div>
     );
   }
