@@ -269,13 +269,17 @@ body
 .login
   $control-width: 250px
   $input-font-size: 20px
-  margin-top: auto
-  margin-bottom: auto
-  // background-color: white
+  margin-top: 15px
+  background-color: $login-background-color
   height: 350px
-  // color: $font-color
+  color: $login-foreground-color
+  opacity: 0.9
+  border-radius: 2px
   .error
-    // background-color: #f1c2c0
+    border-radius: 1.5px
+    opacity: 1
+    background-color: $login-error-background-color
+    color: $login-error-foreground-color
     padding: 5px
     font-weight: bolder
   form, header
@@ -285,11 +289,13 @@ body
   header
     margin-top: 35px
   input[type="email"]
+    color: black
     font-size: $input-font-size
     width: $control-width
     margin-top: 5px
     margin-bottom: 5px
   input[type="password"]
+    color: black
     font-size: $input-font-size
     width: $control-width
     margin-top: 5px
@@ -298,6 +304,8 @@ body
     margin-top: 15px
     font-size: 16px
     width: $control-width
+    background-color: $login-button-background-color
+    color: $login-button-foreground-color
 
 .userdetails
   // color: $font-color
