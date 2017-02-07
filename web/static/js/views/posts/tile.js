@@ -61,7 +61,7 @@ export class TileComponent extends React.Component {
 
     return (
       <div className={tileClasses} onDoubleClick={onDoubleClick}>
-        <div>
+        <div className="header-controls">
           <span className="header-control author">
             {post.user.handle}
           </span>
