@@ -14,12 +14,12 @@ defmodule Datjournaal.PostController do
         order_by: [desc: p.inserted_at],
         where: p.hidden == false,
         select: p,
-        limit: 30
+        limit: 50
     else
       Repo.all from p in Post,
         order_by: [desc: p.inserted_at],
         select: p,
-        limit: 30
+        limit: 50
     end
 
     posts_with_user = Repo.preload(posts, :user)
