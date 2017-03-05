@@ -1,7 +1,7 @@
 defmodule Datjournaal.AuthController do
   use Datjournaal.Web, :controller
   alias Datjournaal.Router
-
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController]
 
   def request(conn, _params) do
     token = ExTwitter.request_token(
