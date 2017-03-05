@@ -30,12 +30,13 @@ defmodule Datjournaal.Router do
         post "/users/twitter", UserSettingsController, :set_twitter_keys
         get "/users/twitter", UserSettingsController, :get_twitter_keys
         get "/location", LocationController, :get_location_for_name
+        get "/auth/request", AuthController, :request
+        get "/auth/callback", AuthController, :callback
     end
   end
 
   scope "/", Datjournaal do
     pipe_through :browser # Use the default browser stack
-
     get "*path", PageController, :index
   end
 end
