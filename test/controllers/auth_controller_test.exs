@@ -14,7 +14,9 @@ defmodule Datjournaal.AuthControllerTest do
     assert response.status == 403
   end
 
-  test "GET /api/v1/auth/request as authenticated user returns redirect", %{ jwt: jwt, credentials: _credentials }do
+  test_with_mock "GET /api/v1/auth/request as authenticated user returns redirect", %{ jwt: jwt, credentials: _credentials },
+    ExTwitter, [], [request_token: fn(_auth_url) -> %{oauth_token: "a token"} end,
+      authenticate_url: fn(_token) -> {:ok, "http://example.com"} end] do
     conn = build_conn
             |> put_req_header("authorization", jwt)
     response = get conn, "/api/v1/auth/request"
