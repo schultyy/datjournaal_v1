@@ -28,7 +28,6 @@ defmodule Datjournaal.Router do
         post "/posts/:id/show", PostController, :show_post
         post "/users/reset_password", UserSettingsController, :reset_password
         post "/users/twitter", UserSettingsController, :set_twitter_keys
-        get "/users/twitter", UserSettingsController, :get_twitter_keys
         get "/location", LocationController, :get_location_for_name
         get "/auth/request", AuthController, :request
         get "/auth/callback", AuthController, :callback
