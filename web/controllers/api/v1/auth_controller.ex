@@ -38,7 +38,6 @@ defmodule Datjournaal.AuthController do
 
   def callback(conn, %{"denied" => _}) do
     conn
-    |> put_flash(:error, "You did not give us access to your account")
     |> redirect(to: Router.Helpers.page_path(conn, :index, %{}))
   end
 end
