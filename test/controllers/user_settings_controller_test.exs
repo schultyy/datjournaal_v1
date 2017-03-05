@@ -129,8 +129,6 @@ defmodule Datjournaal.UserSettingsControllerTest do
   end
 
   @twitter_keys %{
-    consumer_key: "abc",
-    consumer_secret: "abc",
     access_token: "abc",
     access_token_secret: "abc"
   }
@@ -228,8 +226,6 @@ defmodule Datjournaal.UserSettingsControllerTest do
     body = response.resp_body |> Poison.decode!
     assert body |> Map.get("access_token_secret") |> String.length > 0
     assert body |> Map.get("access_token") |> String.length > 0
-    assert body |> Map.get("consumer_secret") |> String.length > 0
-    assert body |> Map.get("consumer_key") |> String.length > 0
   end
 
   test "GET /api/v1/users/twitter without existing twitter key returns empty result set", %{ user: _user, jwt: jwt } do

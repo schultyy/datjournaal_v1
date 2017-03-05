@@ -16,7 +16,7 @@ defmodule Datjournaal.TwitterKey do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:consumer_key, :consumer_secret, :access_token, :access_token_secret, :user_id])
-    |> validate_required([:consumer_key, :consumer_secret, :access_token, :access_token_secret, :user_id])
+    |> cast(params, [:access_token, :access_token_secret, :user_id])
+    |> validate_required([:access_token, :access_token_secret, :user_id])
   end
 end
