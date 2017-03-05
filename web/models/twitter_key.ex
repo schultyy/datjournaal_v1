@@ -2,8 +2,6 @@ defmodule Datjournaal.TwitterKey do
   use Datjournaal.Web, :model
 
   schema "twitterkeys" do
-    field :consumer_key, :string
-    field :consumer_secret, :string
     field :access_token, :string
     field :access_token_secret, :string
     belongs_to :user, Datjournaal.User

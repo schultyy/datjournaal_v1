@@ -9,9 +9,7 @@ defmodule Datjournaal.UserSettingsView do
     key = user.twitter_key
     %{
       access_token_secret: key.access_token_secret,
-      access_token: key.access_token,
-      consumer_secret: key.consumer_secret,
-      consumer_key: key.consumer_key
+      access_token: key.access_token
     }
   end
 
