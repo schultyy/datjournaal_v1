@@ -53,4 +53,18 @@ defmodule Datjournaal.AuthControllerTest do
     assert key.access_token == "an_access_token"
     assert key.access_token_secret == "secret"
   end
+
+  test_with_mock "GET /api/v1/auth/callback with oauth and oauth verifier param overwrites existing twitter key in database",
+    %{ jwt: jwt, credentials: credentials }, ExTwitter, [],
+      [access_token: fn(_verifier, _token) -> {:ok , %{ oauth_token: "an_access_token", oauth_token_secret: "secret" }} end,
+        configure: fn(:process, _args) -> :ok end,
+        verify_credentials: fn() -> credentials end] do
+    conn = build_conn
+            |> put_req_header("authorization", jwt)
+    get conn, "/api/v1/auth/callback?oauth_token=some_token&oauth_verifier=some_verifier"
+    get conn, "/api/v1/auth/callback?oauth_token=some_token&oauth_verifier=some_verifier"
+
+    count = Repo.one(from tw in Datjournaal.TwitterKey, select: count(tw.id))
+    assert count == 1
+  end
 end
