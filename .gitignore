@@ -15,6 +15,7 @@ erl_crash.dump
 # variables.
 /config/dev.exs
 /config/prod.secret.exs
+/config/test.secret.exs
 node_modules/
 /priv/static/css/application.css
 /priv/static/js/application.js
