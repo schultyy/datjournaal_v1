@@ -3,6 +3,7 @@ defmodule Datjournaal.AuthController do
   alias Datjournaal.Router
   alias Datjournaal.{TwitterKey, Repo}
   plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController]
+  require Logger
 
   def request(conn, _params) do
     token = ExTwitter.request_token(
@@ -15,8 +16,6 @@ defmodule Datjournaal.AuthController do
   def callback(conn, %{"oauth_token" => oauth_token, "oauth_verifier" => oauth_verifier}) do
     {:ok, access_token} = ExTwitter.access_token(oauth_verifier, oauth_token)
 
-    # if we just ran configure without merging in the existing
-    # config, we would lose existing config
     ExTwitter.configure(
       :process,
       Keyword.merge(
@@ -31,13 +30,26 @@ defmodule Datjournaal.AuthController do
         access_token_secret: access_token.oauth_token_secret})
 
     case insert_key_results do
-      {:ok, user} -> conn |> redirect(to: Router.Helpers.page_path(conn, :index, %{}))
+      {:ok, _user} -> conn |> redirect(to: Router.Helpers.page_path(conn, :index, %{}))
+      {:error, changeset} ->
+        changeset |> log_errors
+        conn
+          |> redirect(to: Router.Helpers.page_path(conn, :index, %{}))
     end
   end
 
   def callback(conn, %{"denied" => _}) do
     conn
     |> redirect(to: Router.Helpers.page_path(conn, :index, %{}))
+  end
+
+  defp log_errors(changeset) do
+    Logger.error("Could not save Twitter credentials")
+    Enum.map(changeset.errors, fn(err) ->
+      attr_name = elem(err, 0)
+      message = elem(err, 1) |> elem(0)
+      Logger.error("#{attr_name} - #{message}")
+    end)
   end
 
   defp set_twitter_keys(conn, params) do
