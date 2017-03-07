@@ -133,63 +133,48 @@ class NewPostComponent extends React.Component {
         <h3 className="headline">New post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
 
-        <div>
-          <div>
-            <div className="image-preview">
-              <img src={previewImage} />
-            </div>
+        <div className="image-and-text">
+          <div className="image-preview">
+            <img src={previewImage} />
           </div>
-          <div className="form-group file-upload">
+          <div className="file-upload">
             <label htmlFor="post-file">Select the file you would like to share</label>
             <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
           </div>
-          <div className="form-group description-container">
-            <label htmlFor="post-description">Describe it</label>
-            <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption..." />
+          <div className="description-container">
+            <textarea ref="description" rows="5" className="post-description" placeholder="Write a caption..." />
           </div>
         </div>
         <div>
-          <div>
-            <p className="sheet">
-              Add custom location
-            </p>
-          </div>
+          <p className="sheet">
+            Add custom location
+          </p>
 
-          <div>
-            <div className="sheet">
-              <input onChange={this.onQueryLocationChange.bind(this)} checked={this.state.useCustomLocation} name="custom-geolocation" type="checkbox" ref="custom_geolocation" />
-            </div>
+          <div className="sheet">
+            <input onChange={this.onQueryLocationChange.bind(this)} checked={this.state.useCustomLocation} name="custom-geolocation" type="checkbox" ref="custom_geolocation" />
           </div>
 
           <div className="clearfix" />
 
-          <div>
-            <p className="sheet">
-              Publish on Twitter
-            </p>
-          </div>
-          <div>
-            <div className="sheet">
-              <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
-            </div>
+          <p className="sheet">
+            Publish on Twitter
+          </p>
+          <div className="sheet">
+            <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
           </div>
 
           <div className="clearfix" />
 
-          <div>
-            <p className="sheet">
-              Use my current location
-            </p>
-          </div>
-          <div>
-            <div className="sheet">
-              <input onChange={this.onUseCurrentLocationChange.bind(this)} checked={this.state.useCurrentLocation} name="request-geolocation" type="checkbox" ref="geolocation" />
-            </div>
-          </div>
+          <p className="sheet">
+            Use my current location
+          </p>
 
+          <div className="sheet">
+            <input onChange={this.onUseCurrentLocationChange.bind(this)} checked={this.state.useCurrentLocation} name="request-geolocation" type="checkbox" ref="geolocation" />
+          </div>
         </div>
 
-        <div className="row">
+        <div>
           {this.state.useCustomLocation ?
             <Location
               locations={locationResults}
@@ -200,10 +185,8 @@ class NewPostComponent extends React.Component {
             : null}
         </div>
         <div>
-          <div>
-            <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
-            {canPost ? this.renderLoadingIndicator() : null}
-          </div>
+          <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+          {canPost ? this.renderLoadingIndicator() : null}
         </div>
       </div>
     );
