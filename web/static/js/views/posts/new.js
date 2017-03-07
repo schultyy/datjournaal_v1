@@ -172,8 +172,8 @@ class NewPostComponent extends React.Component {
             : null}
         </div>
         <div>
-          <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
-          {canPost ? this.renderLoadingIndicator() : null}
+          <button className="submit-post" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+          { canPost ? this.renderLoadingIndicator() : null }
         </div>
       </div>
     );
