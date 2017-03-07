@@ -82,20 +82,16 @@ body
   @media(min-width: $sm-breakpoint)
     margin-top: 30px
 .tile-list
+  display: flex
+  flex-direction: column
   &:last-child
     margin-bottom: $footer-height + 10px
 .tile
   position: relative
   display: block
-  max-width: 600px
-  @media(max-width: $xs-breakpoint)
-    margin-left: -15px
-    margin-right: -15px
-    margin-bottom: 1px
-  @media(min-width: $xs-breakpoint)
-    margin-left: auto
-    margin-right: auto
-    margin-bottom: 30px
+  margin-left: 5px
+  margin-right: 5px
+  margin-bottom: 1px
   .header-controls
     position: absolute
     top: 20px
