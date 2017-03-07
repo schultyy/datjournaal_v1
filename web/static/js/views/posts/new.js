@@ -137,7 +137,6 @@ class NewPostComponent extends React.Component {
             <img src={previewImage} />
           </div>
           <div className="file-upload">
-            <label htmlFor="post-file">Select the file you would like to share</label>
             <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
           </div>
           <div className="description-container">
