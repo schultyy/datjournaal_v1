@@ -3,6 +3,7 @@ $header-height: 50px
 $menu-entry-height: 40px
 $footer-height: 50px
 $header-font-size: 14px
+$space-between-header-and-content: 50px
 $xs-breakpoint: 768px
 $sm-breakpoint: 768px
 $md-breakpoint: 992px
@@ -89,7 +90,7 @@ body
   display: flex
   flex-direction: column
   &:first-child
-    margin-top: 50px
+    margin-top: $space-between-header-and-content
   &:last-child
     margin-bottom: $footer-height + 10px
 .tile
@@ -183,6 +184,7 @@ body
 
 .new-post-form
   width: 100%
+  margin-top: $space-between-header-and-content
   padding-bottom: 10px
   border: 1px solid #ffffff
   border-radius: 2px
