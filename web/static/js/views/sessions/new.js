@@ -40,8 +40,8 @@ class SessionsNew extends React.Component {
 
     return (
       <div>
-        <div className="row">
-          <main className="col-xs-12 col-md-offset-4 col-md-4 container login">
+        <div>
+          <main className="login">
             <header>
               <div className="logo"><span className="text">dat Journaal</span></div>
               <h4>Login</h4>
