@@ -247,28 +247,31 @@ body
       img
         max-height: 500px
   .location-form
+    display: flex
+    flex-direction: column
     .location-input
-      margin-left: 5px
-      margin-right: 5px
-      width: 100%
-    @media(min-width: $md-breakpoint)
-      .search-button
-        margin-left: 15px
-      .location-input
-        margin-left: 40px
+      input
+        border: 0.01px solid black
+        border-radius: 2px
+        width: 100%
     ul
       margin-top: 15px
-      padding-left: 40px
-      padding-right: 40px
+      padding-left: 20px
+      padding-right: 20px
       list-style-type: none
       li
-        padding: 10px
+        padding: 5px
     .location
+      border-radius: 2px
+      background-color: rgb(235, 235, 235)
+      margin-top: 5px
+      margin-bottom: 5px
       font-size: 12px
       :hover
         cursor: pointer
     .active
-      background-color: rgb(235, 235, 235)
+      background-color: rgb(200, 200, 200)
+      // background-color: #686868
 
 .footer
   height: $footer-height
