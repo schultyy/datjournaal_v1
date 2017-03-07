@@ -37,7 +37,7 @@ export default class PickLocation extends React.Component {
           <input ref="locationname" type="text" name="location" />
         </div>
         <div>
-          <button onClick={this.onQueryLocationClick.bind(this)} className="btn search-button">Search</button>
+          <button onClick={this.onQueryLocationClick.bind(this)} className="search-button">Search</button>
         </div>
         <ul>
           {this.renderSearchResults(locations)}
