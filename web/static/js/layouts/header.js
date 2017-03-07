@@ -31,7 +31,7 @@ export default class Header extends React.Component {
             <li className="menu-entry">
               <div>
                 <Link to="/">
-                  <div title="Plattdeutsch für: die Zeitung" className="logo">
+                  <div title="Plattdeutsch für: die Zeitung">
                     <span className="text">dat Journaal</span>
                   </div>
                 </Link>
