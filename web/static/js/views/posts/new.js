@@ -53,7 +53,7 @@ class NewPostComponent extends React.Component {
 
   renderFormErrors(formErrors) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert" role="alert">
         <ul>
           {formErrors.map((error) => {
             const propertyName = Object.keys(error)[0];
