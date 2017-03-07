@@ -53,7 +53,7 @@ class NewPostComponent extends React.Component {
 
   renderFormErrors(formErrors) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div className="alert" role="alert">
         <ul>
           {formErrors.map((error) => {
             const propertyName = Object.keys(error)[0];
@@ -130,66 +130,37 @@ class NewPostComponent extends React.Component {
 
     return (
       <div className="new-post-form">
-        <h3 className="headline">New post</h3>
         {formErrors ? this.renderFormErrors(formErrors) : null}
 
-        <div className="row">
-          <div className="col-xs-12 col-md-12">
-            <div className="image-preview">
-              <img src={previewImage} />
-            </div>
+        <div className="image-and-text">
+          <div className="image-preview">
+            <img src={previewImage} />
           </div>
-          <div className="form-group col-xs-12 col-md-12 file-upload">
-            <label htmlFor="post-file">Select the file you would like to share</label>
+          <div className="file-upload">
             <input type="file" ref="file" accept="image/*" onChange={this.onPreviewChange.bind(this)} />
           </div>
-          <div className="col-xs-12 col-md-12 form-group description-container">
-            <label htmlFor="post-description">Describe it</label>
-            <textarea ref="description" rows="5" className="post-description form-control" placeholder="Write a caption..." />
+          <div className="description-container">
+            <textarea ref="description" rows="5" className="post-description" placeholder="Write a caption..." />
           </div>
         </div>
-        <div className="row">
-          <div className="col-xs-12 col-md-6">
-            <p className="sheet">
-              Add custom location
-            </p>
+        <div className="sheets">
+          <div className="sheet">
+            <p>Add custom location</p>
+            <input onChange={this.onQueryLocationChange.bind(this)} checked={this.state.useCustomLocation} name="custom-geolocation" type="checkbox" ref="custom_geolocation" />
           </div>
 
-          <div className="col-xs-12 col-md-6">
-            <div className="sheet">
-              <input onChange={this.onQueryLocationChange.bind(this)} checked={this.state.useCustomLocation} name="custom-geolocation" type="checkbox" ref="custom_geolocation" />
-            </div>
+          <div className="sheet">
+            <p>Publish on Twitter</p>
+            <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
           </div>
 
-          <div className="clearfix" />
-
-          <div className="col-xs-12 col-md-6">
-            <p className="sheet">
-              Publish on Twitter
-            </p>
+          <div className="sheet">
+            <p>Use my current location</p>
+            <input onChange={this.onUseCurrentLocationChange.bind(this)} checked={this.state.useCurrentLocation} name="request-geolocation" type="checkbox" ref="geolocation" />
           </div>
-          <div className="col-xs-12 col-md-6">
-            <div className="sheet">
-              <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
-            </div>
-          </div>
-
-          <div className="clearfix" />
-
-          <div className="col-xs-12 col-md-6">
-            <p className="sheet">
-              Use my current location
-            </p>
-          </div>
-          <div className="col-xs-12 col-md-6">
-            <div className="sheet">
-              <input onChange={this.onUseCurrentLocationChange.bind(this)} checked={this.state.useCurrentLocation} name="request-geolocation" type="checkbox" ref="geolocation" />
-            </div>
-          </div>
-
         </div>
 
-        <div className="row">
+        <div>
           {this.state.useCustomLocation ?
             <Location
               locations={locationResults}
@@ -199,11 +170,9 @@ class NewPostComponent extends React.Component {
             />
             : null}
         </div>
-        <div className="row">
-          <div className="col-xs-12 col-md-12">
-            <button className="submit-post btn btn-success" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
-            {canPost ? this.renderLoadingIndicator() : null}
-          </div>
+        <div>
+          <button className="submit-post" disabled={canPost} onClick={this.createNewPost}>Create Post</button>
+          { canPost ? this.renderLoadingIndicator() : null }
         </div>
       </div>
     );

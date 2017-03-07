@@ -55,7 +55,6 @@ export class TileComponent extends React.Component {
     const tileClasses = cx({
       tile: true,
       isHidden: postIsHidden,
-      'detail-view': isDetailMode,
       'is-first': isFirst,
     });
 
