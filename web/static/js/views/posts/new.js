@@ -145,31 +145,19 @@ class NewPostComponent extends React.Component {
             <textarea ref="description" rows="5" className="post-description" placeholder="Write a caption..." />
           </div>
         </div>
-        <div>
-          <p className="sheet">
-            Add custom location
-          </p>
-
+        <div className="sheets">
           <div className="sheet">
+            <p>Add custom location</p>
             <input onChange={this.onQueryLocationChange.bind(this)} checked={this.state.useCustomLocation} name="custom-geolocation" type="checkbox" ref="custom_geolocation" />
           </div>
 
-          <div className="clearfix" />
-
-          <p className="sheet">
-            Publish on Twitter
-          </p>
           <div className="sheet">
+            <p>Publish on Twitter</p>
             <input disabled={twitterDisabled} name="publish" type="checkbox" ref="twitter" />
           </div>
 
-          <div className="clearfix" />
-
-          <p className="sheet">
-            Use my current location
-          </p>
-
           <div className="sheet">
+            <p>Use my current location</p>
             <input onChange={this.onUseCurrentLocationChange.bind(this)} checked={this.state.useCurrentLocation} name="request-geolocation" type="checkbox" ref="geolocation" />
           </div>
         </div>
