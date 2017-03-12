@@ -421,15 +421,19 @@ body
     max-width: 350px
 
 @media (min-width: $sm-breakpoint) and (orientation: landscape)
+  .is-first
+    margin-top: 0px
   .tile-list
     display: flex
     flex-direction: row
     flex-wrap: wrap
     justify-content: flex-start
   .preview
+    height: 400px
     width: 300px
     position: relative
     display: block
+    margin-top: 10px
     margin-left: 5px
     margin-right: 5px
     margin-bottom: 1px
