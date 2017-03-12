@@ -56,6 +56,7 @@ export class TileComponent extends React.Component {
       tile: true,
       isHidden: postIsHidden,
       'is-first': isFirst,
+      preview: !isDetailMode,
     });
 
     return (

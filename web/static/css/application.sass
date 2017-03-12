@@ -96,6 +96,12 @@ body
   margin-top: $space-between-header-and-content + 5px
   display: flex
   justify-content: center
+  .tile
+    .about
+      .description
+        white-space: normal
+        overflow: visible
+        text-overflow: unset
 .tile-list
   display: flex
   flex-direction: column
@@ -110,6 +116,7 @@ body
   margin-left: 5px
   margin-right: 5px
   margin-bottom: 1px
+  max-width: 300px
   .header-controls
     position: absolute
     top: 20px
@@ -139,6 +146,9 @@ body
       margin-left: 10px
       padding: 5px
     .description
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
       padding: 5px
       margin-left: 10px
       margin-bottom: 15px
@@ -420,11 +430,32 @@ body
     margin: 50px
     max-width: 350px
 
-@media only screen and (min-width: $sm-breakpoint)
-  .tile
-    width: 600px
+@media (min-width: $sm-breakpoint)
+  .is-first
+    margin-top: 0px
+  .tile-list
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: center
+  .detail-view
+    .tile
+      max-width: $sm-breakpoint
+  .preview
+    height: 400px
+    width: 300px
     position: relative
     display: block
+    margin-top: 10px
     margin-left: 5px
     margin-right: 5px
     margin-bottom: 1px
+    .about
+      .description
+        max-height: 50px
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
+    .header-controls
+      .header-control
+        font-size: 12px
