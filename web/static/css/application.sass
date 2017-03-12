@@ -426,13 +426,19 @@ body
     flex-direction: row
     flex-wrap: wrap
     justify-content: flex-start
-  .tile
+  .preview
     width: 300px
     position: relative
     display: block
     margin-left: 5px
     margin-right: 5px
     margin-bottom: 1px
+    .about
+      .description
+        max-height: 50px
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
     .header-controls
       .header-control
         font-size: 12px
