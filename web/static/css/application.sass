@@ -102,6 +102,8 @@ body
         white-space: normal
         overflow: visible
         text-overflow: unset
+.preview
+  height: 400px
 .tile-list
   display: flex
   flex-direction: column
@@ -115,8 +117,8 @@ body
   display: block
   margin-left: 5px
   margin-right: 5px
-  margin-bottom: 1px
-  max-width: 300px
+  margin-bottom: 5px
+  max-width: 350px
   .header-controls
     position: absolute
     top: 20px
@@ -162,9 +164,6 @@ body
       margin-left: 10px
       padding: 5px
     .description
-      white-space: nowrap
-      overflow: hidden
-      text-overflow: ellipsis
       padding: 5px
       margin-left: 10px
       margin-bottom: 15px
@@ -209,9 +208,6 @@ body
     margin-left: auto
     margin-right: auto
     border-radius: 2px
-  .description
-    word-wrap: break-word
-    font-size: 16px
   .date
     font-weight: lighter
 
@@ -465,7 +461,7 @@ body
           a
             max-width: 490px
   .preview
-    height: 400px
+    height: 350px
     width: 300px
     position: relative
     display: block
