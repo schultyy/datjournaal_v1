@@ -131,9 +131,17 @@ body
       border-radius: 2px
       max-width: 200px
       display: inline-block
+      height: 31px
       &:first-child
         margin-left: 15px
+    .author
+      overflow: hidden
     .location
+      max-width: 190px
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+      color: $tile-control-foreground-color
       a
         max-width: 190px
         white-space: nowrap
@@ -142,6 +150,7 @@ body
         display: inline-block
         text-decoration: underline
         color: $tile-control-foreground-color
+
   .menu-bar
     display: block
     width: 100%
@@ -448,6 +457,13 @@ body
   .detail-view
     .tile
       max-width: $sm-breakpoint
+      .header-controls
+        .header-control
+          max-width: 500px
+          .location
+            max-width: 490px
+          a
+            max-width: 490px
   .preview
     height: 400px
     width: 300px
