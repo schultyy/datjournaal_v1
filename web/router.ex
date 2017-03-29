@@ -7,11 +7,14 @@ defmodule Datjournaal.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Datjournaal.Auth, repo: Datjournaal.Repo
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-
+    plug :fetch_session
+    plug :fetch_flash
+    plug :put_secure_browser_headers
     plug Guardian.Plug.VerifyHeader
     plug Guardian.Plug.LoadResource
   end

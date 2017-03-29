@@ -2,7 +2,7 @@ defmodule Datjournaal.PostController do
   use Datjournaal.Web, :controller
   import Ecto.Changeset
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide, :show_post]
+  plug :authenticate when action in [:create, :hide, :show_post]
 
   alias Datjournaal.{Repo, Post, UserStat}
 
@@ -188,5 +188,15 @@ defmodule Datjournaal.PostController do
   defp hash_address(address) do
     :crypto.hash(:sha256, address)
     |> Base.encode16
+  end
+
+  defp authenticate(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      |> put_status(:unauthorized)
+      |> halt()
+    end
   end
 end

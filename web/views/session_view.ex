@@ -1,9 +1,8 @@
 defmodule Datjournaal.SessionView do
   use Datjournaal.Web, :view
 
-  def render("show.json", %{jwt: jwt, user: user}) do
+  def render("show.json", %{user: user}) do
     %{
-      jwt: jwt,
       user: user
     }
   end
