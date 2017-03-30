@@ -1,12 +1,12 @@
-FROM elixir:1.3.2
-ENV DEBIAN_FRONTEND=noninteractive
+FROM alpine:3.5
+
+RUN apk update
+RUN apk add elixir erlang-crypto erlang-dev erlang-ssl g++ gcc make git vim nodejs \
+            erlang-dev erlang-asn1 erlang-crypto erlang-inets erlang-mnesia erlang-public-key \
+            erlang-runtime-tools erlang-ssl erlang-syntax-tools erlang-hipe erlang-eunit erlang-parsetools erlang-tools
 RUN mix local.hex --force
-
-# Install rebar
 RUN mix local.rebar --force
-
-# Install the Phoenix framework itself
-RUN mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y -q nodejs
-WORKDIR /app
+RUN adduser -D -u 4000 journaal
+RUN mkdir /app
+RUN chown journaal:journaal -R /app
+WORKDIR app
