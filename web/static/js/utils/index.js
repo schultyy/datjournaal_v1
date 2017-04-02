@@ -1,6 +1,6 @@
 import React from 'react';
 import fetch from 'isomorphic-fetch';
-import { polyfill } from 'es6-promise';
+import 'es6-promise';
 
 const defaultHeaders = {
   Accept: 'application/json',
