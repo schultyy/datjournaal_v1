@@ -2,26 +2,32 @@ import React from 'react';
 import SessionActions from '../actions/sessions';
 
 export default class Footer extends React.Component {
+  constructor() {
+    super();
+    this.handleSignOutClick = this.handleSignOutClick.bind(this);
+  }
+
+  handleSignOutClick(e) {
+    e.preventDefault();
+    const { dispatch } = this.props;
+
+    dispatch(SessionActions.signOut());
+  }
+
   renderSignOutLink() {
     if (!this.props.currentUser) {
       return false;
     }
 
     return (
-      <li><button className="sign-out" onClick={::this.handleSignOutClick}>🏃</button></li>
+      <li><button className="sign-out" onClick={this.handleSignOutClick}>🏃</button></li>
     );
-  }
-
-  handleSignOutClick(e) {
-    e.preventDefault();
-
-    this.props.dispatch(SessionActions.signOut());
   }
 
   render() {
     const { newPostClick, showStatsClick, currentUser } = this.props;
 
-    if(!currentUser) {
+    if (!currentUser) {
       return false;
     }
 
@@ -36,3 +42,10 @@ export default class Footer extends React.Component {
     );
   }
 }
+
+Footer.propTypes = {
+  currentUser: React.PropTypes.object,
+  newPostClick: React.PropTypes.func.isRequired,
+  showStatsClick: React.PropTypes.func.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
+};
