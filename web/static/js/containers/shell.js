@@ -39,7 +39,7 @@ class ShellContainer extends React.Component {
         <div className="container">
           {this.props.children}
         </div>
-        {currentPath == '/posts/new' ?
+        {currentPath === '/posts/new' ?
           null :
           <Footer
             currentUser={currentUser}
