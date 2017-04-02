@@ -20,7 +20,7 @@ export class TileComponent extends React.Component {
     if (post.short_location_name && hasCoordinates) {
       return (
         <span className="header-control location">
-          <a href={this.googleMapsUrl()} target="_blank">{post.short_location_name}</a>
+          <a href={this.googleMapsUrl()} rel="noopener noreferrer" target="_blank">{post.short_location_name}</a>
         </span>
       );
     } else if (post.short_location_name && !hasCoordinates) {
