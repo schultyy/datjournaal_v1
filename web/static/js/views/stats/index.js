@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import SessionActions from '../../actions/sessions';
 import StatsActions from '../../actions/stats';
 import { push } from 'react-router-redux';
 import fp from 'lodash/fp';
@@ -8,9 +7,8 @@ import fp from 'lodash/fp';
 class StatsView extends React.Component {
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
-    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
-    if (phoenixAuthToken && !currentUser) {
-      dispatch(SessionActions.currentUser());
+
+    if (currentUser) {
       dispatch(StatsActions.fetchStats());
     } else {
       dispatch(push('/'));

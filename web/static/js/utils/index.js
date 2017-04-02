@@ -1,11 +1,25 @@
 import React from 'react';
 import fetch from 'isomorphic-fetch';
-import { polyfill } from 'es6-promise';
+import 'es6-promise';
 
 const defaultHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
 };
+
+const TokenIdentifier = 'datjournaal_auth_token';
+
+export function loadAuthToken() {
+  return localStorage.getItem(TokenIdentifier);
+}
+
+export function removeAuthToken() {
+  localStorage.removeItem(TokenIdentifier);
+}
+
+export function setAuthToken(token) {
+  localStorage.setItem(TokenIdentifier, token);
+}
 
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -17,9 +31,7 @@ export function checkStatus(response) {
 }
 
 function buildHeaders() {
-  const authToken = localStorage.getItem('phoenixAuthToken');
-
-  return { ...defaultHeaders, Authorization: authToken };
+  return { ...defaultHeaders, Authorization: loadAuthToken() };
 }
 
 export function parseJSON(response) {
@@ -46,7 +58,7 @@ export function httpGet(url) {
 
 export function httpPostFormData(url, data) {
   const headers = {
-    Authorization: localStorage.getItem('phoenixAuthToken'),
+    Authorization: loadAuthToken(),
     Accept: 'application/json',
   };
 
@@ -66,7 +78,7 @@ export function httpPostFormData(url, data) {
 
 export function httpPost(url, data) {
   const headers = {
-    Authorization: localStorage.getItem('phoenixAuthToken'),
+    Authorization: loadAuthToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };

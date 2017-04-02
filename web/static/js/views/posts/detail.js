@@ -1,21 +1,15 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import PostActions from '../../actions/posts';
-import SessionActions from '../../actions/sessions';
-import { push } from 'react-router-redux';
-import { TileComponent } from '../posts/tile';
 import DocMeta from 'react-doc-meta';
-import { absoluteUrlForPost } from '../../utils';
+import PostActions from '../../actions/posts';
+import TileComponent from '../posts/tile';
+
 
 
 class PostDetailComponent extends React.Component {
   componentDidMount() {
-    const { dispatch, currentUser } = this.props;
-    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
-    if (phoenixAuthToken && !currentUser) {
-      dispatch(SessionActions.currentUser());
-    }
-    const postId = this.props.params.slug;
+    const { dispatch, params } = this.props;
+    const postId = params.slug;
     dispatch(PostActions.fetchPost(postId));
   }
 

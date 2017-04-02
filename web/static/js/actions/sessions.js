@@ -1,7 +1,7 @@
 import { push } from 'react-router-redux';
 import Constants from '../constants';
 import { Socket } from '../phoenix.js';
-import { httpGet, httpPost, httpDelete } from '../utils';
+import { httpGet, httpPost, httpDelete, setAuthToken, removeAuthToken } from '../utils';
 
 function setCurrentUser(dispatch, user) {
   dispatch({
@@ -23,7 +23,7 @@ const Actions = {
   signOut: () => (dispatch) => {
     httpDelete('/api/v1/sessions')
       .then((data) => {
-        localStorage.removeItem('phoenixAuthToken');
+        removeAuthToken();
 
         dispatch({
           type: Constants.USER_SIGNED_OUT,
@@ -46,7 +46,7 @@ const Actions = {
     dispatch({ type: Constants.SIGNING_IN });
     httpPost('/api/v1/sessions', data)
       .then((data) => {
-        localStorage.setItem('phoenixAuthToken', data.jwt);
+        setAuthToken(data.jwt);
         setCurrentUser(dispatch, data.user);
         dispatch({ type: Constants.SIGNED_IN });
         dispatch(push('/'));

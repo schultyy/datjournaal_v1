@@ -4,13 +4,13 @@ import { push } from 'react-router-redux';
 import Header from '../layouts/header';
 import Footer from '../layouts/footer';
 import Actions from '../actions/sessions';
+import { loadAuthToken } from '../utils';
 
 class ShellContainer extends React.Component {
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
-    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
 
-    if (phoenixAuthToken && !currentUser) {
+    if (loadAuthToken() && !currentUser) {
       dispatch(Actions.currentUser());
     }
   }
@@ -30,18 +30,18 @@ class ShellContainer extends React.Component {
   render() {
     const { currentUser, dispatch, currentPath } = this.props;
 
+    const childrenWithCurrentUser = React.Children.map(this.props.children, (child) => React.cloneElement(child, { currentUser }));
+
     return (
       <div>
-        <div className="application-container">
-          <Header
-            currentUser={currentUser}
-          />
+        <Header
+          currentUser={currentUser}
+        />
 
-          <div className="container">
-            {this.props.children}
-          </div>
+        <div className="container">
+          {childrenWithCurrentUser}
         </div>
-        {currentPath == '/posts/new' ?
+        {currentPath === '/posts/new' ?
           null :
           <Footer
             currentUser={currentUser}
