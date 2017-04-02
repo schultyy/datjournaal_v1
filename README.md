@@ -26,6 +26,18 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Install Docker on your machine.
 
+In `config/dev.exs` change the hostname to `postgres`:
+
+```elixir
+config :datjournaal, Datjournaal.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "datjournaal_dev",
+  hostname: "postgres",
+  pool_size: 10
+```
+
 Then:
 
 ```
