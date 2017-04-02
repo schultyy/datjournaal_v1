@@ -32,14 +32,12 @@ class ShellContainer extends React.Component {
 
     return (
       <div>
-        <div className="application-container">
-          <Header
-            currentUser={currentUser}
-          />
+        <Header
+          currentUser={currentUser}
+        />
 
-          <div className="container">
-            {this.props.children}
-          </div>
+        <div className="container">
+          {this.props.children}
         </div>
         {currentPath == '/posts/new' ?
           null :
