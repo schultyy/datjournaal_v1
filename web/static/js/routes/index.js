@@ -1,6 +1,6 @@
 import { IndexRoute, Route } from 'react-router';
 import React from 'react';
-import ShellContainer from '../containers/shell';
+import ShellContainer from '../containers/Shell';
 import HomeIndexView from '../views/home';
 import SessionsNew from '../views/sessions/new';
 import PostsNew from '../views/posts/new';
