@@ -7,16 +7,18 @@ const defaultHeaders = {
   'Content-Type': 'application/json',
 };
 
+const TokenIdentifier = 'datjournaal_auth_token';
+
 export function loadAuthToken() {
-  return localStorage.getItem('phoenixAuthToken');
+  return localStorage.getItem(TokenIdentifier);
 }
 
 export function removeAuthToken() {
-  localStorage.removeItem('phoenixAuthToken');
+  localStorage.removeItem(TokenIdentifier);
 }
 
 export function setAuthToken(token) {
-  localStorage.setItem('phoenixAuthToken', token);
+  localStorage.setItem(TokenIdentifier, token);
 }
 
 export function checkStatus(response) {
