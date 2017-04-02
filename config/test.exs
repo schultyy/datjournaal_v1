@@ -15,8 +15,9 @@ config :comeonin, :pbkdf2_rounds, 1
 # Configure your database
 config :datjournaal, Datjournaal.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("PG_USERNAME"),
+  password: System.get_env("PG_PASSWORD"),
+  hostname: System.get_env("PG_HOST"),
   database: "datjournaal_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

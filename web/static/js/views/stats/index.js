@@ -23,23 +23,18 @@ class StatsView extends React.Component {
 
   renderStats(headline, visitorsToday, visitorsYesterday, visitorsThirtyDays) {
     return (
-      <div className="row stats">
-        <div className="col-xs-12">
-          <h1>{headline}</h1>
-        </div>
-        <div className="col-xs-3">
+      <div>
+        <h1>{headline}</h1>
+        <div className="group">
           <div className="today">
             <h3>Today</h3>
             <div className="visitor-count">{visitorsToday} visits</div>
           </div>
-        </div>
-        <div className="col-xs-3">
+
           <div className="yesterday">
             <h3>Yesterday</h3>
             <div className="visitor-count">{visitorsYesterday} visits</div>
           </div>
-        </div>
-        <div className="col-xs-3">
           <div className="thirty-days">
             <h3>Last 30 days</h3>
             <div className="visitor-count">{visitorsThirtyDays} visits</div>
@@ -53,7 +48,7 @@ class StatsView extends React.Component {
     const { fetching, stats } = this.props;
     if (fetching) {
       return (
-        <div className="container">
+        <div className="stats">
           <div>Loading stats</div>
         </div>
       );
@@ -68,7 +63,7 @@ class StatsView extends React.Component {
     const overallVisitorsThirtyDays = stats.thirty_days.length;
 
     return (
-      <div className="container">
+      <div className="stats">
         {this.renderStats('Unique Visits', uniqueVisitorsToday, uniqueVisitorsYesterday, uniqueVisitorsThirtyDays)}
         {this.renderStats('Overall Visits', overallVisitorsToday, overallVisitorsYesterday, overallVisitorsThirtyDays)}
       </div>

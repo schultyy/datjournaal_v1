@@ -25,6 +25,64 @@ To start your Phoenix app:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
+## Docker
+
+Install Docker on your machine.
+
+In `config/dev.exs` change the hostname to `postgres`:
+
+```elixir
+config :datjournaal, Datjournaal.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "datjournaal_dev",
+  hostname: "postgres",
+  pool_size: 10
+```
+
+Then:
+
+```
+# Build the Docker image and start the `web` container, daemonized
+$ docker-compose up -d web
+```
+
+```
+# Install application's dependencies and compile them all
+$ docker-compose run web mix do deps.get, compile
+```
+
+```
+# Create database and run migrations
+$ docker-compose run web mix ecto.create
+$ docker-compose run web mix ecto.migrate
+```
+
+```
+# Install (mostly) JS dependencies through `npm`
+$ docker-compose run web npm install
+```
+
+```
+# Execute the seeding script, if needed
+$ docker-compose run web mix run priv/repo/seeds.exs
+```
+
+```
+# Restart the `web` container to ensure everything's up
+$ docker-compose restart web
+```
+
+Then check your browser at `http://dev:4000`
+
+### Tests
+
+```
+# Execute all tests (It's a `$ mix test` actually)
+$ docker-compose run test
+```
+
 ## Deployment
 
 Clone the application into the home directory. Then `cd` into it.

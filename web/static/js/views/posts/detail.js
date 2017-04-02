@@ -67,16 +67,14 @@ class PostDetailComponent extends React.Component {
     const meta = this.getMetaTags();
 
     return (
-      <div className="row">
-        <div className="col-xs-12">
-          <DocMeta tags={meta} />
-          <TileComponent
-            post={post}
-            onHide={onHideClick}
-            onShow={onShowClick}
-            isDetailMode
-          />
-        </div>
+      <div className="detail-view">
+        <DocMeta tags={meta} />
+        <TileComponent
+          post={post}
+          onHide={onHideClick}
+          onShow={onShowClick}
+          isDetailMode
+        />
       </div>
     );
   }

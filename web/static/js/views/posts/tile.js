@@ -55,8 +55,8 @@ export class TileComponent extends React.Component {
     const tileClasses = cx({
       tile: true,
       isHidden: postIsHidden,
-      'detail-view': isDetailMode,
       'is-first': isFirst,
+      preview: !isDetailMode,
     });
 
     return (
@@ -76,10 +76,13 @@ export class TileComponent extends React.Component {
               onShow={postIsHidden ? onShow : null}
             />
         </div>
-        <div className="about">
-          <div className="date">{date}</div>
-          <div className="description">{post.description}</div>
-        </div>
+        { isDetailMode ?
+          <div className="about">
+            <div className="date">{date}</div>
+            <div className="description">{post.description}</div>
+          </div>
+          : null
+        }
       </div>
     );
   }
