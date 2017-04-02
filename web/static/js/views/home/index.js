@@ -3,7 +3,7 @@ import DocMeta from 'react-doc-meta';
 import { push } from 'react-router-redux';
 import PostActions from '../../actions/posts';
 import SessionActions from '../../actions/sessions';
-import { TileComponent } from '../posts/tile';
+import TileComponent from '../posts/tile';
 import { setDocumentTitle } from '../../utils';
 
 

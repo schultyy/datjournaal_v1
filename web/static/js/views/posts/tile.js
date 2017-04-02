@@ -4,7 +4,7 @@ import ContextMenu from './contextmenu';
 import { absoluteUrlForPost } from '../../utils';
 import cx from 'classnames';
 
-export class TileComponent extends React.Component {
+export default class TileComponent extends React.Component {
   onCopyURLToClipboard() {
     const { post } = this.props;
     return absoluteUrlForPost(post);

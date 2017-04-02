@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PostActions from '../../actions/posts';
 import SessionActions from '../../actions/sessions';
 import { push } from 'react-router-redux';
-import { TileComponent } from '../posts/tile';
+import TileComponent from '../posts/tile';
 import DocMeta from 'react-doc-meta';
 import { absoluteUrlForPost } from '../../utils';
 
