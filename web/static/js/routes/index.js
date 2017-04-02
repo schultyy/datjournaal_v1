@@ -1,6 +1,5 @@
 import { IndexRoute, Route } from 'react-router';
 import React from 'react';
-import MainLayout from '../layouts/main';
 import ShellContainer from '../containers/shell';
 import HomeIndexView from '../views/home';
 import SessionsNew from '../views/sessions/new';
@@ -12,7 +11,7 @@ import UserDetailView from '../views/userdetails';
 
 export default function configRoutes(store) {
   return (
-    <Route component={MainLayout}>
+    <Route>
       <Route path="/sign_in" component={SessionsNew} />
 
       <Route path="/" component={ShellContainer}>
