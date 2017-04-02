@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import DocMeta from 'react-doc-meta';
 import { push } from 'react-router-redux';
 import PostActions from '../../actions/posts';
@@ -8,7 +7,7 @@ import { TileComponent } from '../posts/tile';
 import { setDocumentTitle } from '../../utils';
 
 
-class HomeIndexView extends React.Component {
+export default class HomeIndexView extends React.Component {
   componentDidMount() {
     setDocumentTitle('Dat Journaal');
     const { dispatch, currentUser } = this.props;
@@ -86,10 +85,3 @@ class HomeIndexView extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  currentUser: state.session.currentUser,
-  ...state.posts,
-});
-
-export default connect(mapStateToProps)(HomeIndexView);

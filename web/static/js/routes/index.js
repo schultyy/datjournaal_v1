@@ -1,7 +1,7 @@
 import { IndexRoute, Route } from 'react-router';
 import React from 'react';
 import ShellContainer from '../containers/Shell';
-import HomeIndexView from '../views/home';
+import HomeIndexView from '../containers/Home.js';
 import SessionsNew from '../views/sessions/new';
 import PostsNew from '../views/posts/new';
 import PostDetailView from '../views/posts/detail';
