@@ -14,9 +14,9 @@ alias Datjournaal.{Repo, User}
 
 [
   %{
-    handle: "hansegang",
-    email: "hello@hansegang.de",
-    password: "123456"
+    handle: "schultyy",
+    email: "hello@unexpected-co.de",
+    password: "test1234"
   }
 ]
 |> Enum.map(&User.changeset(%User{}, &1))
