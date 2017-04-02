@@ -4,13 +4,13 @@ import { push } from 'react-router-redux';
 import Header from '../layouts/header';
 import Footer from '../layouts/footer';
 import Actions from '../actions/sessions';
+import { loadAuthToken } from '../utils';
 
 class ShellContainer extends React.Component {
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
-    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
 
-    if (phoenixAuthToken && !currentUser) {
+    if (loadAuthToken() && !currentUser) {
       dispatch(Actions.currentUser());
     }
   }

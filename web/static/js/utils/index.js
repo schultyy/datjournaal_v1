@@ -7,6 +7,18 @@ const defaultHeaders = {
   'Content-Type': 'application/json',
 };
 
+export function loadAuthToken() {
+  return localStorage.getItem('phoenixAuthToken');
+}
+
+export function removeAuthToken() {
+  localStorage.removeItem('phoenixAuthToken');
+}
+
+export function setAuthToken(token) {
+  localStorage.setItem('phoenixAuthToken', token);
+}
+
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
@@ -17,9 +29,7 @@ export function checkStatus(response) {
 }
 
 function buildHeaders() {
-  const authToken = localStorage.getItem('phoenixAuthToken');
-
-  return { ...defaultHeaders, Authorization: authToken };
+  return { ...defaultHeaders, Authorization: loadAuthToken() };
 }
 
 export function parseJSON(response) {
@@ -46,7 +56,7 @@ export function httpGet(url) {
 
 export function httpPostFormData(url, data) {
   const headers = {
-    Authorization: localStorage.getItem('phoenixAuthToken'),
+    Authorization: loadAuthToken(),
     Accept: 'application/json',
   };
 
@@ -66,7 +76,7 @@ export function httpPostFormData(url, data) {
 
 export function httpPost(url, data) {
   const headers = {
-    Authorization: localStorage.getItem('phoenixAuthToken'),
+    Authorization: loadAuthToken(),
     Accept: 'application/json',
     'Content-Type': 'application/json',
   };
