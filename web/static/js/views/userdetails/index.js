@@ -7,10 +7,9 @@ import TwitterKeys from './twitterKeys';
 class UserDetails extends React.Component {
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
+    const { dispatch, currentUser } = this.props;
 
-    if (!phoenixAuthToken) {
+    if (!currentUser) {
       dispatch(push('/'));
     }
   }

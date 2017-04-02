@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import cx from 'classnames';
 import PostActions from '../../actions/posts';
-import SessionActions from '../../actions/sessions';
 import Location from './location';
 
 
@@ -22,12 +20,8 @@ class NewPostComponent extends React.Component {
   }
   componentDidMount() {
     const { dispatch, currentUser } = this.props;
-    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
-    if (phoenixAuthToken && currentUser) {
-      dispatch(PostActions.clearLocationSuggestions());
-    } else if (phoenixAuthToken && !currentUser) {
-      dispatch(SessionActions.currentUser());
-    } else {
+    dispatch(PostActions.clearLocationSuggestions());
+    if (!currentUser) {
       dispatch(push('/'));
     }
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import DocMeta from 'react-doc-meta';
 import { push } from 'react-router-redux';
 import PostActions from '../../actions/posts';
-import SessionActions from '../../actions/sessions';
 import TileComponent from '../posts/tile';
 import { setDocumentTitle } from '../../utils';
 
@@ -10,12 +9,8 @@ import { setDocumentTitle } from '../../utils';
 export default class HomeIndexView extends React.Component {
   componentDidMount() {
     setDocumentTitle('Dat Journaal');
-    const { dispatch, currentUser } = this.props;
-    const phoenixAuthToken = localStorage.getItem('phoenixAuthToken');
+    const { dispatch } = this.props;
     dispatch(PostActions.fetchPosts());
-    if (phoenixAuthToken && !currentUser) {
-      dispatch(SessionActions.currentUser());
-    }
   }
 
   onTileDoubleClick(post) {
