@@ -247,6 +247,13 @@ defmodule Datjournaal.PostControllerTest do
     assert Map.get(post_from_service, "slug") == Map.get(post_from_db, :slug)
   end
 
+  test "GET /api/v1/posts/:slug returns post original image", %{post: post_from_db, jwt: _jwt} do
+    response = get build_conn(), "/api/v1/posts/#{post_from_db.slug}"
+    post_from_service = response.resp_body
+            |> Poison.decode!
+    assert Map.get(post_from_service, "image") |> String.contains?("original")
+  end
+
   test "POST /api/v1/posts/:slug/hide returns 200 status code", %{post: post, jwt: jwt} do
     conn = build_conn()
       |> put_req_header("authorization", jwt)
