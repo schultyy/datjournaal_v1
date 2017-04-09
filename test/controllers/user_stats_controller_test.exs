@@ -123,7 +123,6 @@ defmodule Datjournaal.UserStatsControllerTest do
       |> Map.get("stats")
       |> Map.get("popular_posts")
       |> Enum.map(fn(p) -> Map.get(p, "views") end)
-    IO.inspect stats
     assert Enum.at(stats, 0) > Enum.at(stats, 1)
   end
 end
