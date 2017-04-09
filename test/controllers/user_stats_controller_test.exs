@@ -113,7 +113,7 @@ defmodule Datjournaal.UserStatsControllerTest do
     assert stats |> Enum.map(fn(p) -> Map.get(p, "post") |> Map.get("user") end) |> Enum.all?(fn(post_user) -> Map.get(post_user, "id") == user.id end)
   end
 
-  test "GET /api/v1/userstats as authenticated user delivers user's most popular images", %{ user: user, jwt: jwt, oldest_date: _d } do
+  test "GET /api/v1/userstats as authenticated user delivers user's most popular images", %{ user: _user, jwt: jwt, oldest_date: _d } do
     response = build_conn()
       |> put_req_header("authorization", jwt)
       |> get("/api/v1/user_stats")

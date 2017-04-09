@@ -7,9 +7,9 @@ defmodule Datjournaal.UserStatsController do
 
   def index(conn, _params) do
     current_user = Guardian.Plug.current_resource(conn)
-    today_query = from st in UserStat, where: st.inserted_at > ^yesterday_end and st.logged_in == false
-    yesterday_query = from st in UserStat, where: st.inserted_at >= ^yesterday_begin and st.inserted_at <= ^yesterday_end and st.logged_in == false
-    thirty_days_query = from st in UserStat, where: st.inserted_at > ^thirty_days_ago and st.logged_in == false
+    today_query = from st in UserStat, where: st.inserted_at > ^yesterday_end() and st.logged_in == false
+    yesterday_query = from st in UserStat, where: st.inserted_at >= ^yesterday_begin() and st.inserted_at <= ^yesterday_end() and st.logged_in == false
+    thirty_days_query = from st in UserStat, where: st.inserted_at > ^thirty_days_ago() and st.logged_in == false
     my_posts = my_posts(current_user)
     today = Repo.all(today_query)
             |> to_local_time
