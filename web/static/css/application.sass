@@ -356,6 +356,8 @@ body
   width: 100%
   margin-top: $space-between-header-and-content
   text-align: center
+  .headline
+    font-size: 12px
   .group
     display: flex
     flex-direction: row
@@ -365,7 +367,32 @@ body
     text-decoration: underline
     text-align: center
   h3
-    font-size: 12px
+    font-size: 10px
+  .popular-posts
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    margin-left: auto
+    margin-right: auto
+    justify-content: flex-start
+    .post
+      z-index: 0
+      position: relative
+    img
+      width: 100px
+      height: 100px
+      opacity: 0.8
+    .views
+      z-index: 1
+      position: absolute
+      font-size: 16px
+      left: 5px
+      bottom: 15px
+      padding: 5px
+      border-radius: 3px
+      width: 40px
+      background-color: $tile-control-background-color
+      color: $tile-control-foreground-color
 
 .imprint
   width: 100%

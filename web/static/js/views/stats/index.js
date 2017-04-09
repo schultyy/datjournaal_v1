@@ -22,7 +22,7 @@ class StatsView extends React.Component {
   renderStats(headline, visitorsToday, visitorsYesterday, visitorsThirtyDays) {
     return (
       <div>
-        <h1>{headline}</h1>
+        <h1 className="headline">{headline}</h1>
         <div className="group">
           <div className="today">
             <h3>Today</h3>
@@ -38,6 +38,19 @@ class StatsView extends React.Component {
             <div className="visitor-count">{visitorsThirtyDays} visits</div>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  renderPopularPosts(stats) {
+    return (
+      <div className="popular-posts">
+        {stats.slice(0, 20).map(stat => (
+          <div key={stat.post.slug} className="post">
+            <img src={stat.post.image} />
+            <span className="views">{stat.views}</span>
+          </div>
+        ))}
       </div>
     );
   }
@@ -62,6 +75,7 @@ class StatsView extends React.Component {
 
     return (
       <div className="stats">
+        {this.renderPopularPosts(stats.popular_posts)}
         {this.renderStats('Unique Visits', uniqueVisitorsToday, uniqueVisitorsYesterday, uniqueVisitorsThirtyDays)}
         {this.renderStats('Overall Visits', overallVisitorsToday, overallVisitorsYesterday, overallVisitorsThirtyDays)}
       </div>

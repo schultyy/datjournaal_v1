@@ -8,10 +8,8 @@ defmodule Datjournaal.PostControllerTest do
   end
 
   setup do
-    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
-    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: false, user: 1, image: upload, lat: 15.5, lng: 9.5})
-      |> Datjournaal.Repo.insert
     {:ok, user} = Datjournaal.ConnCase.create_user
+    {:ok, post} = Datjournaal.ConnCase.create_post(user)
     {:ok, jwt, _full_claims} = user |> Guardian.encode_and_sign(:token)
     {:ok, %{post: post, jwt: jwt}}
   end
@@ -22,7 +20,7 @@ defmodule Datjournaal.PostControllerTest do
   end
 
   test "GET / returns posts with correct image url" do
-    response = get build_conn, "/api/v1/posts"
+    response = get build_conn(), "/api/v1/posts"
     post = response.resp_body
             |> Poison.decode!
             |> Map.get("posts")
@@ -32,25 +30,25 @@ defmodule Datjournaal.PostControllerTest do
   end
 
   test "GET / logs one access" do
-    get build_conn, "/api/v1/posts"
+    get build_conn(), "/api/v1/posts"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat)
     assert length(stats) == 1
   end
 
   test "GET / logs one access with route '/'" do
-    get build_conn, "/api/v1/posts"
+    get build_conn(), "/api/v1/posts"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :path) == "/api/v1/posts"
   end
 
   test "GET / as anonymous user logs one access with logged_in = false" do
-    get build_conn, "/api/v1/posts"
+    get build_conn(), "/api/v1/posts"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :logged_in) == false
   end
 
   test "GET / as authenticated user logs one access with route '/' and logged_in = true", %{post: _post, jwt: jwt} do
-    conn = build_conn
+    conn = build_conn()
     |> put_req_header("authorization", jwt)
     get conn, "/api/v1/posts"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
@@ -58,7 +56,7 @@ defmodule Datjournaal.PostControllerTest do
   end
 
   test "GET / logs access with hashed remote IP address" do
-    get build_conn, "/api/v1/posts"
+    get build_conn(), "/api/v1/posts"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :ip) == "12CA17B49AF2289436F303E0166030A21E525D266E209267433801A8FD4071A0"
   end
@@ -72,19 +70,19 @@ defmodule Datjournaal.PostControllerTest do
   end
 
   test "GET /posts/:id logs access with post's detail url" do
-    get build_conn, "/api/v1/posts/1"
+    get build_conn(), "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :path) == "/api/v1/posts/1"
   end
 
   test "GET /posts/:id as anonymous user logs one access with logged_in = false" do
-    get build_conn, "/api/v1/posts/1"
+    get build_conn(), "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :logged_in) == false
   end
 
   test "GET /posts/:id as authenticated user logs one access with route '/' and logged_in = true", %{post: _post, jwt: jwt} do
-    conn = build_conn
+    conn = build_conn()
     |> put_req_header("authorization", jwt)
     get conn, "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
@@ -92,7 +90,7 @@ defmodule Datjournaal.PostControllerTest do
   end
 
   test "GET /posts/:id logs access with hashed remote IP address" do
-    get build_conn, "/api/v1/posts/1"
+    get build_conn(), "/api/v1/posts/1"
     stats = Datjournaal.Repo.all(Datjournaal.UserStat) |> List.first
     assert Map.get(stats, :ip) == "12CA17B49AF2289436F303E0166030A21E525D266E209267433801A8FD4071A0"
   end
@@ -228,8 +226,6 @@ defmodule Datjournaal.PostControllerTest do
 
   test "POST /api/v1/posts with invalid Google Places Id results in 422 status code", %{post: _post, jwt: jwt} do
     upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
-    lat = 51.36824
-    lng = 8.4140813
     places_id = "ABCDEF"
     form_data = %{image: upload, description: "Dies und das", postOnTwitter: "false", places_id: places_id}
     conn = build_conn()
