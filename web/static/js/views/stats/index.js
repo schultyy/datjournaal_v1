@@ -42,6 +42,14 @@ class StatsView extends React.Component {
     );
   }
 
+  renderPopularPosts(stats) {
+    return (
+      <div className="popular-posts">
+        {stats.map(stat => <div key={stat.post.slug}><img src={stat.post.image} /></div>)}
+      </div>
+    );
+  }
+
   render() {
     const { fetching, stats } = this.props;
     if (fetching) {
@@ -62,6 +70,7 @@ class StatsView extends React.Component {
 
     return (
       <div className="stats">
+        {this.renderPopularPosts(stats.popular_posts)}
         {this.renderStats('Unique Visits', uniqueVisitorsToday, uniqueVisitorsYesterday, uniqueVisitorsThirtyDays)}
         {this.renderStats('Overall Visits', overallVisitorsToday, overallVisitorsYesterday, overallVisitorsThirtyDays)}
       </div>
