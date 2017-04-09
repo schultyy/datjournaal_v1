@@ -40,7 +40,7 @@ defmodule Datjournaal.UserStatsController do
   defp my_posts(user) do
     all_posts_for_user = Repo.all(from p in Post, where: p.user_id == ^user.id, select: p) |> Repo.preload(:user)
     post_slugs = all_posts_for_user |> Enum.map(fn(p) -> p.slug end)
-    query = from(st in UserStat, group_by: st.path, where: like(st.path, "/api/v1/posts/%"), select: {st.path, count(st.path)})
+    query = from(st in UserStat, group_by: st.path, where: like(st.path, "/api/v1/posts/%") and st.logged_in == false, select: {st.path, count(st.path)})
     Repo.all(query)
       |> Enum.map(fn({path, count}) -> {String.replace_prefix(path, "/api/v1/posts/", ""), count} end)
       |> Enum.filter(fn({path, _count}) -> Enum.member?(post_slugs, path) end)
