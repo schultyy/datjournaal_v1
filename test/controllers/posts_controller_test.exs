@@ -8,10 +8,8 @@ defmodule Datjournaal.PostControllerTest do
   end
 
   setup do
-    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
-    {:ok, post} = Datjournaal.Post.changeset(%Datjournaal.Post{}, %{description: "this and that", hidden: false, user: 1, image: upload, lat: 15.5, lng: 9.5})
-      |> Datjournaal.Repo.insert
     {:ok, user} = Datjournaal.ConnCase.create_user
+    {:ok, post} = Datjournaal.ConnCase.create_post(user)
     {:ok, jwt, _full_claims} = user |> Guardian.encode_and_sign(:token)
     {:ok, %{post: post, jwt: jwt}}
   end

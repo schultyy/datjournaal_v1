@@ -52,6 +52,15 @@ defmodule Datjournaal.ConnCase do
     Datjournaal.Repo.insert(changeset)
   end
 
+  def create_post(user) do
+    upload = %Plug.Upload{path: "test/fixtures/placeholder.jpg", filename: "placeholder.png"}
+    post_params = %{description: "this and that", hidden: false, user: user, image: upload, lat: 15.5, lng: 9.5}
+    user
+    |> Ecto.build_assoc(:owned_posts)
+    |> Datjournaal.Post.changeset(post_params)
+    |> Datjournaal.Repo.insert
+  end
+
   def create_stats(%{logged_in: logged_in}) do
     Datjournaal.UserStat.changeset(%Datjournaal.UserStat{}, %{path: "/", ip: "127.0.0.1", logged_in: logged_in})
     |> Datjournaal.Repo.insert
