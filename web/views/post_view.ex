@@ -3,12 +3,12 @@ defmodule Datjournaal.PostView do
 
   def render("index.json", %{posts: posts, is_authenticated: is_authenticated}) do
     %{
-      posts: Enum.map(posts, &post_with_file_url/1) |> strip_coords(is_authenticated)
+      posts: Enum.map(posts, &post_with_thumb_file_url/1) |> strip_coords(is_authenticated)
     }
   end
 
   def render("show.json", %{post: post, is_authenticated: is_authenticated}) do
-    post |> post_with_file_url |> strip_coords(is_authenticated)
+    post |> post_with_original_file_url |> strip_coords(is_authenticated)
   end
 
   def render("not_found.json", %{id: id}) do
@@ -28,7 +28,14 @@ defmodule Datjournaal.PostView do
     }
   end
 
-  def post_with_file_url(post) do
+  def post_with_original_file_url(post) do
+    filename = Datjournaal.Image.url({post.image, :images}, :original)
+                |> Path.basename
+    image_url = "/uploads/" <> filename
+    Map.put(post, :image, image_url)
+  end
+
+  def post_with_thumb_file_url(post) do
     filename = Datjournaal.Image.url({post.image, :images}, :thumb)
                 |> Path.basename
     image_url = "/uploads/" <> filename
