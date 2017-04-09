@@ -45,7 +45,12 @@ class StatsView extends React.Component {
   renderPopularPosts(stats) {
     return (
       <div className="popular-posts">
-        {stats.slice(0, 20).map(stat => <div key={stat.post.slug}><img src={stat.post.image} /></div>)}
+        {stats.slice(0, 20).map(stat => (
+          <div key={stat.post.slug} className="post">
+            <img src={stat.post.image} />
+            <span className="views">{stat.views}</span>
+          </div>
+        ))}
       </div>
     );
   }
