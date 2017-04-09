@@ -48,6 +48,7 @@ defmodule Datjournaal.UserStatsController do
             p = Enum.find(all_posts_for_user, fn(p) -> p.slug == path end)
             {p, count}
           end)
+      |> Enum.sort(fn({_p1, count1}, {_p2, count2}) -> count1 > count2 end)
   end
 
   defp clean(stats) do
