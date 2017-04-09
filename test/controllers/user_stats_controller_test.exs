@@ -8,13 +8,16 @@ defmodule Datjournaal.UserStatsControllerTest do
       email: "bob@example.org",
       password: "tester1234!"
     })
+
     {:ok, alices_post} = Datjournaal.ConnCase.create_post(alice)
     {:ok, alices_second_post} = Datjournaal.ConnCase.create_post(alice)
     {:ok, bobs_post} = Datjournaal.ConnCase.create_post(bob)
     {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true, post: alices_second_post})
     {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true, post: alices_second_post})
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false, post: alices_second_post})
     {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true, post: alices_post})
 
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false, post: alices_post})
     {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false, post: alices_post})
     {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false, post: alices_post})
 
@@ -76,7 +79,7 @@ defmodule Datjournaal.UserStatsControllerTest do
       |> Poison.decode!
       |> Map.get("stats")
       |> Map.get("today")
-    assert length(stats) == 2
+    assert length(stats) == 4
   end
 
   test "GET /api/v1/userstats as authenticated user delivers stats for the last 30 days without logged_in user stats", %{user: _user, jwt: jwt, oldest_date: _d} do
@@ -87,7 +90,7 @@ defmodule Datjournaal.UserStatsControllerTest do
       |> Poison.decode!
       |> Map.get("stats")
       |> Map.get("thirty_days")
-    assert length(stats) == 4
+    assert length(stats) == 6
   end
 
   test "GET /api/v1/userstats as authenticated user delivers stats for yesterday", %{user: _user, jwt: jwt, oldest_date: _d} do
@@ -124,5 +127,18 @@ defmodule Datjournaal.UserStatsControllerTest do
       |> Map.get("popular_posts")
       |> Enum.map(fn(p) -> Map.get(p, "views") end)
     assert Enum.at(stats, 0) > Enum.at(stats, 1)
+  end
+
+  test "GET /api/v1/userstats as authenticated user delivers user's most popular images stats excluding stats for logged in users", %{ user: _user, jwt: jwt, oldest_date: _d } do
+    response = build_conn()
+      |> put_req_header("authorization", jwt)
+      |> get("/api/v1/user_stats")
+
+    stats = response.resp_body
+      |> Poison.decode!
+      |> Map.get("stats")
+      |> Map.get("popular_posts")
+      |> Enum.map(fn(p) -> Map.get(p, "views") end)
+    assert length(stats) == 2 #It's 2 because we generate views for two pictures, as logged in user and as anonymous user
   end
 end
