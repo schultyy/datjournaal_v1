@@ -22,7 +22,7 @@ class StatsView extends React.Component {
   renderStats(headline, visitorsToday, visitorsYesterday, visitorsThirtyDays) {
     return (
       <div>
-        <h1>{headline}</h1>
+        <h1 className="headline">{headline}</h1>
         <div className="group">
           <div className="today">
             <h3>Today</h3>
