@@ -48,6 +48,10 @@ defmodule Datjournaal.ConnCase do
       email: "tester@example.org",
       password: "tester1234!"
     }
+    create_user(user_params)
+  end
+
+  def create_user(user_params) do
     changeset = Datjournaal.User.changeset(%Datjournaal.User{}, user_params)
     Datjournaal.Repo.insert(changeset)
   end
@@ -61,13 +65,18 @@ defmodule Datjournaal.ConnCase do
     |> Datjournaal.Repo.insert
   end
 
-  def create_stats(%{logged_in: logged_in}) do
-    Datjournaal.UserStat.changeset(%Datjournaal.UserStat{}, %{path: "/", ip: "127.0.0.1", logged_in: logged_in})
+  def create_stats(%{logged_in: logged_in, post: post}) do
+    path = "/api/v1/posts/#{post.slug}"
+    Datjournaal.UserStat.changeset(%Datjournaal.UserStat{}, %{path: path, ip: "127.0.0.1", logged_in: logged_in})
     |> Datjournaal.Repo.insert
   end
 
   def create_stats(inserted_at) do
-    %Datjournaal.UserStat{path: "/", ip: "127.0.0.1", inserted_at: inserted_at, logged_in: false}
+    create_stats(inserted_at, "/")
+  end
+
+  def create_stats(inserted_at, image_path) do
+    %Datjournaal.UserStat{path: image_path, ip: "127.0.0.1", inserted_at: inserted_at, logged_in: false}
     |> Datjournaal.Repo.insert
   end
 end

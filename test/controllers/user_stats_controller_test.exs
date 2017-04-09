@@ -2,12 +2,21 @@ defmodule Datjournaal.UserStatsControllerTest do
   use Datjournaal.ConnCase
 
   setup do
-    {:ok, user} = Datjournaal.ConnCase.create_user()
-    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false})
-    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false})
+    {:ok, alice} = Datjournaal.ConnCase.create_user()
+    {:ok, bob} = Datjournaal.ConnCase.create_user(%{
+      handle: "bob",
+      email: "bob@example.org",
+      password: "tester1234!"
+    })
+    {:ok, alices_post} = Datjournaal.ConnCase.create_post(alice)
+    {:ok, bobs_post} = Datjournaal.ConnCase.create_post(bob)
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false, post: alices_post})
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: false, post: alices_post})
 
-    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true})
-    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true})
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true, post: alices_post})
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true, post: alices_post})
+
+    {:ok, _stats} = Datjournaal.ConnCase.create_stats(%{logged_in: true, post: bobs_post})
 
     yesterday = Calendar.DateTime.now_utc()
             |> Calendar.Date.add!(-1)
@@ -29,8 +38,8 @@ defmodule Datjournaal.UserStatsControllerTest do
                           day: Map.get(thirty_one_days_ago, :day), hour: 10, minute: 23, second: 0}
                       |> Ecto.DateTime.cast!
                       |> Datjournaal.ConnCase.create_stats()
-    {:ok, jwt, _full_claims} = user |> Guardian.encode_and_sign(:token)
-    {:ok, %{user: user, jwt: jwt, oldest_date: thirty_one_days_ago}}
+    {:ok, jwt, _full_claims} = alice |> Guardian.encode_and_sign(:token)
+    {:ok, %{user: alice, jwt: jwt, oldest_date: thirty_one_days_ago}}
   end
 
   test "GET /api/v1/userstats as anonymous user" do
@@ -88,5 +97,17 @@ defmodule Datjournaal.UserStatsControllerTest do
       |> Map.get("stats")
       |> Map.get("yesterday")
     assert length(stats) == 2
+  end
+
+  test "GET /api/v1/userstats as authenticated user delivers my most popular images", %{ user: user, jwt: jwt, oldest_date: _d } do
+    response = build_conn()
+      |> put_req_header("authorization", jwt)
+      |> get("/api/v1/user_stats")
+
+    stats = response.resp_body
+      |> Poison.decode!
+      |> Map.get("stats")
+      |> Map.get("popular_posts")
+    assert stats |> Enum.map(fn(p) -> Map.get(p, "post") |> Map.get("user") end) |> Enum.all?(fn(post_user) -> Map.get(post_user, "id") == user.id end)
   end
 end
