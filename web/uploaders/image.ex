@@ -21,7 +21,8 @@ defmodule Datjournaal.Image do
   end
 
   def transform(:original, _) do
-    {:convert, "-strip -auto-orient -format png", :png}
+    # We keep them as jpgs for backwards compability reasons
+    {:convert, "-strip -auto-orient -format jpg", :jpg}
   end
 
   # Override the persisted filenames:
