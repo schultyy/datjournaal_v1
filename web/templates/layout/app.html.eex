@@ -24,6 +24,7 @@
     <meta name="msapplication-TileImage" content="<%= static_path(@conn, "/images/ms-icon-144x144.png") %>">
     <meta name="theme-color" content="#ffffff">
     <title>Dat Journaal</title>
+    <link href="https://fonts.googleapis.com/css?family=BioRhyme|Open+Sans|Open+Sans+Condensed:300" rel="stylesheet">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/application.css") %>">
     <meta name="twitter:site" content="@ganzefolge" />
     <meta name="twitter:creator" content="@ganzefolge" />
