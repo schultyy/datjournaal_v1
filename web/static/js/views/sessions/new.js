@@ -42,7 +42,7 @@ class SessionsNew extends React.Component {
       <div>
         <main className="login">
           <header>
-            <div className="logo"><span className="text">dat Journaal</span></div>
+            <div className="logo">dat Journaal</div>
             <h4>Login</h4>
           </header>
           <form onSubmit={::this.handleSubmit}>
