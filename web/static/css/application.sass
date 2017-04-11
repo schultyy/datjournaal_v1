@@ -1,8 +1,9 @@
 @import "_colors"
+@import url('https://fonts.googleapis.com/css?family=BioRhyme|Open+Sans|Open+Sans+Condensed:300')
 $header-height: 50px
 $menu-entry-height: 40px
 $footer-height: 50px
-$header-font-size: 14px
+$header-font-size: 18px
 $space-between-header-and-content: 50px
 $xs-breakpoint: 768px
 $sm-breakpoint: 768px
@@ -10,7 +11,7 @@ $md-breakpoint: 992px
 
 *
   box-sizing: border-box
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: 'Open Sans', sans-serif
 
 body
   background-color: white
@@ -39,9 +40,6 @@ body
     @media only screen and (-webkit-min-device-pixel-ratio: 2)
       margin-left: 5px
     font-size: $header-font-size
-    font-family: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
-    font-variant: all-petite-caps
-    font-style: italic
     margin-left: 5px
     vertical-align: top
 
@@ -56,22 +54,29 @@ body
   top: 0px
   left: 0px
   width: 100%
+  display: flex
+  flex-direction: row
+  justify-content: flex-start
+  .menu
+    display: flex
+    flex-direction: row
+    justify-content: center
   .menu-entry
-    font-size: $header-font-size
-    font-family: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
-    font-variant: all-petite-caps
-    font-style: italic
     height: $menu-entry-height
-    padding: 5px
+    padding-left: 10px
     margin-top: 5px
     vertical-align: top
+    font-size: $header-font-size
   .logo
-    margin-left: 5px
-    margin-right: 0px
-    margin-bottom: 0px
-    padding: 0px
+    font-family: 'BioRhyme', serif
+    font-size: $header-font-size + 2px
+    margin-right: 15px
   a
     color: $header-foreground-color
+    font-family: 'Open Sans Condensed', sans-serif
+    text-transform: uppercase
+    text-decoration: none
+    font-weight: 800
 
 .isHidden
   img
