@@ -21,13 +21,6 @@ export default class Header extends React.Component {
       <header className="main-header">
         <nav>
           <ul className="list-inline">
-            <li className="menu-entry logo">
-              <Link to="/">
-                <div title="Plattdeutsch für: die Zeitung" className="logo">
-                  <span className="image" />
-                </div>
-              </Link>
-            </li>
             <li className="menu-entry">
               <div>
                 <Link to="/">
