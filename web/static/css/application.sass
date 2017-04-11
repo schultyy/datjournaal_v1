@@ -1,8 +1,9 @@
 @import "_colors"
+@import url('https://fonts.googleapis.com/css?family=BioRhyme|Open+Sans|Open+Sans+Condensed:300')
 $header-height: 50px
 $menu-entry-height: 40px
 $footer-height: 50px
-$header-font-size: 14px
+$header-font-size: 18px
 $space-between-header-and-content: 50px
 $xs-breakpoint: 768px
 $sm-breakpoint: 768px
@@ -10,7 +11,7 @@ $md-breakpoint: 992px
 
 *
   box-sizing: border-box
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-family: 'Open Sans', sans-serif
 
 body
   background-color: white
@@ -33,29 +34,12 @@ body
   ul
     list-style-type: none
 
-.logo
-  .image
-    background: url(/images/datjournaal_small.png) 0 0 no-repeat
-    margin-left: 5px
-    height: $menu-entry-height - 5px
-    width: $menu-entry-height - 5px
-    @media only screen and (-webkit-min-device-pixel-ratio: 2)
-      background: url(/images/datjournaal_small@2x.png) 0 0 no-repeat
-      background-size: contain
-      height: $menu-entry-height - 10px
-      width: $menu-entry-height - 10px
-      margin-left: 0px
-    display: inline-block
-
   .text
     @media only screen and (-webkit-min-device-pixel-ratio: 1)
       margin-left: 0px
     @media only screen and (-webkit-min-device-pixel-ratio: 2)
       margin-left: 5px
     font-size: $header-font-size
-    font-family: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
-    font-variant: all-petite-caps
-    font-style: italic
     margin-left: 5px
     vertical-align: top
 
@@ -64,28 +48,35 @@ body
   border-bottom: 0.5px solid
   color: $header-foreground-color
   height: $header-height
-  font-size: $header-font-size
   padding: 5px
   position: absolute
   top: 0px
   left: 0px
   width: 100%
+  display: flex
+  flex-direction: row
+  justify-content: flex-start
+  .menu
+    display: flex
+    flex-direction: row
+    justify-content: center
   .menu-entry
-    font-size: $header-font-size
-    font-family: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"
-    font-variant: all-petite-caps
-    font-style: italic
     height: $menu-entry-height
-    padding: 5px
-    margin-top: 5px
+    padding-top: 8px
+    padding-left: 10px
     vertical-align: top
   .logo
-    margin-left: 5px
-    margin-right: 0pxg
-    margin-bottom: 0px
-    padding: 0px
+    font-family: 'BioRhyme', serif
+    display: block
+    margin-top: auto
+    margin-bottom: auto
+    margin-right: 15px
   a
     color: $header-foreground-color
+    font-family: 'Open Sans Condensed', sans-serif
+    text-transform: uppercase
+    text-decoration: none
+    font-weight: 800
 
 .isHidden
   img
@@ -419,6 +410,9 @@ body
   max-width: 500px
   margin-left: auto
   margin-right: auto
+  .logo
+    font-family: 'BioRhyme', serif
+    font-size: $header-font-size + 15px
   .error
     border-radius: 1.5px
     opacity: 1
@@ -492,6 +486,12 @@ body
             max-width: 490px
           a
             max-width: 490px
+  .main-header
+    font-size: $header-font-size
+    .menu-entry
+      font-size: $header-font-size
+    .logo
+      font-size: $header-font-size + 2px
   .preview
     height: 350px
     width: 300px
