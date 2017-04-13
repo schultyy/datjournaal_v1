@@ -356,4 +356,17 @@ defmodule Datjournaal.PostControllerTest do
     post = Datjournaal.Repo.get_by(Datjournaal.Post, slug: post.slug)
     assert post == nil
   end
+
+  test "DELETE /api/v1/posts/:slug as anonymous user does not remove the corresponding post from db", %{ post: post, jwt: _jwt } do
+    conn = build_conn()
+    delete conn, "/api/v1/posts/#{post.slug}"
+    post = Datjournaal.Repo.get_by(Datjournaal.Post, slug: post.slug)
+    assert post != nil
+  end
+
+  test "DELETE /api/v1/posts/:slug as anonymous user returns 403 status code", %{ post: post, jwt: _jwt } do
+    conn = build_conn()
+    response = delete conn, "/api/v1/posts/#{post.slug}"
+    assert response.status == 403
+  end
 end

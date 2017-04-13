@@ -2,7 +2,7 @@ defmodule Datjournaal.PostController do
   use Datjournaal.Web, :controller
   import Ecto.Changeset
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide, :show_post]
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide, :show_post, :delete]
 
   alias Datjournaal.{Repo, Post, UserStat}
 
