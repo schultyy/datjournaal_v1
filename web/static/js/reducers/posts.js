@@ -47,6 +47,13 @@ export default function reducer(state = initialState, action = {}) {
 
     case Constants.FLUSH_POSTS:
       return initialState;
+    case Constants.DELETING_POST:
+      return state;
+    case Constants.DELETED_POST:
+      const remainingPosts = state.posts.filter(p => p.slug !== action.slug);
+      return { ...state, posts: remainingPosts };
+    case Constants.DELETE_POST_ERROR:
+      return { ...state, formErrors: action.errors };
     default:
       return state;
   }

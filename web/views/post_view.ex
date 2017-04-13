@@ -17,6 +17,12 @@ defmodule Datjournaal.PostView do
     }
   end
 
+  def render("unauthorized.json", %{ message: message}) do
+    %{
+      message: message
+    }
+  end
+
   def render("error.json", %{changeset: changeset}) do
     errors = Enum.map(changeset.errors, fn {field, detail} ->
       message = detail |> Tuple.to_list |> List.first
@@ -25,6 +31,13 @@ defmodule Datjournaal.PostView do
 
     %{
       errors: errors
+    }
+  end
+
+  def render("delete.json", %{post: post}) do
+    %{
+      post: post.slug,
+      deleted: true
     }
   end
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import DocMeta from 'react-doc-meta';
 import PostActions from '../../actions/posts';
 import TileComponent from '../posts/tile';
@@ -21,6 +22,12 @@ class PostDetailComponent extends React.Component {
   onShowClick(post) {
     const { dispatch } = this.props;
     dispatch(PostActions.showPost(post.slug));
+  }
+
+  onDeleteClick(post) {
+    const { dispatch } = this.props;
+    dispatch(PostActions.deletePost(post.slug));
+    dispatch(push('/'));
   }
 
   getMetaTags() {
@@ -53,9 +60,11 @@ class PostDetailComponent extends React.Component {
     if (currentUser) {
       var onHideClick = this.onHideClick.bind(this, post);
       var onShowClick = this.onShowClick.bind(this, post);
+      var onDeleteClick = this.onDeleteClick.bind(this, post);
     } else {
       var onHideClick = null;
       var onShowClick = null;
+      var onDeleteClick = null;
     }
 
     const meta = this.getMetaTags();
@@ -67,6 +76,8 @@ class PostDetailComponent extends React.Component {
           post={post}
           onHide={onHideClick}
           onShow={onShowClick}
+          onDelete={onDeleteClick}
+          currentUser={currentUser}
           isDetailMode
         />
       </div>

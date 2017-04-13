@@ -2,7 +2,7 @@ defmodule Datjournaal.PostController do
   use Datjournaal.Web, :controller
   import Ecto.Changeset
 
-  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide, :show_post]
+  plug Guardian.Plug.EnsureAuthenticated, [handler: Datjournaal.SessionController] when action in [:create, :hide, :show_post, :delete]
 
   alias Datjournaal.{Repo, Post, UserStat}
 
@@ -77,6 +77,20 @@ defmodule Datjournaal.PostController do
         conn
         |> put_status(:unprocessable_entity)
         |> render("error.json", changeset: changeset)
+    end
+  end
+
+  def delete(conn, %{"id" => slug}) do
+    current_user = Guardian.Plug.current_resource(conn)
+    post = Repo.get_by(Post, slug: slug) |> Repo.preload(:user)
+    cond do
+      post.user.id == current_user.id ->
+        Repo.delete(post)
+        conn |> render("delete.json", post: post)
+      true ->
+        conn
+        |> put_status(:forbidden)
+        |> render("unauthorized.json", message: "You don't have the sufficient rights to delete this post")
     end
   end
 
