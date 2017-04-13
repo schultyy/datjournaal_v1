@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import DocMeta from 'react-doc-meta';
 import PostActions from '../../actions/posts';
 import TileComponent from '../posts/tile';
@@ -26,6 +27,7 @@ class PostDetailComponent extends React.Component {
   onDeleteClick(post) {
     const { dispatch } = this.props;
     dispatch(PostActions.deletePost(post.slug));
+    dispatch(push('/'));
   }
 
   getMetaTags() {
