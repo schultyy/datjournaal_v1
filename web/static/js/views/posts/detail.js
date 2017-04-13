@@ -23,6 +23,11 @@ class PostDetailComponent extends React.Component {
     dispatch(PostActions.showPost(post.slug));
   }
 
+  onDeleteClick(post) {
+    const { dispatch } = this.props;
+    dispatch(PostActions.deletePost(post.slug));
+  }
+
   getMetaTags() {
     const { post } = this.props;
     if (!post) {
@@ -53,9 +58,11 @@ class PostDetailComponent extends React.Component {
     if (currentUser) {
       var onHideClick = this.onHideClick.bind(this, post);
       var onShowClick = this.onShowClick.bind(this, post);
+      var onDeleteClick = this.onDeleteClick.bind(this, post);
     } else {
       var onHideClick = null;
       var onShowClick = null;
+      var onDeleteClick = null;
     }
 
     const meta = this.getMetaTags();
@@ -67,6 +74,7 @@ class PostDetailComponent extends React.Component {
           post={post}
           onHide={onHideClick}
           onShow={onShowClick}
+          onDelete={onDeleteClick}
           isDetailMode
         />
       </div>

@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 import {
   httpGet,
   httpPost,
+  httpDelete,
   httpPostFormData,
   requestLocation,
 } from '../utils';
@@ -121,6 +122,23 @@ const Actions = {
           });
         });
       });
+  },
+  deletePost: slug => (dispatch) => {
+    dispatch({ type: Constants.DELETING_POST });
+
+    httpDelete(`/api/v1/posts/${slug}`)
+    .then(() => {
+      dispatch({
+        type: Constants.DELETED_POST,
+        slug
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: Constants.DELETE_POST_ERROR,
+        errors: error
+      });
+    });
   },
   queryLocationName: locationName => (dispatch) => {
     dispatch({ type: Constants.START_LOCATION_NAME_QUERY });

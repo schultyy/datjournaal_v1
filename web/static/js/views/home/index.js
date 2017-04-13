@@ -29,6 +29,11 @@ export default class HomeIndexView extends React.Component {
     dispatch(PostActions.showPost(post.slug));
   }
 
+  onDeleteClick(post) {
+    const { dispatch } = this.props;
+    dispatch(PostActions.deletePost(post.slug));
+  }
+
   getMetaTags() {
     const meta = [
       { property: 'og:description', content: '' },
@@ -57,6 +62,13 @@ export default class HomeIndexView extends React.Component {
       return null;
     };
 
+    const bindDeleteClickHandler = (post) => {
+      if (currentUser) {
+        return this.onDeleteClick.bind(this, post);
+      }
+      return null;
+    };
+
     const meta = this.getMetaTags();
 
     return (
@@ -70,6 +82,7 @@ export default class HomeIndexView extends React.Component {
                 onDoubleClick={this.onTileDoubleClick.bind(this, post)}
                 onHide={bindHideClickHandler(post)}
                 onShow={bindShowClickHandler(post)}
+                onDelete={bindDeleteClickHandler(post)}
                 isFirst={index === 0}
                 isDetailMode={false}
               />
