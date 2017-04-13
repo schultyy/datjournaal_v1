@@ -80,6 +80,12 @@ defmodule Datjournaal.PostController do
     end
   end
 
+  def delete(conn, %{"id" => slug}) do
+    post = Repo.get_by(Post, slug: slug)
+    Repo.delete(post)
+    conn |> render("delete.json", post: post)
+  end
+
   def hide(conn, %{"id" => id}) do
     set_hidden_status(conn, id, true)
   end

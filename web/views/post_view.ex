@@ -28,6 +28,13 @@ defmodule Datjournaal.PostView do
     }
   end
 
+  def render("delete.json", %{post: post}) do
+    %{
+      post: post.slug,
+      deleted: true
+    }
+  end
+
   def post_with_original_file_url(post) do
     filename = Datjournaal.Image.url({post.image, :images}, :original)
                 |> Path.basename

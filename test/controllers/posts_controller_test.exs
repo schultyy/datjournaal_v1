@@ -341,4 +341,19 @@ defmodule Datjournaal.PostControllerTest do
     coordinates = response.resp_body |> Poison.decode! |> Map.get("posts") |> Enum.map(fn(p) -> { Map.get(p, "lat"), Map.get(p, "lng")} end)
     assert Enum.all?(coordinates, fn(co) -> co != { nil, nil } end) == true
   end
+
+  test "DELETE /api/v1/posts/:slug as logged in user returns 204 status code", %{ post: post, jwt: jwt } do
+    conn = build_conn()
+           |> put_req_header("authorization", jwt)
+    response = delete conn, "/api/v1/posts/#{post.slug}"
+    assert response.status == 200
+  end
+
+  test "DELETE /api/v1/posts/:slug as logged in user removes the corresponding post from db", %{ post: post, jwt: jwt } do
+    conn = build_conn()
+           |> put_req_header("authorization", jwt)
+    delete conn, "/api/v1/posts/#{post.slug}"
+    post = Datjournaal.Repo.get_by(Datjournaal.Post, slug: post.slug)
+    assert post == nil
+  end
 end
