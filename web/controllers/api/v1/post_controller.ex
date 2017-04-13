@@ -81,9 +81,17 @@ defmodule Datjournaal.PostController do
   end
 
   def delete(conn, %{"id" => slug}) do
-    post = Repo.get_by(Post, slug: slug)
-    Repo.delete(post)
-    conn |> render("delete.json", post: post)
+    current_user = Guardian.Plug.current_resource(conn)
+    post = Repo.get_by(Post, slug: slug) |> Repo.preload(:user)
+    cond do
+      post.user.id == current_user.id ->
+        Repo.delete(post)
+        conn |> render("delete.json", post: post)
+      true ->
+        conn
+        |> put_status(:forbidden)
+        |> render("unauthorized.json", message: "You don't have the sufficient rights to delete this post")
+    end
   end
 
   def hide(conn, %{"id" => id}) do

@@ -369,4 +369,33 @@ defmodule Datjournaal.PostControllerTest do
     response = delete conn, "/api/v1/posts/#{post.slug}"
     assert response.status == 403
   end
+
+  test "DELETE /api/v1/posts/:slug as logged in user returns 403 status code if post is owned by somebody else", %{ post: _post, jwt: jwt } do
+    {:ok, user} = Datjournaal.ConnCase.create_user(%{
+      handle: "bob",
+      email: "bob@example.org",
+      password: "tester1234!"
+    })
+    {:ok, post} = Datjournaal.ConnCase.create_post(user)
+
+    conn = build_conn()
+           |> put_req_header("authorization", jwt)
+    response = delete conn, "/api/v1/posts/#{post.slug}"
+    assert response.status == 403
+  end
+
+  test "DELETE /api/v1/posts/:slug as logged in user does not delete post if post is owned by somebody else", %{ post: _post, jwt: jwt } do
+    {:ok, user} = Datjournaal.ConnCase.create_user(%{
+      handle: "bob",
+      email: "bob@example.org",
+      password: "tester1234!"
+    })
+    {:ok, post} = Datjournaal.ConnCase.create_post(user)
+
+    conn = build_conn()
+           |> put_req_header("authorization", jwt)
+    delete conn, "/api/v1/posts/#{post.slug}"
+    post = Datjournaal.Repo.get_by(Datjournaal.Post, slug: post.slug)
+    assert post != nil
+  end
 end
