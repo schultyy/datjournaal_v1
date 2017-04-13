@@ -42,6 +42,7 @@ export default class TileComponent extends React.Component {
       onShow,
       onDelete,
       isFirst,
+      currentUser
     } = this.props;
     const date = moment(`${post.inserted_at}Z`).tz('Europe/Berlin').format('DD.MM.YYYY HH:mm');
 
@@ -76,6 +77,7 @@ export default class TileComponent extends React.Component {
               onHide={postIsHidden ? null : onHide}
               onShow={postIsHidden ? onShow : null}
               onDelete={onDelete}
+              currentUser={currentUser}
             />
         </div>
         { isDetailMode ?

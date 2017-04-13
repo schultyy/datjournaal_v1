@@ -77,6 +77,7 @@ class PostDetailComponent extends React.Component {
           onHide={onHideClick}
           onShow={onShowClick}
           onDelete={onDeleteClick}
+          currentUser={currentUser}
           isDetailMode
         />
       </div>

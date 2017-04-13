@@ -16,10 +16,15 @@ export default class ContextMenuComponent extends React.Component {
       onDelete,
       onShow,
       onCopyURLToClipboard,
+      currentUser,
     } = this.props;
+
     const clipboardPayload = onCopyURLToClipboard();
+
+    const classNames = currentUser ? 'is-authenticated' : 'anonymous';
+
     return (
-      <ul>
+      <ul className={classNames}>
         { onShowDetail ?
           <li onClick={onShowDetail}><div className="entry">Show in detail</div></li>
           : false
@@ -63,7 +68,7 @@ export default class ContextMenuComponent extends React.Component {
     const expanded = this.state.expanded;
 
     return (
-      <div className="menu">
+      <div className='menu'>
         <span className="menu-text" onClick={this.onMenuClick.bind(this)}>...</span>
         { expanded ? this.renderMenuEntries() : null }
       </div>

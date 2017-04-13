@@ -85,6 +85,7 @@ export default class HomeIndexView extends React.Component {
                 onDelete={bindDeleteClickHandler(post)}
                 isFirst={index === 0}
                 isDetailMode={false}
+                currentUser={currentUser}
               />
             </div>
               ))}
