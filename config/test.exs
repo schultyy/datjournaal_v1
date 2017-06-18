@@ -19,4 +19,7 @@ config :datjournaal, Datjournaal.Repo,
   password: System.get_env("PG_PASSWORD"),
   hostname: System.get_env("PG_HOST"),
   database: "datjournaal_test",
+  hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+import_config "test.secret.exs"

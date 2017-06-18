@@ -17,6 +17,9 @@ To start your Phoenix app:
   * Install dependencies with `mix deps.get`
   * Install JS dependencies with `npm install`
   * Copy over dev config `cp config/dev.exs.example config/dev.exs`
+  * Copy over test config `cp config/test.secret.exs.example config/test.secret.exs`
+  * Go to [https://apps.twitter.com/](https://apps.twitter.com/) and create a new config for your application
+  * Fill in `consumer_key` and `consumer_secret` in `test.secret.exs`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
   * Start Phoenix endpoint with `mix phoenix.server`
 

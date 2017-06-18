@@ -18,9 +18,7 @@ class UserDetails extends React.Component {
     const {
       dispatch,
       isPasswordUpdating,
-      isTwitterUpdating,
       passwordFormErrors,
-      twitterFormErrors,
     } = this.props;
 
     return (
@@ -30,7 +28,7 @@ class UserDetails extends React.Component {
             <ResetPassword isUpdating={isPasswordUpdating} formErrors={passwordFormErrors} dispatch={dispatch} />
           </div>
           <div className="col-xs-12 col-md-6">
-            <TwitterKeys isUpdating={isTwitterUpdating} formErrors={twitterFormErrors} dispatch={dispatch} />
+            <TwitterKeys dispatch={dispatch} />
           </div>
         </div>
       </div>
@@ -41,8 +39,6 @@ class UserDetails extends React.Component {
 const mapStateToProps = state => ({
   passwordFormErrors: state.userPassword.formErrors,
   isPasswordUpdating: state.userPassword.updating,
-  twitterFormErrors: state.twitter.formErrors,
-  isTwitterUpdating: state.twitter.updating,
   currentUser: state.session.currentUser,
 });
 

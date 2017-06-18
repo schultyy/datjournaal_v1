@@ -19,25 +19,7 @@ const Actions = {
           });
         });
       });
-  },
-  postTwitterAccessToken: twitter_key => (dispatch) => {
-    dispatch({ type: Constants.POSTING_TWITTER_ACCESS_KEY });
-
-    httpPost('/api/v1/users/twitter', twitter_key)
-      .then((data) => {
-        dispatch({ type: Constants.POSTED_TWITTER_ACCESS_KEY });
-      })
-      .catch((error) => {
-        const response = error.response;
-        response.json()
-        .then((json) => {
-          dispatch({
-            type: Constants.POST_TWITTER_ACCESS_KEY_ERROR,
-            errors: json.errors,
-          });
-        });
-      });
-  },
+  }
 };
 
 export default Actions;
